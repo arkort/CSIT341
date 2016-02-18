@@ -20,7 +20,7 @@ namespace Task1
                                  .OrderByDescending(element => element.Count);
                 foreach(var element in extensions)
                 {
-                    Console.WriteLine("{0}#{1}#{2}%", element.extName.Remove(0, 1), element.Count, 100 * (double)element.Count / fileCount);
+                    Console.WriteLine("{0}#{1}#{2:0.000}%", element.extName.Remove(0, 1), element.Count, 100 * (double)element.Count / fileCount);
                 }
                                  
                                 
