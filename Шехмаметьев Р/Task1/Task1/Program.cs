@@ -12,7 +12,7 @@ namespace Task1
         {
             using (StreamReader input = new StreamReader("input.txt"))
             {
-                string[] files = Directory.GetFiles(input.ReadLine());
+                string[] files = Directory.GetFiles(input.ReadLine(), "*", SearchOption.AllDirectories);
                 int fileCount = files.Length;
                 var extensions = files.Select(element => element.Substring(element.LastIndexOf('.'))).
                                  GroupBy(element => element.Substring(1)).
