@@ -14,7 +14,10 @@ namespace Task1
             {
                 string[] files = Directory.GetFiles(input.ReadLine());
                 int fileCount = files.Length;
-                var extensions = files.Select(element => element.Substring(element.LastIndexOf('.'))).GroupBy(element => element.Substring(1)).Select(group => new {extName = group.First(), Count = group.Count() }).OrderByDescending(element => element.Count);
+                var extensions = files.Select(element => element.Substring(element.LastIndexOf('.'))).
+                                 GroupBy(element => element.Substring(1)).
+                                 Select(group => new {extName = group.First(), Count = group.Count() })
+                                 .OrderByDescending(element => element.Count);
                 foreach(var element in extensions)
                 {
                     Console.WriteLine("{0}#{1}#{2}%", element.extName.Remove(0, 1), element.Count, 100 * (double)element.Count / fileCount);
