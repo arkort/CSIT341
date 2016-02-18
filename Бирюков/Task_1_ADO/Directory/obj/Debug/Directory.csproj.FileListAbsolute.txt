@@ -10,3 +10,9 @@ C:\Users\AlexeyB\Documents\Visual Studio 2015\Projects\ADO_Practice\Task_1_ADO\D
 C:\Users\AlexeyB\Documents\Visual Studio 2015\Projects\ADO_Practice\Task_1_ADO\Directory\bin\Debug\Directory.exe
 C:\Users\AlexeyB\Documents\Visual Studio 2015\Projects\ADO_Practice\Task_1_ADO\Directory\bin\Debug\Directory.pdb
 C:\Users\AlexeyB\Documents\Visual Studio 2015\Projects\ADO_Practice\Task_1_ADO\Directory\obj\Debug\Directory.csprojResolveAssemblyReference.cache
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\bin\Debug\Directory.exe.config
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\obj\Debug\Directory.exe
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\obj\Debug\Directory.pdb
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\bin\Debug\Directory.exe
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\bin\Debug\Directory.pdb
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\obj\Debug\Directory.csprojResolveAssemblyReference.cache

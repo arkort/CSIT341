@@ -36,8 +36,12 @@ namespace DirectoryName
             return a;            
         }
 
+        
+
         static void WriteDictionary()
         {
+            countFilesExtensions = countFilesExtensions.OrderBy(pair => -pair.Value)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
             using (StreamWriter write = new StreamWriter("output.txt"))
             {
                 foreach (var q in countFilesExtensions)
