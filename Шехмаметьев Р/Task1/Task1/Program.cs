@@ -12,7 +12,26 @@ namespace Task1
         {
             using (StreamReader input = new StreamReader("input.txt"))
             {
-                string[] files = Directory.GetFiles(input.ReadLine(), "*", SearchOption.AllDirectories);
+                string[] files = new string[0];
+                try
+                {
+                    files = Directory.GetFiles(input.ReadLine(), "*", SearchOption.AllDirectories);
+                }
+                catch(Exception e)
+                {
+                    if (e is UnauthorizedAccessException)
+                    {
+                        Console.WriteLine("You do not have authorization to access a directory or a subdirectory");
+                    }
+                    else if(e is DirectoryNotFoundException)
+                    {
+                        Console.WriteLine("Specified directory doesn't exist");
+                    }
+                    else
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
                 int fileCount = files.Length;
                 var extensions = files.Select(element => element.Substring(element.LastIndexOf('.'))).
                                  GroupBy(element => element.Substring(1)).
@@ -22,10 +41,7 @@ namespace Task1
                 {
                     Console.WriteLine("{0}#{1}#{2:0.000}%", element.extName.Remove(0, 1), element.Count, 100 * (double)element.Count / fileCount);
                 }
-                                 
-                                
             }
-            
         }
     }
 }
