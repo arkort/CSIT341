@@ -10,7 +10,7 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            using (StreamReader input = new StreamReader(@"C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\input.txt"))
+            using (StreamReader input = new StreamReader(@"..\..\..\input.txt"))
             {
                 string[] files = new string[0];
                 try
