@@ -8,31 +8,51 @@ namespace Task1
 {
     class Program
     {
+        static IEnumerable<String> GetFileExtensions(string pathToDirectory)
+        {
+            string[] directories = null;
+            string[] files = null;
+            try
+            {
+                directories = Directory.GetDirectories(pathToDirectory);
+                files = Directory.GetFiles(pathToDirectory);
+            }
+            catch (Exception e)
+            {
+                if (e is UnauthorizedAccessException)
+                {
+                    Console.WriteLine("You do not have authorization to access this directory: {0}", pathToDirectory);
+                }
+                else if (e is DirectoryNotFoundException)
+                {
+                    Console.WriteLine("Specified directory doesn't exist: {0}", pathToDirectory);
+                    yield break;
+                }
+                else
+                {
+                    Console.WriteLine(e.Message);
+                    yield break;
+                }
+            }
+            foreach (var file in files)
+            {
+                yield return file;
+            }
+            foreach (var directory in directories)
+            {
+                foreach (var rec_action in GetFileExtensions(directory))
+                {
+                    yield return rec_action;
+                }
+            }
+        }
         static void Main(string[] args)
         {
             using (StreamReader input = new StreamReader(@"..\..\..\input.txt"))
             {
-                string[] files = new string[0];
-                try
-                {
-                    files = Directory.GetFiles(input.ReadLine(), "*", SearchOption.AllDirectories);
-                }
-                catch(Exception e)
-                {
-                    if (e is UnauthorizedAccessException)
-                    {
-                        Console.WriteLine("You do not have authorization to access the directory or one of its subdirectories");
-                    }
-                    else if(e is DirectoryNotFoundException)
-                    {
-                        Console.WriteLine("Specified directory doesn't exist");
-                    }
-                    else
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-                int fileCount = files.Length;
+                string path = input.ReadLine();
+                IEnumerable<string> files = GetFileExtensions(path);
+                int fileCount = files.Count();
                 var extensions = files.Select(element => Path.GetExtension(element)).
                                  GroupBy(element => element).
                                  Select(group => new { extName = group.First().Trim('.'), Count = group.Count() })
