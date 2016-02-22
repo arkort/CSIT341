@@ -35,7 +35,7 @@ namespace Task1
                 int fileCount = files.Length;
                 var extensions = files.Select(element => Path.GetExtension(element)).
                                  GroupBy(element => element).
-                                 Select(group => new {extName = group.First(), Count = group.Count() })
+                                 Select(group => new { extName = group.First().Trim('.'), Count = group.Count() })
                                  .OrderByDescending(element => element.Count);
                 foreach(var element in extensions)
                 {
