@@ -34,21 +34,28 @@ namespace Task1
                     yield break;
                 }
             }
-            foreach (var file in files)
+            if (files != null)
             {
-                yield return file;
-            }
-            foreach (var directory in directories)
-            {
-                foreach (var rec_action in GetFileExtensions(directory))
+                foreach (var file in files)
                 {
-                    yield return rec_action;
+                    yield return file;
+                }
+            }
+            if (directories != null)
+            {
+                foreach (var directory in directories)
+                {
+                    foreach (var rec_action in GetFileExtensions(directory))
+                    {
+                        yield return rec_action;
+                    }
                 }
             }
         }
         static void Main(string[] args)
         {
             using (StreamReader input = new StreamReader(@"..\..\..\input.txt"))
+            using (StreamWriter output = new StreamWriter(@"..\..\..\output.txt"))
             {
                 string path = input.ReadLine();
                 IEnumerable<string> files = GetFileExtensions(path);
@@ -57,9 +64,10 @@ namespace Task1
                                  GroupBy(element => element).
                                  Select(group => new { extName = group.First().Trim('.'), Count = group.Count() })
                                  .OrderByDescending(element => element.Count);
-                foreach(var element in extensions)
+                foreach (var element in extensions)
                 {
                     Console.WriteLine("{0}#{1}#{2:0.000}%", element.extName, element.Count, 100 * (double)element.Count / fileCount);
+                    output.WriteLine("{0}#{1}#{2:0.000}%", element.extName, element.Count, 100 * (double)element.Count / fileCount);
                 }
             }
         }
