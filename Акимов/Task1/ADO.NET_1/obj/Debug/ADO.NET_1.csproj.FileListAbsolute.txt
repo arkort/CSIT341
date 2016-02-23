@@ -4,3 +4,9 @@ c:\users\артем\documents\visual studio 2015\Projects\ADO.NET_1\ADO.NET_1\bi
 c:\users\артем\documents\visual studio 2015\Projects\ADO.NET_1\ADO.NET_1\bin\Debug\ADO.NET_1.pdb
 c:\users\артем\documents\visual studio 2015\Projects\ADO.NET_1\ADO.NET_1\obj\Debug\ADO.NET_1.exe
 c:\users\артем\documents\visual studio 2015\Projects\ADO.NET_1\ADO.NET_1\obj\Debug\ADO.NET_1.pdb
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task1\ADO.NET_1\bin\Debug\ADO.NET_1.exe.config
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task1\ADO.NET_1\obj\Debug\ADO.NET_1.exe
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task1\ADO.NET_1\obj\Debug\ADO.NET_1.pdb
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task1\ADO.NET_1\bin\Debug\ADO.NET_1.exe
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task1\ADO.NET_1\bin\Debug\ADO.NET_1.pdb
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task1\ADO.NET_1\obj\Debug\ADO.NET_1.csprojResolveAssemblyReference.cache

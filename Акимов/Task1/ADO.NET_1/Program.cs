@@ -49,7 +49,8 @@ namespace ADO.NET_1
             {
                 foreach (var item in copy)
                 {
-                    write.WriteLine("<{0}>#<{1}>#<{2:F4}>", item.Item2, item.Item1, (double)item.Item1 / allFiles);
+                    if (!String.IsNullOrEmpty(item.Item2))
+                        write.WriteLine("<{0}>#<{1}>#<{2:F4}%>", item.Item2.Remove(0,1), item.Item1, (double)item.Item1 / allFiles);
                 }
 
             }
