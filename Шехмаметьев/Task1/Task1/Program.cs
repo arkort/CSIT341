@@ -8,7 +8,7 @@ namespace Task1
 {
     class Program
     {
-        static IEnumerable<String> GetFileExtensions(string pathToDirectory)
+        static IEnumerable<String> GetFileExtensions(string pathToDirectory, StreamWriter error_log)
         {
             string[] directories = null;
             string[] files = null;
@@ -22,15 +22,18 @@ namespace Task1
                 if (e is UnauthorizedAccessException)
                 {
                     Console.WriteLine("You do not have authorization to access this directory: {0}", pathToDirectory);
+                    error_log.WriteLine("You do not have authorization to access this directory: {0}", pathToDirectory);
                 }
                 else if (e is DirectoryNotFoundException)
                 {
                     Console.WriteLine("Specified directory doesn't exist: {0}", pathToDirectory);
+                    error_log.WriteLine("Specified directory doesn't exist: {0}", pathToDirectory);
                     yield break;
                 }
                 else
                 {
                     Console.WriteLine(e.Message);
+                    error_log.WriteLine(e.Message);
                     yield break;
                 }
             }
@@ -45,7 +48,7 @@ namespace Task1
             {
                 foreach (var directory in directories)
                 {
-                    foreach (var rec_action in GetFileExtensions(directory))
+                    foreach (var rec_action in GetFileExtensions(directory, error_log))
                     {
                         yield return rec_action;
                     }
@@ -56,9 +59,10 @@ namespace Task1
         {
             using (StreamReader input = new StreamReader(@"..\..\..\input.txt"))
             using (StreamWriter output = new StreamWriter(@"..\..\..\output.txt"))
+            using (StreamWriter error_log = new StreamWriter(@"..\..\..\error_log.txt"))
             {
                 string path = input.ReadLine();
-                IEnumerable<string> files = GetFileExtensions(path);
+                IEnumerable<string> files = GetFileExtensions(path, error_log);
                 int fileCount = files.Count();
                 var extensions = files.Select(element => Path.GetExtension(element)).
                                  GroupBy(element => element).
