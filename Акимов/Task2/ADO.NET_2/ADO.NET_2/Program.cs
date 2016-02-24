@@ -13,11 +13,11 @@ namespace ADO.NET_2
         static void Main()
         {
             XmlReaderSettings booksSettings = new XmlReaderSettings();
-            booksSettings.Schemas.Add(null, @"C:\Users\akimovaa\Documents\Visual Studio 2010\Projects\ADO.NET_2\XSD.xsd");
+            booksSettings.Schemas.Add(null, @"C:\Users\Артем\Documents\Visual Studio 2015\Projects\XSD.xsd");
             booksSettings.ValidationType = ValidationType.Schema;
             booksSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
 
-            XmlReader books = XmlReader.Create(@"C:\Users\akimovaa\Documents\Visual Studio 2010\Projects\ADO.NET_2\XMLFile1.xml", booksSettings);
+            XmlReader books = XmlReader.Create(@"C:\Users\Артем\Documents\Visual Studio 2015\Projects\XMLFile1.xml", booksSettings);
 
             while (books.Read()) { }
         }
