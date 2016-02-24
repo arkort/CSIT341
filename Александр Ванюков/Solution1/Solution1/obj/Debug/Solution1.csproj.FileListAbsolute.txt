@@ -1,0 +1,6 @@
+D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\bin\Debug\Solution1.exe.config
+D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\bin\Debug\Solution1.exe
+D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\bin\Debug\Solution1.pdb
+D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\obj\Debug\Solution1.csprojResolveAssemblyReference.cache
+D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\obj\Debug\Solution1.exe
+D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\obj\Debug\Solution1.pdb
