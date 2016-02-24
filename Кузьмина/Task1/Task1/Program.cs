@@ -42,7 +42,7 @@ namespace Task1
             {
                 foreach (var item in extensions.OrderByDescending(element => element.Value))
                 {
-                    outfile.WriteLine("{0} - {1:0.####}", item.Key, 100 * (double)item.Value / count);
+                    outfile.WriteLine("{0} # {1} # {2:0.####}", item.Key, item.Value, 100 * (double)item.Value / count);
                 }
             }
         }
