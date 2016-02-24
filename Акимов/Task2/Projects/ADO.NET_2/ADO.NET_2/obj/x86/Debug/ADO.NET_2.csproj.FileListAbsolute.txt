@@ -1,4 +1,0 @@
-c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.exe
-c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.pdb
-c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.exe
-c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.pdb
