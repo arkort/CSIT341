@@ -16,3 +16,4 @@ C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\obj\Debug
 C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\bin\Debug\Directory.exe
 C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\bin\Debug\Directory.pdb
 C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\obj\Debug\Directory.csprojResolveAssemblyReference.cache
+C:\Users\AlexeyB\Documents\CSIT341\Бирюков\Task_1_ADO\Directory\bin\Debug\input.txt

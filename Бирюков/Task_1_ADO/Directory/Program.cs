@@ -55,7 +55,8 @@ namespace DirectoryName
 
         static void Main(string[] args)
         {
-            Direct(@"C:\Users\AlexeyB\Desktop\q");
+            using (StreamReader read = new StreamReader("input.txt"))
+                Direct(read.ReadLine());
             WriteDictionary();
         }
     }
