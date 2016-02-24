@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ComicsLibrary"
+    elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:simpleType name="intRating">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxExclusive value="11"></xs:maxExclusive>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Comics">
+    <xs:attribute name="ID" type="xs:positiveInteger"></xs:attribute>
+    <xs:attribute name="Title" type="xs:string"></xs:attribute>
+    <xs:attribute name="IssueNumber" type="xs:int"></xs:attribute>
+    <xs:attribute name="PublicationDate" type="xs:date"></xs:attribute>
+    <xs:attribute name="NumberOfPages" type="xs:positiveInteger"></xs:attribute>
+    <xs:attribute name="Summary" type="xs:string"></xs:attribute>
+    <xs:attribute name="Publisher" type="xs:string"></xs:attribute>
+    <xs:attribute name="Rating" type="intRating"></xs:attribute>
+    <xs:attribute name="PreviewReference" type="xs:string"></xs:attribute>
+    <xs:attribute name="ReleaseDate" type="xs:date"></xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ComicsCollection">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="Comics" type="Comics"></xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="ComicsCollection" type="ComicsCollection"></xs:element>
+</xs:schema>
