@@ -35,7 +35,7 @@ namespace Task2
                     Console.WriteLine($"{element.Name} {counter++}:");
                     foreach (XmlAttribute attribute in element.Attributes)
                     {
-                        Console.WriteLine(attribute.Name + ": " + attribute.Value);
+                        Console.WriteLine(attribute.Name.Replace('_',' ') + ": " + attribute.Value);
                     }
                 }
             }
