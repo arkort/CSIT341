@@ -7,22 +7,14 @@ using System.Xml;
 using System.Xml.Schema;
 namespace Task2
 {
-    abstract class Student
-    {
-        void hello()
-        {
-            Console.WriteLine("alsdjaskjdask");
-        }
-    }
-    
     class Program
     {
         static void Main(string[] args)
         {
             var doc = new XmlDocument();
-            doc.Load(@"C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев Р\Task2\Task2\XMLFile1.xml");
+            doc.Load(@"..\..\XMLFile1.xml");
             var ComicsCollection = doc.SelectSingleNode("ComicsCollection").SelectNodes("Comics");
-            doc.Schemas.Add("", @"c:\users\rustam\documents\gitprojects\adonetgit2\csit341\шехмаметьев р\task2\task2\comicslibrary.xsd");
+            doc.Schemas.Add("", @"..\..\ComicsLibrary.xsd");
             bool validated = true;
             try
             {
