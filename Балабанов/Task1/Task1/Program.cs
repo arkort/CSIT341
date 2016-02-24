@@ -53,7 +53,7 @@ namespace Task1
 
                     foreach (var S in a)
                     {
-                         Console.WriteLine("{0}#{1}#{2:P1}", S.elem.Key, S.Count, (double)S.Count / FilesCount);
+                         outFile.WriteLine("{0}#{1}#{2:P1}", S.elem.Key, S.Count, (double)S.Count / FilesCount);
                     }
                 }
             }
