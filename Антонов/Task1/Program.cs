@@ -7,8 +7,8 @@ namespace Task1
 {
     class Program
     {
-        static string inputFile = "../../input.txt";
-        static string outputFile = "../../output.txt";
+        static string inputFile = "input.txt";
+        static string outputFile = "output.txt";
 
         static void GetStatsOnExtensions(string[] files)
         {
