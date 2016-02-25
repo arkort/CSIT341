@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Bibl>
+<BOOK Title="sd">
+  <AUTHOR>Herman Melville</AUTHOR>
+  <BINDING>hardcover</BINDING>
+  <PAGES>724</PAGES>
+  <PRICE>9.95</PRICE>
+</BOOK>
+</Bibl>
