@@ -15,7 +15,6 @@ namespace Task2
             doc.Load(@"..\..\XMLFile1.xml");
             var ComicsCollection = doc.SelectSingleNode("ComicsCollection").SelectNodes("Comics");
             doc.Schemas.Add("", @"..\..\ComicsLibrary.xsd");
-            bool validated = true;
             try
             {
                 doc.Validate((o, e) => { if (e.Severity == XmlSeverityType.Error) throw e.Exception; });
