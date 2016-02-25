@@ -20,7 +20,7 @@ namespace Task1
 
                 if(extStats.ContainsKey(ext))
                 {
-                    extStats[ext] += 1;
+                    extStats[ext]++;
                 }
                 else
                 {
@@ -39,22 +39,25 @@ namespace Task1
 
         static void Main()
         {
-            string[] files = new string[0];
+            string[] files = null;
 
             try
             {
                 files = Directory.GetFiles(File.ReadAllText(inputFile), "*", SearchOption.AllDirectories);
             }
-            catch (FileNotFoundException)
+            catch (DirectoryNotFoundException)
             {
-                Console.WriteLine("Ошибка. Файл не найден.");
+                Console.WriteLine("Ошибка. Директория не найдена.");
             }
             catch (UnauthorizedAccessException)
             {
                 Console.WriteLine("Ошибка. Нет доступа к директории или файлу.");
             }
-            
-            GetStatsOnExtensions(files);
+
+            if (files != null)
+            {
+                GetStatsOnExtensions(files);
+            }
         }
     }
 }
