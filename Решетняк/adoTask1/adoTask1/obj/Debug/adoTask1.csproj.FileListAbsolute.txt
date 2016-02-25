@@ -1,0 +1,6 @@
+F:\С#_project\adoTask1\adoTask1\bin\Debug\adoTask1.exe.config
+F:\С#_project\adoTask1\adoTask1\bin\Debug\adoTask1.exe
+F:\С#_project\adoTask1\adoTask1\bin\Debug\adoTask1.pdb
+F:\С#_project\adoTask1\adoTask1\obj\Debug\adoTask1.csprojResolveAssemblyReference.cache
+F:\С#_project\adoTask1\adoTask1\obj\Debug\adoTask1.exe
+F:\С#_project\adoTask1\adoTask1\obj\Debug\adoTask1.pdb
