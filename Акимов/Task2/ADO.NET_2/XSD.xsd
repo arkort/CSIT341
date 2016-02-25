@@ -11,6 +11,7 @@
               <xs:element name="PAGES" type="xs:int"/>
               <xs:element name="PRICE" type="xs:decimal"/>
             </xs:sequence>
+            <xs:attribute name="Title" type="xs:string"/>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
