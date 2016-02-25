@@ -12,8 +12,8 @@ namespace Task2
         static void Main(string[] args)
         {
             var doc = new XmlDocument();
-            doc.Load(@"..\..\XMLFile1.xml");
-            doc.Schemas.Add("", @"..\..\ComicsLibrary.xsd");
+            doc.Load("XMLFile1.xml");
+            doc.Schemas.Add("", "ComicsLibrary.xsd");
             try
             {
                 doc.Validate((o, e) => { if (e.Severity == XmlSeverityType.Error) throw e.Exception; });
@@ -40,6 +40,7 @@ namespace Task2
                         Console.WriteLine(attribute.Name.Replace('_', ' ') + ": " + attribute.Value);
                     }
                 }
+                Console.WriteLine();
                 }
         }
     }

@@ -57,9 +57,9 @@ namespace Task1
         }
         static void Main(string[] args)
         {
-            using (StreamReader input = new StreamReader(@"..\..\..\input.txt"))
-            using (StreamWriter output = new StreamWriter(@"..\..\..\output.txt"))
-            using (StreamWriter error_log = new StreamWriter(@"..\..\..\error_log.txt"))
+            using (StreamReader input = new StreamReader("input.txt"))
+            using (StreamWriter output = new StreamWriter("output.txt"))
+            using (StreamWriter error_log = new StreamWriter("error_log.txt"))
             {
                 string path = input.ReadLine();
                 IEnumerable<string> files = GetFileExtensions(path, error_log);
