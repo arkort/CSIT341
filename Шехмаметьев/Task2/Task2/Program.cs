@@ -29,10 +29,17 @@ namespace Task2
                 foreach (XmlElement element in ComicsCollection)
                 {
                     Console.WriteLine($"{element.Name} {counter++}:");
-                    foreach (XmlAttribute attribute in element.Attributes)
+                foreach (XmlAttribute attribute in element.Attributes)
+                {
+                    if (attribute.Name == "Publication_date" || attribute.Name == "Release_date")
                     {
-                        Console.WriteLine(attribute.Name.Replace('_',' ') + ": " + attribute.Value);
+                        Console.WriteLine(attribute.Name.Replace('_', ' ') + ": " + DateTime.Parse(attribute.Value).ToString("dd.MM.yyyy"));
                     }
+                    else
+                    {
+                        Console.WriteLine(attribute.Name.Replace('_', ' ') + ": " + attribute.Value);
+                    }
+                }
                 }
         }
     }
