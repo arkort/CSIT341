@@ -26,9 +26,6 @@ namespace Task2
                 Console.WriteLine(e.Message);
                 return;
             }
-
-            if (validated)
-            {
                 int counter = 1;
                 foreach (XmlElement element in ComicsCollection)
                 {
@@ -38,7 +35,6 @@ namespace Task2
                         Console.WriteLine(attribute.Name.Replace('_',' ') + ": " + attribute.Value);
                     }
                 }
-            }
         }
     }
 }
