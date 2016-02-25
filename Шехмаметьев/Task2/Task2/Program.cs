@@ -13,7 +13,6 @@ namespace Task2
         {
             var doc = new XmlDocument();
             doc.Load(@"..\..\XMLFile1.xml");
-            var ComicsCollection = doc.SelectSingleNode("ComicsCollection").SelectNodes("Comics");
             doc.Schemas.Add("", @"..\..\ComicsLibrary.xsd");
             try
             {
@@ -26,7 +25,8 @@ namespace Task2
                 return;
             }
                 int counter = 1;
-                foreach (XmlElement element in ComicsCollection)
+            var ComicsCollection = doc.SelectSingleNode("ComicsCollection").SelectNodes("Comics");
+            foreach (XmlElement element in ComicsCollection)
                 {
                     Console.WriteLine($"{element.Name} {counter++}:");
                 foreach (XmlAttribute attribute in element.Attributes)
