@@ -18,7 +18,9 @@ namespace Task1
             {
                 string ext = Path.GetExtension(file);
 
-                if(extStats.ContainsKey(ext))
+                if(ext.Length == 0) continue;
+
+                if (extStats.ContainsKey(ext))
                 {
                     extStats[ext]++;
                 }
@@ -45,13 +47,9 @@ namespace Task1
             {
                 files = Directory.GetFiles(File.ReadAllText(inputFile), "*", SearchOption.AllDirectories);
             }
-            catch (DirectoryNotFoundException)
+            catch (Exception e)
             {
-                Console.WriteLine("Ошибка. Директория не найдена.");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                Console.WriteLine("Ошибка. Нет доступа к директории или файлу.");
+                Console.WriteLine(e.Message);
             }
 
             if (files != null)
