@@ -45,13 +45,9 @@ namespace Task1
             {
                 files = Directory.GetFiles(File.ReadAllText(inputFile), "*", SearchOption.AllDirectories);
             }
-            catch (DirectoryNotFoundException)
+            catch (Exception e)
             {
-                Console.WriteLine("Ошибка. Директория не найдена.");
-            }
-            catch (UnauthorizedAccessException)
-            {
-                Console.WriteLine("Ошибка. Нет доступа к директории или файлу.");
+                Console.WriteLine(e.Message);
             }
 
             if (files != null)
