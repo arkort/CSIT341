@@ -18,7 +18,9 @@ namespace Task1
             {
                 string ext = Path.GetExtension(file);
 
-                if(extStats.ContainsKey(ext))
+                if(ext.Length == 0) continue;
+
+                if (extStats.ContainsKey(ext))
                 {
                     extStats[ext]++;
                 }
