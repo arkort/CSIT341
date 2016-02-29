@@ -10,7 +10,6 @@ namespace ADO.NET_1
     class Program
     {
         static Dictionary<string, int> counter = new Dictionary<string, int>();
-        static List<Tuple<int, string>> copy = new List<Tuple<int, string>>();
         static int allFiles = 0;
 
         static void Directory(string name)
@@ -21,9 +20,9 @@ namespace ADO.NET_1
             {
                 Directory(item.FullName);
             }
-            
+
         }
-         static IEnumerable<FileInfo> Record(DirectoryInfo name)
+        static IEnumerable<FileInfo> Record(DirectoryInfo name)
         {
             var array = name.EnumerateFiles();
             foreach (var item in array)
@@ -33,32 +32,35 @@ namespace ADO.NET_1
                 else
                     counter.Add(Path.GetExtension(item.FullName), 1);
                 allFiles++;
-                
+
             }
             return array;
         }
         static void Write()
         {
-            foreach (var item in counter)
-            {
-                copy.Add(Tuple.Create(item.Value, item.Key));
-            }
-            copy.Sort();
-            copy.Reverse();
+         
+           
             using (StreamWriter write = new StreamWriter("output.txt"))
             {
-                foreach (var item in copy)
+                foreach (var item in counter.OrderByDescending(pair => pair.Value))
                 {
-                    if (!String.IsNullOrEmpty(item.Item2))
-                        write.WriteLine("<{0}>#<{1}>#<{2:F4}%>", item.Item2.Remove(0,1), item.Item1, (double)item.Item1 / allFiles);
+
+                    if (!String.IsNullOrEmpty(item.Key))
+                        write.WriteLine("<{0}>#<{1}>#<{2:F4}>", item.Key.Remove(0, 1), item.Key, (double)item.Value / allFiles);
                 }
 
             }
         }
         static void Main()
         {
-            Directory(@"C:\Users\Артем\Documents\Visual Studio 2015\Projects");
+            using (StreamReader read = new StreamReader("input.txt"))
+            {
+                string key = read.ReadLine();
+                Directory(key);
+            }
             Write();
+
+
         }
     }
 }
