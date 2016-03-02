@@ -40,7 +40,6 @@
             // 
             // chooseDrawFileDialog
             // 
-            this.chooseDrawFileDialog.FileName = "openFileDialog1";
             this.chooseDrawFileDialog.Filter = "Saved drawings|*.dat|XML files|*.xml";
             // 
             // menuStrip1

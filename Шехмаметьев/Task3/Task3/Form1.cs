@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Xml.Schema;
+using System.Drawing;
 
 namespace Task3
 {
@@ -17,7 +13,6 @@ namespace Task3
     {
         Canvas drawingCanvas;
         BinaryFormatter fileSaver;
-        XmlDocument doc;
         public drawingForm()
         {
             InitializeComponent();
@@ -32,13 +27,24 @@ namespace Task3
         private void openXmlFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             chooseDrawFileDialog.Filter = "Xml files|*.xml";
+            XmlDocument doc = new XmlDocument();
             if (chooseDrawFileDialog.ShowDialog() == DialogResult.OK)
             {
-                doc = new XmlDocument();
                 doc.Load(chooseDrawFileDialog.FileName);
                 doc.Schemas.Add(null, "ValidateFigures.xsd");
+                try
+                {
+                    doc.Validate((o, a) => { if (a.Severity == XmlSeverityType.Error) throw a.Exception; });
+                }
+                catch (XmlSchemaValidationException a)
+                {
+                    MessageBox.Show("Error in XMLFile:\n" + a.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 drawingCanvas = new Canvas(doc);
-                drawingCanvas.Draw(this.CreateGraphics());
+                Graphics g = this.CreateGraphics();
+                g.Clear(this.BackColor);
+                drawingCanvas.Draw(g);
             }
             else
             {
@@ -68,8 +74,27 @@ namespace Task3
             {
                 using (FileStream loadFileStream = new FileStream(chooseDrawFileDialog.FileName, FileMode.Open))
                 {
-                    drawingCanvas = (Canvas)fileSaver.Deserialize(loadFileStream);
-                    drawingCanvas.Draw(this.CreateGraphics());
+                    try
+                    {
+                        drawingCanvas = (Canvas)fileSaver.Deserialize(loadFileStream);
+                    }
+                    catch (Exception exc)
+                    {
+                        if (exc is SerializationException)
+                        {
+                            MessageBox.Show("Error: the safe file is uncompatible with the application", 
+                                null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: " + exc.Message,
+                                null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        return;
+                    }
+                    Graphics g = this.CreateGraphics();
+                    g.Clear(this.BackColor);
+                    drawingCanvas.Draw(g);
                 }
             }
             else

@@ -31,18 +31,6 @@ namespace Task3
         public Canvas(XmlDocument doc)
         {
             this.figures = new List<IFigure>();
-            #region XmlValidation
-            try
-            {
-                doc.Validate((o, e) => { if (e.Severity == XmlSeverityType.Error) throw e.Exception; });
-            }
-            catch (XmlSchemaValidationException e)
-            {
-                Console.Write("Error in XMLFile: ");
-                Console.WriteLine(e.Message);
-                return;
-            }
-            #endregion
             var children = doc.SelectSingleNode("Figures").ChildNodes;
             
             foreach(XmlElement figure in children)
