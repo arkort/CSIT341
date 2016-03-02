@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ComicsCollection
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="ComicsLibrary.xsd" >
-  <Comics ID="1" Title="Batman" Issue_number="1" Publication_date="1947-02-26" Number_of_pages="30" Summary=" " Publisher="DC Comics" Rating="10" Preview_reference=" " Release_date="2016-02-24"></Comics>
-  <Comics ID="2" Title="Batman" Issue_number="1" Publication_date="1947-02-26" Number_of_pages="30" Summary=" " Publisher="DC Comics" Rating="10" Preview_reference=" " Release_date="2016-02-24"></Comics>
-</ComicsCollection>

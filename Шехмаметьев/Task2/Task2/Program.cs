@@ -13,7 +13,7 @@ namespace Task2
         {
             var doc = new XmlDocument();
             doc.Load("XMLFile1.xml");
-            doc.Schemas.Add("", "ComicsLibrary.xsd");
+            doc.Schemas.Add(null, "ComicsLibrary.xsd");
             try
             {
                 doc.Validate((o, e) => { if (e.Severity == XmlSeverityType.Error) throw e.Exception; });

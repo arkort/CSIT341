@@ -5,8 +5,8 @@ namespace Task2
 {
     class Program
     {
-        static string xmlFile = "../../db.xml";
-        static string xsdFile = "../../db.xsd";
+        static string xmlFile = "db.xml";
+        static string xsdFile = "db.xsd";
 
         static bool isValidXml(XmlDocument xmlDoc)
         {

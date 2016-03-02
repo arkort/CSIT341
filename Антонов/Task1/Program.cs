@@ -7,8 +7,8 @@ namespace Task1
 {
     class Program
     {
-        static string inputFile = "../../input.txt";
-        static string outputFile = "../../output.txt";
+        static string inputFile = "input.txt";
+        static string outputFile = "output.txt";
 
         static void GetStatsOnExtensions(string[] files)
         {
@@ -18,9 +18,11 @@ namespace Task1
             {
                 string ext = Path.GetExtension(file);
 
-                if(extStats.ContainsKey(ext))
+                if(ext.Length == 0) continue;
+
+                if (extStats.ContainsKey(ext))
                 {
-                    extStats[ext] += 1;
+                    extStats[ext]++;
                 }
                 else
                 {
@@ -39,22 +41,21 @@ namespace Task1
 
         static void Main()
         {
-            string[] files = new string[0];
+            string[] files = null;
 
             try
             {
                 files = Directory.GetFiles(File.ReadAllText(inputFile), "*", SearchOption.AllDirectories);
             }
-            catch (FileNotFoundException)
+            catch (Exception e)
             {
-                Console.WriteLine("Ошибка. Файл не найден.");
+                Console.WriteLine(e.Message);
             }
-            catch (UnauthorizedAccessException)
+
+            if (files != null)
             {
-                Console.WriteLine("Ошибка. Нет доступа к директории или файлу.");
+                GetStatsOnExtensions(files);
             }
-            
-            GetStatsOnExtensions(files);
         }
     }
 }
