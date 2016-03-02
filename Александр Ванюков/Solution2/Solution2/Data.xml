@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<library>
+<book title="Moby-Dick">
+      <author>Herman Melville</author>
+      <binding>hardcover</binding>
+      <pages>635</pages>
+      <price>$9.95</price>
+</book>
+<book title="Redburn">
+      <author>Herman Melville</author>
+      <binding>hardcover</binding>
+      <pages>340</pages>
+      <price>$19.95</price>
+</book>
+<book title="Typee">
+      <author>Herman Melville</author>
+      <binding>hardcover</binding>
+      <pages>829</pages>
+      <price>$29.95</price>
+</book>
+</library>
