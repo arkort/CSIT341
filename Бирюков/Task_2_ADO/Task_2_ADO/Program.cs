@@ -8,42 +8,39 @@ class XmlSchemaSetExample
 
     static void Main()
     {
-        XmlReaderSettings footballersSettings = new XmlReaderSettings();
-        footballersSettings.Schemas.Add("", @"c:\users\alexeyb\documents\csit341\бирюков\task_2_ado\task_2_ado\teplatefootballers.xsd");
-        footballersSettings.ValidationEventHandler += new ValidationEventHandler(footballersSettingsValidationEventHandler);
 
-        footballersSettings.ValidationType = ValidationType.Schema;
 
-        List<string> list = new List<string>();
-
-        using (XmlReader f = XmlReader.Create("footballers.xml", footballersSettings))
+        try
         {
-            try
-            {
-                while (f.Read())
-                {
-                    if (!string.IsNullOrWhiteSpace(f.Value) || !string.IsNullOrEmpty(f.Name) && !list.Contains(f.Name))
-                        list.Add(string.Format("Name = {0}, Value = {1}",f.Name, f.Value));
-                }
-            }
 
-            catch (Exception e)
+            var document = new XmlDocument();
+            document.Load("footballers.xml");
+
+            var a = document.SelectNodes("group");
+            document.Schemas.Add("", @"c:\users\alexeyb\documents\csit341\бирюков\task_2_ado\task_2_ado\teplatefootballers.xsd");
+            document.Validate(footballersSettingsValidationEventHandler);
+
+            foreach (XmlNode footballer in a[0].ChildNodes)
             {
-                Console.WriteLine(e.Message);
-                list.Clear();
-            }
-            for (int i = 1; i < list.Count; i++)
-            {
-                Console.WriteLine(list[i]);
-                //if (i % 3 == 0 && i != 0)
-                //    Console.WriteLine(new string('-', 25));
+                Console.WriteLine(footballer.Name);
+
+                foreach (XmlNode characteristics in footballer.ChildNodes)
+                {
+                    Console.WriteLine(characteristics.Name + " " + characteristics.InnerText);
+                }
+                Console.WriteLine();
             }
         }
-        
-        
-    }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
 
-    static void footballersSettingsValidationEventHandler(object sender, ValidationEventArgs e)
+
+
+        }
+
+        static void footballersSettingsValidationEventHandler(object sender, ValidationEventArgs e)
     {
        
 
