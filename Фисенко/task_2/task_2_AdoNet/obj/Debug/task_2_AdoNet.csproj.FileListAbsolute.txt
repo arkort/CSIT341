@@ -1,0 +1,12 @@
+c:\users\ольга\documents\visual studio 2013\Projects\task_2_AdoNet\task_2_AdoNet\bin\Debug\task_2_AdoNet.exe.config
+c:\users\ольга\documents\visual studio 2013\Projects\task_2_AdoNet\task_2_AdoNet\bin\Debug\task_2_AdoNet.exe
+c:\users\ольга\documents\visual studio 2013\Projects\task_2_AdoNet\task_2_AdoNet\bin\Debug\task_2_AdoNet.pdb
+c:\users\ольга\documents\visual studio 2013\Projects\task_2_AdoNet\task_2_AdoNet\obj\Debug\task_2_AdoNet.csprojResolveAssemblyReference.cache
+c:\users\ольга\documents\visual studio 2013\Projects\task_2_AdoNet\task_2_AdoNet\obj\Debug\task_2_AdoNet.exe
+c:\users\ольга\documents\visual studio 2013\Projects\task_2_AdoNet\task_2_AdoNet\obj\Debug\task_2_AdoNet.pdb
+C:\Users\fisenkoos\Desktop\task_2\task_2_AdoNet\bin\Debug\task_2_AdoNet.exe.config
+C:\Users\fisenkoos\Desktop\task_2\task_2_AdoNet\obj\Debug\task_2_AdoNet.exe
+C:\Users\fisenkoos\Desktop\task_2\task_2_AdoNet\obj\Debug\task_2_AdoNet.pdb
+C:\Users\fisenkoos\Desktop\task_2\task_2_AdoNet\bin\Debug\task_2_AdoNet.exe
+C:\Users\fisenkoos\Desktop\task_2\task_2_AdoNet\bin\Debug\task_2_AdoNet.pdb
+C:\Users\fisenkoos\Desktop\task_2\task_2_AdoNet\obj\Debug\task_2_AdoNet.csprojResolveAssemblyReference.cache

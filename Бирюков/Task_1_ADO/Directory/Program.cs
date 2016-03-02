@@ -46,7 +46,7 @@ namespace DirectoryName
             {
                 foreach (var q in countFilesExtensions)
                 {
-                    //if (!string.IsNullOrEmpty(q.Key))
+                    if (!string.IsNullOrEmpty(q.Key))
                         write.WriteLine(q.Key.Remove(0, 1) + "#" + q.Value.ToString() + "#" + 100 * (double)q.Value / countAllFiles);
                 }
             }
