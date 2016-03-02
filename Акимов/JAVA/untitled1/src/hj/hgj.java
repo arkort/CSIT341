@@ -21,6 +21,14 @@ public class hgj {
     }
 
         public static void bubbleSort(int[] arr) {
+            System.out.println("Before:");
+
+
+            for(int i = 0; i < arr.length  ; i++)
+            {
+                System.out.print(arr[i] + "  ");
+            }
+
         for (int i = 0; i < arr.length; i++)
         {
             for (int j = 0; j < arr.length - i - 1; j++)
@@ -33,7 +41,10 @@ public class hgj {
                 }
             }
         }
-            for(int i = 0; i < arr.length  ; i++) {
+            System.out.println();
+            System.out.println("After:");
+            for(int i = 0; i < arr.length  ; i++)
+            {
                 System.out.print(arr[i] + "  ");
     }
 
