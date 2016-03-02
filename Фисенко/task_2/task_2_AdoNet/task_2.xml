@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Customers>
+  <Customer name="100">
+    <FirstName>Павел</FirstName>
+    <LastName>Иванов</LastName>
+    <DateOfBirth>21.03.94</DateOfBirth>
+  </Customer>
+  <Customer name="101">
+    <FirstName>Мария</FirstName>
+    <LastName>Васильева</LastName>
+    <DateOfBirth>15.12.67</DateOfBirth>
+  </Customer>
+</Customers>
+
