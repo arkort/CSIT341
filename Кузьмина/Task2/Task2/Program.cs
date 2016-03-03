@@ -6,20 +6,26 @@ namespace Task2
 {
     class Program
     {
+        static string xmlFile = "XML.xml";
+        static string xsdFile = "XSD.xsd";
         static void Main()
         {
-            string xmlFile = "XML.xml";
-            string xsdFile = "XSD.xsd";
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFile);
 
+            
+
+            if (IsValidXml(doc)) PrintXmlDoc(xmlFile);
+        }
+
+        static bool IsValidXml(XmlDocument doc)
+        {
             bool flag = true;
             doc.Schemas.Add(null, xsdFile);
             doc.Validate((o, e) => { Console.WriteLine(e.Message); flag = false; });
-
-            if (flag) PrintXmlDoc(xmlFile);
+            return flag;
         }
-
+        
         static void PrintXmlDoc(string xmlFile)
         {
             string fileName = xmlFile;
