@@ -3,7 +3,7 @@
   <Customer name="100">
     <FirstName>Павел</FirstName>
     <LastName>Иванов</LastName>
-    <DateOfBirth>21.03.94</DateOfBirth>    
+    <DateOfBirth>21.03.94</DateOfBirth>
   </Customer>
   <Customer name="101">
     <FirstName>Мария</FirstName>
