@@ -1,13 +1,1 @@
-cs - 23,2558
-config - 13,9535
-exe - 13,9535
-pdb - 9,3023
-cache - 9,3023
-docx - 4,6512
-sln - 4,6512
-suo - 4,6512
-csproj - 4,6512
-manifest - 4,6512
-txt - 4,6512
-doc - 1,1628
-png - 1,1628
+jpg - 100
