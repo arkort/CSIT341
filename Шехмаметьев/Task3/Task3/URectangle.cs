@@ -24,9 +24,7 @@ namespace Task3
             }
             set
             {
-                if(value <= 0)
-                    throw new ArgumentOutOfRangeException("Height of the rectangle must be greater than zero");
-                else if(value > Screen.PrimaryScreen.Bounds.Height)
+                if(value > Screen.PrimaryScreen.Bounds.Height)
                     throw new ArgumentOutOfRangeException("Height of the rectangle must be" + 
                                                             "lesser than the screen's height");
                 else
@@ -41,9 +39,7 @@ namespace Task3
             }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Width of the rectangle must be greater than zero");
-                else if (value > Screen.PrimaryScreen.Bounds.Width)
+                if (value > Screen.PrimaryScreen.Bounds.Width)
                     throw new ArgumentOutOfRangeException("Width of the rectangle must " +
                                                             "be lesser than the screen's width");
                 else
@@ -59,10 +55,7 @@ namespace Task3
             }
             set
             {
-                if(value.X < 0 || value.Y < 0)
-                    throw new ArgumentOutOfRangeException("Coordinates of the upper left corner of the rectangle " +
-                                                            "must be positive");
-                else if(value.X + width > Screen.PrimaryScreen.Bounds.Width || 
+                if(value.X + width > Screen.PrimaryScreen.Bounds.Width || 
                         value.Y + height > Screen.PrimaryScreen.Bounds.Height)
                     throw new ArgumentOutOfRangeException("The rectangle must be within the screen boundaries. " + 
                                                            "Please change the coordinates of the upper left corner or " +

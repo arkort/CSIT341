@@ -23,9 +23,7 @@ namespace Task3
             }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Radius of the circle must be greater than zero");
-                else if (value > Screen.PrimaryScreen.Bounds.Width || value > Screen.PrimaryScreen.Bounds.Height)
+                if (value > Screen.PrimaryScreen.Bounds.Width || value > Screen.PrimaryScreen.Bounds.Height)
                     throw new ArgumentOutOfRangeException("Radius of the circle can't be greater than screen's boundaries");
                 else
                     radius = value;

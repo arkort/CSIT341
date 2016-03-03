@@ -39,8 +39,8 @@
     <xs:sequence>
       <xs:element name="upperLeft" type="Point"></xs:element>
     </xs:sequence>
-    <xs:attribute name="height" type="positiveFloat"></xs:attribute>
-    <xs:attribute name="width" type="positiveFloat"></xs:attribute>
+    <xs:attribute name="height" type="positiveFloatWithoutZero"></xs:attribute>
+    <xs:attribute name="width" type="positiveFloatWithoutZero"></xs:attribute>
     <xs:attribute name="color" type="color"></xs:attribute>
   </xs:complexType>
 
