@@ -55,6 +55,10 @@ namespace Task3
                     {
                         MessageBox.Show("Error in XML file: " + exc.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    else if (exc is ArgumentException)
+                    {
+                        MessageBox.Show("Error in XML file: " + exc.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     else
                     {
                         MessageBox.Show("Error: " + exc.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);

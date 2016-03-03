@@ -79,6 +79,14 @@ namespace Task3
             this.LowerLeft = lowerLeft;
             this.Top = top;
             this.LowerRight = lowerRight;
+            if(lowerLeft == top || top == lowerRight || lowerLeft == lowerRight)
+            {
+                throw new ArgumentException("Points of the triangle can't be at the same coordinates");
+            }
+            else if ((lowerLeft.X == top.X && top.X == lowerRight.Y) || lowerLeft.Y == top.Y && top.Y == lowerRight.Y)
+            {
+                throw new ArgumentException("All three points of the triangle can't be on the same line");
+            }
             this.drawingColor = color;
         }
 
