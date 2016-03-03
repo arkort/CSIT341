@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Figures  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="ValidateFigures.xsd" >
+
+  <Rectangle color="0xFF0000FF" height="200" width="200">
+    <upperLeft X="500" Y="500"/>
+  </Rectangle>
+
+  <Triangle color ="0xFFFF0000">
+    <lowerLeft X="500" Y="500"/>
+    <top X="600" Y="300"/>
+    <lowerRight X="700" Y="500"/>
+  </Triangle>
+
+  <Circle color="0xFFFFFF00" radius="40">
+    <center X="600" Y="425"/>
+  </Circle>
+
+  <Line color="0xFFFFFFFF" penWidth="5">
+    <start X="560" Y="425"/>
+    <end X="640" Y="425"/>
+  </Line>
+
+  <Line color="0xFFFFFFFF" penWidth="5">
+    <start X="600" Y="465"/>
+    <end X="600" Y="385"/>
+  </Line>
+
+  <Rectangle color="0xFFA0522D" height="100" width="50">
+    <upperLeft X="600" Y="600"/>
+  </Rectangle>
+
+  <Circle color="0xFFFFFFFF" radius="5">
+    <center X="610" Y="650"/>
+  </Circle>
+
+  <Rectangle color="0xFFA0522D" height="100" width="50">
+    <upperLeft X="550" Y="600"/>
+  </Rectangle>
+
+  <Circle color="0xFFFFFFFF" radius="5">
+    <center X="590" Y="650"/>
+  </Circle>
+
+  <Line color="0xFF000000" penWidth="2">
+    <start X="600" Y="600"/>
+    <end X="600" Y="700"/>
+  </Line>
+  
+</Figures>
