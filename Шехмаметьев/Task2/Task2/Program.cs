@@ -28,7 +28,7 @@ namespace Task2
             var ComicsCollection = doc.SelectSingleNode("ComicsCollection").SelectNodes("Comics");
             foreach (XmlElement element in ComicsCollection)
                 {
-                    Console.WriteLine($"{element.Name} {counter++}:");
+                    Console.WriteLine("{0} {1}", element.Name, counter++);
                 foreach (XmlAttribute attribute in element.Attributes)
                 {
                     if (attribute.Name == "Publication_date" || attribute.Name == "Release_date")
