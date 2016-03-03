@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Xml;
+using System.Linq;
 using System.Xml.Schema;
 using System.Xml.Linq;
 
@@ -40,10 +42,6 @@ public class Sample
         settings.Schemas.Add(compiledSchema);
         settings.ValidationEventHandler += new ValidationEventHandler(ValidationCallBack);
         settings.ValidationType = ValidationType.Schema;
-
-        XmlReader vreader = XmlReader.Create(filename, settings);
-        while (vreader.Read()) { }        
-        vreader.Close();
 
         OK = false;        
     }
