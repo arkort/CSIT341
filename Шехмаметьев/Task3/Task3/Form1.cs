@@ -27,6 +27,7 @@ namespace Task3
         private void openXmlFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             chooseDrawFileDialog.Filter = "Xml files|*.xml";
+            chooseDrawFileDialog.InitialDirectory = Path.GetFullPath(@"..\..\");
             XmlDocument doc = new XmlDocument();
             if (chooseDrawFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -54,6 +55,7 @@ namespace Task3
 
         private void saveToBinaryToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            saveBinary.InitialDirectory = Path.GetFullPath(@"..\..\Save files");
             if (saveBinary.ShowDialog() == DialogResult.OK)
             {
                 using (FileStream saveFileStream = new FileStream(saveBinary.FileName, FileMode.Create))
@@ -70,6 +72,7 @@ namespace Task3
         private void loadFromBinaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             chooseDrawFileDialog.Filter = "Binary files|*.dat";
+            chooseDrawFileDialog.InitialDirectory = Path.GetFullPath(@"..\..\Save files");
             if (chooseDrawFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (FileStream loadFileStream = new FileStream(chooseDrawFileDialog.FileName, FileMode.Open))
