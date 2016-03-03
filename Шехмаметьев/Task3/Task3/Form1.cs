@@ -21,7 +21,10 @@ namespace Task3
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            drawingCanvas?.Draw(e.Graphics);
+            if (drawingCanvas != null)
+            {
+                drawingCanvas.Draw(e.Graphics);
+            }
         }
 
         private void openXmlFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,7 +45,22 @@ namespace Task3
                     MessageBox.Show("Error in XMLFile:\n" + a.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                drawingCanvas = new Canvas(doc);
+                try
+                {
+                    drawingCanvas = new Canvas(doc);
+                }
+                catch(Exception exc)
+                {
+                    if (exc is ArgumentOutOfRangeException)
+                    {
+                        MessageBox.Show("Error in XML file: " + exc.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: " + exc.Message, null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    return;
+                }
                 Graphics g = this.CreateGraphics();
                 g.Clear(this.BackColor);
                 drawingCanvas.Draw(g);
