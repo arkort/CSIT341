@@ -86,6 +86,7 @@
             // saveBinary
             // 
             this.saveBinary.Filter = "Binary files|*.dat";
+            this.saveBinary.InitialDirectory = "..\\..\\..\\Save files";
             // 
             // drawingForm
             // 
