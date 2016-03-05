@@ -30,11 +30,9 @@ namespace FirstTaskDB
             else
             {                
                 outFile.Write("this path is incorrect");
-            }
+            }            
 
-            int countOfFiles = allExtensions.Count;
-
-            for(int i = 0; i < countOfFiles; i++)
+            for(int i = 0; i < allExtensions.Count; i++)
             {
                 allExtensions[i] = allExtensions[i].Remove(0, 1);
             }          
@@ -49,10 +47,9 @@ namespace FirstTaskDB
 
             foreach (var el in sortedGroups)
             {                                
-                outFile.WriteLine("{0}#{1}#{2:0.00}",el.Key,el.Count(), (float)el.Count() * 100 / countOfFiles);         
-            }            
-                            
-            
+                outFile.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);         
+            }          
+              
             outFile.Close();
         }        
     }
