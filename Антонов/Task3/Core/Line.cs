@@ -29,7 +29,7 @@ namespace Task3
             }
             catch (Exception)
             {
-                color = (Color)ColorConverter.ConvertFromString("black");
+                color = Colors.Black;
             }
 
             var line = new System.Windows.Shapes.Line();

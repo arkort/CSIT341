@@ -28,7 +28,7 @@ namespace Task3
             }
             catch (Exception)
             {
-                color = (Color)ColorConverter.ConvertFromString("black");
+                color = Colors.Black;
             }
             
             var circle = new System.Windows.Shapes.Ellipse();

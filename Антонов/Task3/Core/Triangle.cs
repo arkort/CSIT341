@@ -32,7 +32,7 @@ namespace Task3
             }
             catch (Exception)
             {
-                color = (Color)ColorConverter.ConvertFromString("black");
+                color = Colors.Black;
             }
 
             var triangle = new System.Windows.Shapes.Polygon();
