@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Users>
+  <User>
+    <Name>John Connor</Name>
+    <Company>SSU</Company>
+    <Age>33</Age>
+    <Salary>25000</Salary>
+  </User>
+  <User>
+    <Name>Jay Noslon</Name>
+    <Company>BKE</Company>
+    <Age>40</Age>
+    <Salary>42000.5</Salary>
+  </User>
+</Users>
