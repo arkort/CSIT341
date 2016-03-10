@@ -1,0 +1,25 @@
+c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.exe
+c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.pdb
+c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.exe
+c:\users\akimovaa\documents\visual studio 2010\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.pdb
+C:\Users\Артем\Documents\Visual Studio 2015\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.exe
+C:\Users\Артем\Documents\Visual Studio 2015\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.pdb
+C:\Users\Артем\Documents\Visual Studio 2015\Projects\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.exe
+C:\Users\Артем\Documents\Visual Studio 2015\Projects\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.pdb
+C:\Users\Артем\Documents\Visual Studio 2015\Projects\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.csprojResolveAssemblyReference.cache
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.exe
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.pdb
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.exe
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.pdb
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\XMLFile1.xml
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\XSD.xsd
+C:\Users\akimovaa\Desktop\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.csprojResolveAssemblyReference.cache
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.exe
+C:\Users\Артем\Documents\Visual Studio 2015\CSIT341\Акимов\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.pdb
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.exe
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.pdb
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\XMLFile1.xml
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\XSD.xsd
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.exe
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\bin\Debug\ADO.NET_2.pdb
+C:\Users\akimovaa\Documents\csit341\Акимов\Task2\ADO.NET_2\ADO.NET_2\obj\x86\Debug\ADO.NET_2.csprojResolveAssemblyReference.cache

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<legoStore>
+  <legoItem>
+	  <MARKING>10236</MARKING>
+	  <PIECES>1990</PIECES>
+	  <PRICE>20000</PRICE>
+	  <AGE>12+</AGE>
+  </legoItem>
+
+  <legoItem>
+	  <MARKING>6065</MARKING>
+	  <PIECES>395</PIECES>
+	  <PRICE>3299</PRICE>
+	  <AGE>7-12</AGE>
+  </legoItem>
+</legoStore>

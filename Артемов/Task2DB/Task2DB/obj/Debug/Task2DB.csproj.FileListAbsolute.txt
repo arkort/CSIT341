@@ -1,0 +1,6 @@
+C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\bin\Debug\Task2DB.exe.config
+C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\bin\Debug\Task2DB.exe
+C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\bin\Debug\Task2DB.pdb
+C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\obj\Debug\Task2DB.csprojResolveAssemblyReference.cache
+C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\obj\Debug\Task2DB.exe
+C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\obj\Debug\Task2DB.pdb

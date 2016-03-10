@@ -1,0 +1,8 @@
+E:\УНИВЕР\Ado.Net\Task1\Task1\bin\Debug\Task1.exe.config
+E:\УНИВЕР\Ado.Net\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+E:\УНИВЕР\Ado.Net\Task1\Task1\bin\Debug\Task1.exe
+E:\УНИВЕР\Ado.Net\Task1\Task1\bin\Debug\Task1.pdb
+E:\УНИВЕР\Ado.Net\Task1\Task1\obj\Debug\Task1.exe
+E:\УНИВЕР\Ado.Net\Task1\Task1\obj\Debug\Task1.pdb
+E:\УНИВЕР\Ado.Net\Task1\Task1\bin\Debug\input.txt
+E:\УНИВЕР\Ado.Net\Task1\Task1\bin\Debug\output.txt
