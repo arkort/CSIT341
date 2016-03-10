@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<figures xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <figure xsi:type="circle">
+    <Color>Blue</Color>
+    <X>550</X>
+    <Y>150</Y>
+    <Radius>150</Radius>
+  </figure>
+  <figure xsi:type="triangle">
+    <Color>BlueViolet</Color>
+    <X1>500</X1>
+    <Y1>100</Y1>
+    <X2>550</X2>
+    <Y2>300</Y2>
+    <X3>300</X3>
+    <Y3>300</Y3>
+  </figure>
+  <figure xsi:type="rectangle">
+    <Color>DarkGreen</Color>
+    <X>100</X>
+    <Y>400</Y>
+    <Width>600</Width>
+    <Height>100</Height>
+  </figure>
+  <figure xsi:type="rectangle">
+    <Color>Red</Color>
+    <X>100</X>
+    <Y>50</Y>
+    <Width>100</Width>
+    <Height>400</Height>
+  </figure>
+  <figure xsi:type="line">
+    <Color>Black</Color>
+    <X1>100</X1>
+    <Y1>125</Y1>
+    <X2>350</X2>
+    <Y2>200</Y2>
+  </figure>
+  <figure xsi:type="line">
+    <Color>Navy</Color>
+    <X1>250</X1>
+    <Y1>100</Y1>
+    <X2>360</X2>
+    <Y2>550</Y2>
+  </figure>
+</figures>

@@ -4,6 +4,18 @@
   <AUTHOR>Herman Melville</AUTHOR>
   <BINDING>hardcover</BINDING>
   <PAGES>724</PAGES>
-  <PRICE>9.95</PRICE>
+  <PRICE>$9.95</PRICE>
 </BOOK>
+  <BOOK Title="sd">
+    <AUTHOR>Herman Melville</AUTHOR>
+    <BINDING>hardcover</BINDING>
+    <PAGES>724</PAGES>
+    <PRICE>$9.95</PRICE>
+  </BOOK>
+  <BOOK Title="sd">
+    <AUTHOR>Herman Melville</AUTHOR>
+    <BINDING>hardcover</BINDING>
+    <PAGES>724</PAGES>
+    <PRICE>$9.95</PRICE>
+  </BOOK>
 </Bibl>

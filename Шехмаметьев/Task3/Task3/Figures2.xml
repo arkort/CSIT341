@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Figures
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="ValidateFigures.xsd" >
+  
+    <Rectangle color="0xFFFF0000" height="100" width="100">
+      <upperLeft X="100" Y="100"/>
+    </Rectangle>
+
+  <Circle color="0xFFFFFF00" radius="50">
+    <center X="150" Y="150"/>
+  </Circle>
+
+  <Triangle color="0xFF000000">
+    <lowerLeft X="110" Y="180"/>
+    <top X="150" Y="100"/>
+    <lowerRight X="190" Y="180"/>
+  </Triangle>
+</Figures>

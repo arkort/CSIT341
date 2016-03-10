@@ -15,38 +15,39 @@ namespace DirectoryName
         static void Direct(string nameOfDirectory)
         {
             DirectoryInfo dir = new DirectoryInfo(nameOfDirectory);
-            Ret(dir);
+            CountExtensions(dir);
             foreach (var dires in dir.EnumerateDirectories())
             {
                 Direct(dires.FullName);
             }
         }
 
-        static IEnumerable<FileInfo> Ret(DirectoryInfo d)
+        static IEnumerable<FileInfo> CountExtensions(DirectoryInfo d)
         {
-            var a = d.EnumerateFiles();
-            foreach (var q in a)
+            var filesCollection = d.EnumerateFiles();
+            foreach (var file in filesCollection)
             {
-                if (countFilesExtensions.ContainsKey(Path.GetExtension(q.FullName)))
-                    countFilesExtensions[Path.GetExtension(q.FullName)]++;
+                if (countFilesExtensions.ContainsKey(Path.GetExtension(file.FullName)))
+                    countFilesExtensions[Path.GetExtension(file.FullName)]++;
                 else
-                    countFilesExtensions.Add(Path.GetExtension(q.FullName), 1);
+                    countFilesExtensions.Add(Path.GetExtension(file.FullName), 1);
                 countAllFiles++;
             }
-            return a;            
+            return filesCollection;            
         }
 
         
 
         static void WriteDictionary()
         {
-            countFilesExtensions = countFilesExtensions.OrderBy(pair => -pair.Value)
+            countFilesExtensions = countFilesExtensions.OrderByDescending(pair => pair.Value)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
             using (StreamWriter write = new StreamWriter("output.txt"))
             {
                 foreach (var q in countFilesExtensions)
                 {
-                    write.WriteLine(q.Key.Remove(0, 1) + "#" + q.Value.ToString() + "#" + 100 * (double)q.Value / countAllFiles);
+                    if (!string.IsNullOrEmpty(q.Key))
+                        write.WriteLine(q.Key.Remove(0, 1) + "#" + q.Value.ToString() + "#" + 100 * (double)q.Value / countAllFiles);
                 }
             }
 

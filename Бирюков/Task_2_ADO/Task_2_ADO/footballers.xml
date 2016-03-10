@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<group>
+  <FOOTBALLER>
+    <NAME>Rustam SH</NAME>
+    <CLUB>qqq</CLUB>
+    <NUMBER>15</NUMBER>
+  </FOOTBALLER>
+
+  <FOOTBALLER>
+    <NAME>Sasha V</NAME>
+    <CLUB>ppp</CLUB>
+    <NUMBER>-1</NUMBER>
+  </FOOTBALLER>
+
+  <FOOTBALLER>
+    <NAME>Artem Ak</NAME>
+    <CLUB>qqqvvv</CLUB>
+    <NUMBER>-100</NUMBER>
+  </FOOTBALLER>
+
+  <FOOTBALLER>
+    <NAME>Roma S</NAME>
+    <CLUB>asdf</CLUB>
+    <NUMBER>45</NUMBER>
+  </FOOTBALLER>
+
+  <FOOTBALLER>
+    <NAME>Egor Ba</NAME>
+    <CLUB>zxc</CLUB>
+    <NUMBER>1</NUMBER>
+  </FOOTBALLER>
+
+  <FOOTBALLER>
+    <NAME>Serega</NAME>
+    <CLUB>mnb</CLUB>
+    <NUMBER>25</NUMBER>
+  </FOOTBALLER>
+
+  <FOOTBALLER>
+    <NAME>Vitya I</NAME>
+    <CLUB>gbh</CLUB>
+    <NUMBER>33</NUMBER>
+  </FOOTBALLER>
+</group>
