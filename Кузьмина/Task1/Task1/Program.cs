@@ -14,7 +14,6 @@ namespace Task1
             Dictionary<string, int> extensions = new Dictionary<string, int>();
             string path;
             char[] dot = {'.'};
-            int count = 0;
 
             using (StreamReader infile = new StreamReader("input.txt"))
             {
@@ -25,10 +24,9 @@ namespace Task1
             string temp;
             foreach (var file in files)
             {
-                count++;
                 temp = Path.GetExtension(file).Trim(dot);
 
-                if (extensions.Count == 0 || !extensions.Keys.Contains(temp))
+                if (!extensions.Keys.Contains(temp))
                 {
                     extensions.Add(temp, 1);
                 }
@@ -38,11 +36,11 @@ namespace Task1
                 }
             }
 
-            using (StreamWriter outfile = new StreamWriter("output.txt"))
+            using (StreamWriter outfile = new StreamWriter(@"E:\УНИВЕР\Ado.Net\Task1\Task1\output.txt"))
             {
                 foreach (var item in extensions.OrderByDescending(element => element.Value))
                 {
-                    outfile.WriteLine("{0} - {1:0.####}", item.Key, 100 * (double)item.Value / count);
+                    outfile.WriteLine("{0} - {1:0.####}", item.Key, 100 * (double)item.Value / files.Count());
                 }
             }
         }

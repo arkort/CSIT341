@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="db" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="catalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="cd" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="title" />
+              <xs:element type="xs:string" name="artist" />
+              <xs:element type="xs:string" name="country" />
+              <xs:element type="xs:string" name="company" />
+              <xs:element type="xs:decimal" name="price" />
+              <xs:element type="xs:integer" name="year" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

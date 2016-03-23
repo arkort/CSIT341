@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ValidateFigures"
+    elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:simpleType name="positiveFloat">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0"></xs:minInclusive>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="positiveFloatWithoutZero">
+    <xs:restriction base="xs:float">
+      <xs:minExclusive value="0"></xs:minExclusive>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="color">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="0x[\dA-F]{6}([\dA-F][\dA-F])?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="Point">
+    <xs:attribute name="X" type="positiveFloat"></xs:attribute>
+    <xs:attribute name="Y" type="positiveFloat"></xs:attribute>
+  </xs:complexType>
+  
+  <xs:complexType name="Line">
+    <xs:sequence>
+      <xs:element name="start" type="Point"></xs:element>
+      <xs:element name="end" type="Point"></xs:element>
+    </xs:sequence>
+    <xs:attribute name="color" type="color"></xs:attribute>
+    <xs:attribute name="penWidth" type="positiveFloatWithoutZero"></xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="Rectangle">
+    <xs:sequence>
+      <xs:element name="upperLeft" type="Point"></xs:element>
+    </xs:sequence>
+    <xs:attribute name="height" type="positiveFloatWithoutZero"></xs:attribute>
+    <xs:attribute name="width" type="positiveFloatWithoutZero"></xs:attribute>
+    <xs:attribute name="color" type="color"></xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="Circle">
+    <xs:sequence>
+      <xs:element name="center" type="Point"></xs:element>
+    </xs:sequence>
+    <xs:attribute name="radius" type="positiveFloatWithoutZero"></xs:attribute>
+    <xs:attribute name="color" type="color"></xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="Triangle">
+    <xs:sequence>
+      <xs:element name="lowerLeft" type="Point"></xs:element>
+      <xs:element name="top" type="Point"></xs:element>
+      <xs:element name="lowerRight" type="Point"></xs:element>
+    </xs:sequence>
+    <xs:attribute name="color" type="color"></xs:attribute>
+  </xs:complexType>
+  
+  <xs:complexType name="Figures">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="Line" type="Line"></xs:element>
+      <xs:element name="Rectangle" type="Rectangle"></xs:element>
+      <xs:element name="Circle" type="Circle"></xs:element>
+      <xs:element name="Triangle" type="Triangle"></xs:element>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:element name="Figures" type="Figures"></xs:element>
+</xs:schema>

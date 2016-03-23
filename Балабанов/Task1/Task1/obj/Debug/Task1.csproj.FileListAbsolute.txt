@@ -4,3 +4,11 @@ C:\Users\colpche\Desktop\Task1\Task1\bin\Debug\Task1.pdb
 C:\Users\colpche\Desktop\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
 C:\Users\colpche\Desktop\Task1\Task1\obj\Debug\Task1.exe
 C:\Users\colpche\Desktop\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\bin\Debug\Task1.pdb
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\bin\Debug\input.txt
+C:\Users\colpche\Desktop\Repository\CSIT341\Балабанов\Task1\Task1\bin\Debug\output.txt
