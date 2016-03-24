@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfFigure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Figure xsi:type="Line">
+    <points>
+      <PointF>
+        <X>50</X>
+        <Y>100</Y>
+      </PointF>
+      <PointF>
+        <X>200</X>
+        <Y>0</Y>
+      </PointF>
+    </points>
+    <color>Red</color>
+  </Figure>
+  <Figure xsi:type="Triangle">
+    <points>
+      <PointF>
+        <X>450</X>
+        <Y>400</Y>
+      </PointF>
+      <PointF>
+        <X>550</X>
+        <Y>200</Y>
+      </PointF>
+      <PointF>
+        <X>350</X>
+        <Y>200</Y>
+      </PointF>
+    </points>
+    <color>Yellow</color>
+  </Figure>
+  <Figure xsi:type="Square">
+    <points>
+      <PointF>
+        <X>200</X>
+        <Y>200</Y>
+      </PointF>
+      <PointF>
+        <X>300</X>
+        <Y>100</Y>
+      </PointF>
+      <PointF>
+        <X>200</X>
+        <Y>100</Y>
+      </PointF>
+      <PointF>
+        <X>300</X>
+        <Y>200</Y>
+      </PointF>
+    </points>
+    <color>Green</color>
+  </Figure>
+  <Figure xsi:type="Cicle">
+    <points>
+      <PointF>
+        <X>200</X>
+        <Y>300</Y>
+      </PointF>
+    </points>
+    <color>Brown</color>
+	<radius>50</radius>
+  </Figure>
+</ArrayOfFigure>
