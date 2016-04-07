@@ -48,6 +48,10 @@
       <Project>{6cfc25b4-76eb-4bd3-9b94-1b41d95effb8}</Project>
       <Name>DatabaseBackup.ContractsBLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseBackup.ContractsDAL\DatabaseBackup.ContractsDAL.csproj">
+      <Project>{97d726df-d705-4f1b-8553-76313fad1a91}</Project>
+      <Name>DatabaseBackup.ContractsDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DatabaseBackup.DAL\DatabaseBackup.DAL.csproj">
       <Project>{feec01b0-d93f-4dfa-8c43-4c27e704700d}</Project>
       <Name>DatabaseBackup.DAL</Name>

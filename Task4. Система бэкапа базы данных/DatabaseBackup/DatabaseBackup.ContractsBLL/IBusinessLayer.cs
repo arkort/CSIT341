@@ -4,6 +4,6 @@
     {
         void Connect(string connectionString);
         void Backup();
-        void Restore();
+        void Restore(string backupFileName);
     }
 }

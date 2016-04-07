@@ -100,6 +100,10 @@
       <Project>{6feeaa94-2743-4c92-ba09-7be213ee7ebd}</Project>
       <Name>DatabaseBackup.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseBackup.ContractsBLL\DatabaseBackup.ContractsBLL.csproj">
+      <Project>{6cfc25b4-76eb-4bd3-9b94-1b41d95effb8}</Project>
+      <Name>DatabaseBackup.ContractsBLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
