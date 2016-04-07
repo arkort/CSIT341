@@ -41,8 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessLayer.cs" />
-    <Compile Include="IDataAccessLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkingDatabase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseBackup.ContractsDAL\DatabaseBackup.ContractsDAL.csproj">
+      <Project>{97d726df-d705-4f1b-8553-76313fad1a91}</Project>
+      <Name>DatabaseBackup.ContractsDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
