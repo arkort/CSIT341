@@ -11,6 +11,7 @@ namespace DatabaseBackup.Presentation
         public MainWindow()
         {
             BL.Connect("...");
+            BL.Backup();
             InitializeComponent();
         }
     }
