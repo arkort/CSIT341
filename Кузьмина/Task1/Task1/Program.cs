@@ -15,7 +15,7 @@ namespace Task1
             string path;
             char[] dot = {'.'};
 
-            using (StreamReader infile = new StreamReader("input.txt"))
+            using (StreamReader infile = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "input.txt")))
             {
                 path = infile.ReadLine();
             }
@@ -36,7 +36,7 @@ namespace Task1
                 }
             }
 
-            using (StreamWriter outfile = new StreamWriter(@"E:\УНИВЕР\Ado.Net\Task1\Task1\output.txt"))
+            using (StreamWriter outfile = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.txt")))
             {
                 foreach (var item in extensions.OrderByDescending(element => element.Value))
                 {
@@ -53,7 +53,7 @@ namespace Task1
             {
                 files = Directory.GetFiles(folder);
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
                 files = new string[0];
             }
@@ -67,7 +67,7 @@ namespace Task1
             {
                 directories = Directory.GetDirectories(folder);
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
                 directories = new string[0];
             }
