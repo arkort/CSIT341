@@ -29,8 +29,8 @@ namespace Solution2
         static void Main()
         {
             XmlDocument file = new XmlDocument();
-            file.Load(AppDomain.CurrentDomain.BaseDirectory+"Data.xml");
-            file.Schemas.Add("", AppDomain.CurrentDomain.BaseDirectory+"schema.xsd");
+            file.Load("Data.xml");
+            file.Schemas.Add("", "schema.xsd");
             bool exception = false;
             ValidationEventHandler eventHandler = new ValidationEventHandler((object sender, ValidationEventArgs e) => { Console.WriteLine(e.Message); exception = true; });
             file.Validate(eventHandler);
