@@ -38,16 +38,15 @@ namespace DatabaseBackup.DAL
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("SELECT TABLE_SCHEMA, TABLE_NAME, TABLE_TYPE FROM INFORMATION_SCHEMA.TABLES", connection))
+                using (SqlCommand command = new SqlCommand("SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", connection))
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         string tableSchema = reader.GetString(0);
                         string tableName = reader.GetString(1);
-                        string tableType = reader.GetString(2);
 
-                        this.tables.Add(new DBTable(tableSchema, tableName, tableType));
+                        this.tables.Add(new DBTable(tableSchema, tableName));
                     }
                 }
 

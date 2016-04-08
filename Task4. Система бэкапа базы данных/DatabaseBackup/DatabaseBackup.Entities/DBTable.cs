@@ -14,21 +14,15 @@ namespace DatabaseBackup.Entities
             get; set;
         }
 
-        public string Type
-        {
-            get; set;
-        }
-
         public List<DBTableColumn> Columns
         {
             get; set;
         }
 
-        public DBTable(string schema, string name, string type)
+        public DBTable(string schema, string name)
         {
             this.Schema = schema;
             this.Name = name;
-            this.Type = type;
 
             this.Columns = new List<DBTableColumn>();
         }
