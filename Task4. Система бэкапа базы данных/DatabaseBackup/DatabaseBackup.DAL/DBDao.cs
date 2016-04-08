@@ -16,7 +16,8 @@ namespace DatabaseBackup.DAL
                 connection.Open();
                 var tables = GetTables(connection);
                 var procedures = GetStoredProcedures(connection);
-                CreateBackupFile(tables, procedures);
+                var fkConstraints = GetForeignKeyConstraints(connection);
+                CreateBackupFile(tables, procedures, fkConstraints);
             }
         }
 
@@ -25,7 +26,7 @@ namespace DatabaseBackup.DAL
             throw new NotImplementedException();
         }
 
-        private static void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures)
+        private static void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures, IEnumerable<ForeignKeyConstraint> fkConstraints)
         {
             var curDate = DateTime.Now;
             using (var sqlFile = new StreamWriter($"backup_{curDate: dd-MM-yyyy_HH-mm}.sql"))
@@ -60,6 +61,19 @@ namespace DatabaseBackup.DAL
                     sqlFile.WriteLine(procedure.Definition);
                     sqlFile.WriteLine("GO;");
                 }
+
+                sqlFile.WriteLine();
+
+                sqlFile.WriteLine("/* FK constraints */");
+
+                foreach (var fkConstraint in fkConstraints)
+                {
+                    sqlFile.WriteLine("ALTER TABLE [{0}].[{1}]", fkConstraint.PrimaryTableSchema, fkConstraint.PrimaryTableName);
+                    sqlFile.WriteLine("ADD CONSTRAINT [{0}]", fkConstraint.ConstraintName);
+                    sqlFile.WriteLine("FOREIGN KEY ({0})", fkConstraint.PrimaryTableColumn);
+                    sqlFile.WriteLine("REFERENCES [{0}].[{1}]([{2}])", fkConstraint.ForeignTableSchema, fkConstraint.ForeignTableName, fkConstraint.ForeignTableColumn);
+                    sqlFile.WriteLine();
+                }
             }
         }
 
@@ -78,21 +92,14 @@ namespace DatabaseBackup.DAL
                 {
                     while (reader.Read())
                     {
-                        string columnName = reader.GetString(0);
-                        string columnDefault = (reader.IsDBNull(1)) ? null : reader.GetString(1);
-                        string isNullable = reader.GetString(2);
-                        string dataType = reader.GetString(3);
-                        int characterMaxLength = (reader.IsDBNull(4)) ? -1 : reader.GetInt32(4);
-                        string collationName = (reader.IsDBNull(5)) ? null : reader.GetString(5);
-
                         columns.Add(new Column
                         {
-                            Name = columnName,
-                            Default = columnDefault,
-                            IsNullable = isNullable,
-                            DataType = dataType,
-                            CharactersMaxLength = characterMaxLength,
-                            CollationName = collationName,
+                            Name = reader.GetString(0),
+                            Default = (reader.IsDBNull(1)) ? null : reader.GetString(1),
+                            IsNullable = reader.GetString(2),
+                            DataType = reader.GetString(3),
+                            CharactersMaxLength = (reader.IsDBNull(4)) ? -1 : reader.GetInt32(4),
+                            CollationName = (reader.IsDBNull(5)) ? null : reader.GetString(5),
                         });
                     }
                 }
@@ -106,6 +113,59 @@ namespace DatabaseBackup.DAL
             //
         }
 
+        private static IEnumerable<ForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection)
+        {
+            var foreignKeyConstraints = new List<ForeignKeyConstraint>();
+            string sqlCommandStr = @"SELECT
+	                                    FK_Schema = FK.TABLE_SCHEMA,
+                                        FK_Table = FK.TABLE_NAME,
+                                        FK_Column = CU.COLUMN_NAME,
+                                        PK_Schema = PK.TABLE_SCHEMA,
+	                                    PK_Table = PK.TABLE_NAME,
+                                        PK_Column = PT.COLUMN_NAME,
+                                        Constraint_Name = C.CONSTRAINT_NAME
+                                    FROM
+                                        INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
+                                    INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK
+                                        ON C.CONSTRAINT_NAME = FK.CONSTRAINT_NAME
+                                    INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS PK
+                                        ON C.UNIQUE_CONSTRAINT_NAME = PK.CONSTRAINT_NAME
+                                    INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE CU
+                                        ON C.CONSTRAINT_NAME = CU.CONSTRAINT_NAME
+                                    INNER JOIN (
+                                                SELECT
+                                                    i1.TABLE_NAME,
+                                                    i2.COLUMN_NAME
+                                                FROM
+                                                    INFORMATION_SCHEMA.TABLE_CONSTRAINTS i1
+                                                INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2
+                                                    ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
+                                                WHERE
+                                                    i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
+                                               ) PT
+                                        ON PT.TABLE_NAME = PK.TABLE_NAME";
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    foreignKeyConstraints.Add(new ForeignKeyConstraint
+                    {
+                        ForeignTableSchema = reader.GetString(0),
+                        ForeignTableName = reader.GetString(1),
+                        ForeignTableColumn = reader.GetString(2),
+                        PrimaryTableSchema = reader.GetString(3),
+                        PrimaryTableName = reader.GetString(4),
+                        PrimaryTableColumn = reader.GetString(5),
+                        ConstraintName = reader.GetString(6),
+                    });
+                }
+            }
+
+            return foreignKeyConstraints;
+        }
+
         private static IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
         {
             var procedures = new List<Procedure>();
@@ -117,13 +177,10 @@ namespace DatabaseBackup.DAL
             {
                 while (reader.Read())
                 {
-                    string procedureName = reader.GetString(0);
-                    string procedureDefinition = reader.GetString(1);
-
                     procedures.Add(new Procedure
                     {
-                        Name = procedureName,
-                        Definition = procedureDefinition,
+                        Name = reader.GetString(0),
+                        Definition = reader.GetString(1),
                     });
                 }
             }
@@ -131,7 +188,6 @@ namespace DatabaseBackup.DAL
             return procedures;
         }
 
-        // TODO: Get constraints
         private static IEnumerable<Table> GetTables(SqlConnection connection)
         {
             var tables = new List<Table>();
@@ -140,13 +196,10 @@ namespace DatabaseBackup.DAL
             {
                 while (reader.Read())
                 {
-                    string tableSchema = reader.GetString(0);
-                    string tableName = reader.GetString(1);
-
                     tables.Add(new Table
                     {
-                        Schema = tableSchema,
-                        Name = tableName
+                        Schema = reader.GetString(0),
+                        Name = reader.GetString(1)
                     });
                 }
             }
