@@ -11,6 +11,7 @@ namespace DatabaseBackup.DAL
         private string connectionString;
         List<DBTable> tables;
         List<DBProcedure> procedures;
+        List<DBForeignKeyConstraint> fkConstraints;
 
         public WorkingDatabase(string connectionString)
         {
@@ -23,11 +24,13 @@ namespace DatabaseBackup.DAL
 
             this.tables = new List<DBTable>();
             this.procedures = new List<DBProcedure>();
+            this.fkConstraints = new List<DBForeignKeyConstraint>();
         }
 
         public void Backup()
         {
             getTables();
+            getConstraints();
             getStoredProcedures();
             createBackupFile();
         }
@@ -49,7 +52,7 @@ namespace DatabaseBackup.DAL
 
                 foreach (var table in this.tables)
                 {
-                    sqlFile.WriteLine("CREATE TABLE [{0}].[{1}] (", table.Name, table.Schema);
+                    sqlFile.WriteLine("CREATE TABLE [{0}].[{1}] (", table.Schema, table.Name);
 
                     foreach (var column in table.Columns)
                     {
@@ -71,10 +74,23 @@ namespace DatabaseBackup.DAL
                     sqlFile.WriteLine(procedure.Definition);
                     sqlFile.WriteLine("GO;");
                 }
+
+
+                sqlFile.WriteLine();
+
+                sqlFile.WriteLine("/* FK constraints */");
+
+                foreach (var fkConstraint in fkConstraints)
+                {
+                    sqlFile.WriteLine("ALTER TABLE [{0}].[{1}]", fkConstraint.PrimaryTableSchema, fkConstraint.PrimaryTableName);
+                    sqlFile.WriteLine("ADD CONSTRAINT [{0}]", fkConstraint.ConstraintName);
+                    sqlFile.WriteLine("FOREIGN KEY ({0})", fkConstraint.PrimaryTableColumn);
+                    sqlFile.WriteLine("REFERENCES [{0}].[{1}]([{2}])", fkConstraint.ForeignTableSchema, fkConstraint.ForeignTableName, fkConstraint.ForeignTableColumn);
+                    sqlFile.WriteLine();
+                }
             }
         }
 
-        // TODO: Get constraints
         private void getTables()
         {
             using (var connection = new SqlConnection(connectionString))
@@ -117,6 +133,60 @@ namespace DatabaseBackup.DAL
                                 table.Columns.Add(new DBTableColumn(columnName, columnDefault, isNullable, dataType, characterMaxLength, collationName));
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        private void getConstraints()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sqlCommandStr = @"SELECT
+	                                    FK_Schema = FK.TABLE_SCHEMA,
+                                        FK_Table = FK.TABLE_NAME,
+                                        FK_Column = CU.COLUMN_NAME,
+                                        PK_Schema = PK.TABLE_SCHEMA,
+	                                    PK_Table = PK.TABLE_NAME,
+                                        PK_Column = PT.COLUMN_NAME,
+                                        Constraint_Name = C.CONSTRAINT_NAME
+                                    FROM
+                                        INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
+                                    INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK
+                                        ON C.CONSTRAINT_NAME = FK.CONSTRAINT_NAME
+                                    INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS PK
+                                        ON C.UNIQUE_CONSTRAINT_NAME = PK.CONSTRAINT_NAME
+                                    INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE CU
+                                        ON C.CONSTRAINT_NAME = CU.CONSTRAINT_NAME
+                                    INNER JOIN (
+                                                SELECT
+                                                    i1.TABLE_NAME,
+                                                    i2.COLUMN_NAME
+                                                FROM
+                                                    INFORMATION_SCHEMA.TABLE_CONSTRAINTS i1
+                                                INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2
+                                                    ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
+                                                WHERE
+                                                    i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
+                                               ) PT
+                                        ON PT.TABLE_NAME = PK.TABLE_NAME";
+
+                using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string fkSchema = reader.GetString(0);
+                        string fkTable = reader.GetString(1);
+                        string fkColumn = reader.GetString(2);
+                        string pkSchema = reader.GetString(3);
+                        string pkTable = reader.GetString(4);
+                        string pkColumn = reader.GetString(5);
+                        string constraintName = reader.GetString(6);
+
+                        this.fkConstraints.Add(new DBForeignKeyConstraint(constraintName, pkSchema, pkTable, pkColumn, fkSchema, fkTable, fkColumn));
                     }
                 }
             }
