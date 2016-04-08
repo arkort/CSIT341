@@ -1,6 +1,8 @@
 ﻿using DatabaseBackup.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace DatabaseBackup.DAL
 {
@@ -8,6 +10,7 @@ namespace DatabaseBackup.DAL
     {
         private string connectionString;
         List<DBTable> tables;
+        List<DBProcedure> procedures;
 
         public WorkingDatabase(string connectionString)
         {
@@ -19,16 +22,56 @@ namespace DatabaseBackup.DAL
             }
 
             this.tables = new List<DBTable>();
+            this.procedures = new List<DBProcedure>();
         }
 
         public void Backup()
         {
             getTables();
+            getStoredProcedures();
+            createBackupFile();
         }
 
         public void Restore(string sqlDump)
         {
             // Execute sqlDump
+        }
+
+        private void createBackupFile()
+        {
+            using (var sqlFile = new StreamWriter("temp.sql"))
+            {
+                sqlFile.WriteLine("/* Database backup ({0}) */", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+
+                sqlFile.WriteLine();
+
+                sqlFile.WriteLine("/* Tables */");
+
+                foreach (var table in this.tables)
+                {
+                    sqlFile.WriteLine("CREATE TABLE [{0}].[{1}] (", table.Name, table.Schema);
+
+                    foreach (var column in table.Columns)
+                    {
+                        string allowNull = (column.IsNullable == "YES") ? "NULL" : "NOT NULL";
+                        string defaultValue = (column.ColumnDefault == null) ? String.Empty : "DEFAULT" + column.ColumnDefault;
+                        sqlFile.WriteLine("\t[{0}] {1} {2} {3},", column.ColumnName, column.DataType, allowNull, defaultValue);
+                    }
+
+                    sqlFile.WriteLine(");");
+                    sqlFile.WriteLine("GO;");
+                }
+
+                sqlFile.WriteLine();
+
+                sqlFile.WriteLine("/* Stored procedures */");
+
+                foreach (var procedure in this.procedures)
+                {
+                    sqlFile.WriteLine(procedure.Definition);
+                    sqlFile.WriteLine("GO;");
+                }
+            }
         }
 
         // TODO: Get constraints
@@ -86,7 +129,25 @@ namespace DatabaseBackup.DAL
 
         private void getStoredProcedures()
         {
-            //
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sqlCommandStr = @"SELECT ROUTINE_NAME, ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
+                                        WHERE ROUTINE_TYPE = 'PROCEDURE'";
+
+                using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string procedureName = reader.GetString(0);
+                        string procedureDefinition = reader.GetString(1);
+
+                        this.procedures.Add(new DBProcedure(procedureName, procedureDefinition));
+                    }
+                }
+            }
         }
     }
 }
