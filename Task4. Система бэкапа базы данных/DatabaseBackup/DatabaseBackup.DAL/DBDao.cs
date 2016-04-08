@@ -25,7 +25,7 @@ namespace DatabaseBackup.DAL
             throw new NotImplementedException();
         }
 
-        private static void CreateBackupFile(IEnumerable<DBTable> tables, IEnumerable<DBProcedure> procedures)
+        private static void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures)
         {
             var curDate = DateTime.Now;
             using (var sqlFile = new StreamWriter($"backup_{curDate: dd-MM-yyyy_HH-mm}.sql"))
@@ -63,11 +63,11 @@ namespace DatabaseBackup.DAL
             }
         }
 
-        private static IEnumerable<DBColumn> GetColumns(SqlConnection connection, DBTable table)
+        private static IEnumerable<Column> GetColumns(SqlConnection connection, Table table)
         {
             string sqlCommandStr = @"SELECT COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLLATION_NAME
                                             FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName";
-            var columns = new List<DBColumn>();
+            var columns = new List<Column>();
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
@@ -85,7 +85,7 @@ namespace DatabaseBackup.DAL
                         int characterMaxLength = (reader.IsDBNull(4)) ? -1 : reader.GetInt32(4);
                         string collationName = (reader.IsDBNull(5)) ? null : reader.GetString(5);
 
-                        columns.Add(new DBColumn
+                        columns.Add(new Column
                         {
                             Name = columnName,
                             Default = columnDefault,
@@ -106,9 +106,9 @@ namespace DatabaseBackup.DAL
             //
         }
 
-        private static IEnumerable<DBProcedure> GetStoredProcedures(SqlConnection connection)
+        private static IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
         {
-            var procedures = new List<DBProcedure>();
+            var procedures = new List<Procedure>();
             string sqlCommandStr = @"SELECT ROUTINE_NAME, ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
                                         WHERE ROUTINE_TYPE = 'PROCEDURE'";
 
@@ -120,7 +120,7 @@ namespace DatabaseBackup.DAL
                     string procedureName = reader.GetString(0);
                     string procedureDefinition = reader.GetString(1);
 
-                    procedures.Add(new DBProcedure
+                    procedures.Add(new Procedure
                     {
                         Name = procedureName,
                         Definition = procedureDefinition,
@@ -132,9 +132,9 @@ namespace DatabaseBackup.DAL
         }
 
         // TODO: Get constraints
-        private static IEnumerable<DBTable> GetTables(SqlConnection connection)
+        private static IEnumerable<Table> GetTables(SqlConnection connection)
         {
-            var tables = new List<DBTable>();
+            var tables = new List<Table>();
             using (SqlCommand command = new SqlCommand("SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", connection))
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -143,7 +143,7 @@ namespace DatabaseBackup.DAL
                     string tableSchema = reader.GetString(0);
                     string tableName = reader.GetString(1);
 
-                    tables.Add(new DBTable
+                    tables.Add(new Table
                     {
                         Schema = tableSchema,
                         Name = tableName

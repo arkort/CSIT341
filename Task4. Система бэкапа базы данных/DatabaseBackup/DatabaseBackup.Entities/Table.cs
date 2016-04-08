@@ -1,8 +1,8 @@
 ﻿namespace DatabaseBackup.Entities
 {
-    public class DBTable
+    public class Table
     {
-        public System.Collections.Generic.IEnumerable<DBColumn> Columns { get; set; }
+        public System.Collections.Generic.IEnumerable<Column> Columns { get; set; }
 
         public string Name { get; set; }
 

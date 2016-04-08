@@ -1,6 +1,6 @@
 ﻿namespace DatabaseBackup.Entities
 {
-    public class DBProcedure
+    public class Procedure
     {
         public string Definition { get; set; }
 
