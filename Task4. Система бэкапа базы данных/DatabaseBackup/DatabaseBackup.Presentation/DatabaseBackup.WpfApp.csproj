@@ -96,13 +96,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseBackup.BLL\DatabaseBackup.Logic.csproj">
+    <ProjectReference Include="..\DatabaseBackup.BLL\DatabaseBackup.Bll.csproj">
       <Project>{6feeaa94-2743-4c92-ba09-7be213ee7ebd}</Project>
-      <Name>DatabaseBackup.Logic</Name>
+      <Name>DatabaseBackup.Bll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DatabaseBackup.ContractsBLL\DatabaseBackup.ContractsBLL.csproj">
+    <ProjectReference Include="..\DatabaseBackup.ContractsBLL\DatabaseBackup.Bll.Interfaces.csproj">
       <Project>{6cfc25b4-76eb-4bd3-9b94-1b41d95effb8}</Project>
-      <Name>DatabaseBackup.ContractsBLL</Name>
+      <Name>DatabaseBackup.Bll.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

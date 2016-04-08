@@ -1,30 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace DatabaseBackup.Entities
+﻿namespace DatabaseBackup.Entities
 {
     public class DBTable
     {
-        public string Schema
-        {
-            get; set;
-        }
+        public System.Collections.Generic.IEnumerable<DBColumn> Columns { get; set; }
 
-        public string Name
-        {
-            get; set;
-        }
+        public string Name { get; set; }
 
-        public List<DBTableColumn> Columns
-        {
-            get; set;
-        }
-
-        public DBTable(string schema, string name)
-        {
-            this.Schema = schema;
-            this.Name = name;
-
-            this.Columns = new List<DBTableColumn>();
-        }
+        public string Schema { get; set; }
     }
 }

@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="DBProcedure.cs" />
     <Compile Include="DBTable.cs" />
-    <Compile Include="DBTableColumn.cs" />
+    <Compile Include="DBColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

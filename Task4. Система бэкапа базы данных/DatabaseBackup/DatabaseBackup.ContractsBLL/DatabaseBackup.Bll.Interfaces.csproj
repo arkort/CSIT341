@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{97D726DF-D705-4F1B-8553-76313FAD1A91}</ProjectGuid>
+    <ProjectGuid>{6CFC25B4-76EB-4BD3-9B94-1B41D95EFFB8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DatabaseBackup.ContractsDAL</RootNamespace>
-    <AssemblyName>DatabaseBackup.ContractsDAL</AssemblyName>
+    <RootNamespace>DatabaseBackup.ContractsBLL</RootNamespace>
+    <AssemblyName>DatabaseBackup.ContractsBLL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDao.cs" />
+    <Compile Include="IBackupLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

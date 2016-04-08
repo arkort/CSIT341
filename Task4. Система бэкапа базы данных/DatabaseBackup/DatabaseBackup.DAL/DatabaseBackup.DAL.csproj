@@ -40,9 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessLayer.cs" />
+    <Compile Include="DBDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkingDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseBackup.ContractsDAL\DatabaseBackup.ContractsDAL.csproj">

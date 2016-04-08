@@ -6,12 +6,10 @@ namespace DatabaseBackup.Presentation
 {
     public partial class MainWindow : Window
     {
-        IBusinessLayer BL = new BusinessLayer();
+        private ILogic BL = new Logic();
 
         public MainWindow()
         {
-            BL.Connect("...");
-            BL.Backup();
             InitializeComponent();
         }
     }
