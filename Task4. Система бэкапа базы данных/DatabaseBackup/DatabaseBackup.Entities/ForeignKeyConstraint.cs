@@ -6,6 +6,8 @@
         public string ForeignTableColumn { get; set; }
         public string ForeignTableName { get; set; }
         public string ForeignTableSchema { get; set; }
+        public string OnDeleteRule { get; set; }
+        public string OnUpdateRule { get; set; }
         public string PrimaryTableColumn { get; set; }
         public string PrimaryTableName { get; set; }
         public string PrimaryTableSchema { get; set; }

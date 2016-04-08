@@ -68,10 +68,13 @@ namespace DatabaseBackup.DAL
 
                 foreach (var fkConstraint in fkConstraints)
                 {
-                    sqlFile.WriteLine("ALTER TABLE [{0}].[{1}]", fkConstraint.PrimaryTableSchema, fkConstraint.PrimaryTableName);
-                    sqlFile.WriteLine("ADD CONSTRAINT [{0}]", fkConstraint.ConstraintName);
-                    sqlFile.WriteLine("FOREIGN KEY ({0})", fkConstraint.PrimaryTableColumn);
-                    sqlFile.WriteLine("REFERENCES [{0}].[{1}]([{2}])", fkConstraint.ForeignTableSchema, fkConstraint.ForeignTableName, fkConstraint.ForeignTableColumn);
+                    sqlFile.WriteLine($"ALTER TABLE [{fkConstraint.PrimaryTableSchema}].[{fkConstraint.PrimaryTableName}]");
+                    sqlFile.WriteLine($"ADD CONSTRAINT [{fkConstraint.ConstraintName}]");
+                    sqlFile.WriteLine($"FOREIGN KEY ({fkConstraint.PrimaryTableColumn})");
+                    sqlFile.WriteLine($"REFERENCES [{fkConstraint.ForeignTableSchema}].[{fkConstraint.ForeignTableName}]([{fkConstraint.ForeignTableColumn}])");
+                    sqlFile.WriteLine($"ON DELETE {fkConstraint.OnDeleteRule}");
+                    sqlFile.WriteLine($"ON UPDATE {fkConstraint.OnUpdateRule};");
+                    sqlFile.WriteLine("GO");
                     sqlFile.WriteLine();
                 }
             }
@@ -123,7 +126,9 @@ namespace DatabaseBackup.DAL
                                         PK_Schema = PK.TABLE_SCHEMA,
 	                                    PK_Table = PK.TABLE_NAME,
                                         PK_Column = PT.COLUMN_NAME,
-                                        Constraint_Name = C.CONSTRAINT_NAME
+                                        Constraint_Name = C.CONSTRAINT_NAME,
+		                                On_Delete = C.DELETE_RULE,
+		                                On_Update = C.UPDATE_RULE
                                     FROM
                                         INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
                                     INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK
@@ -142,7 +147,7 @@ namespace DatabaseBackup.DAL
                                                     ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
                                                 WHERE
                                                     i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
-                                               ) PT
+                                                ) PT
                                         ON PT.TABLE_NAME = PK.TABLE_NAME";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
@@ -159,6 +164,8 @@ namespace DatabaseBackup.DAL
                         PrimaryTableName = reader.GetString(4),
                         PrimaryTableColumn = reader.GetString(5),
                         ConstraintName = reader.GetString(6),
+                        OnDeleteRule = reader.GetString(7),
+                        OnUpdateRule = reader.GetString(8),
                     });
                 }
             }

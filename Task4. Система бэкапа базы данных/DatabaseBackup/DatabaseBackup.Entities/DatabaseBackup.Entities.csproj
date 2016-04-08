@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForeignKeyConstraint.cs" />
+    <Compile Include="PrimaryKeyConstraints.cs" />
     <Compile Include="Procedure.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="Column.cs" />
