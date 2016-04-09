@@ -36,17 +36,12 @@ namespace DatabaseBackup.DAL
             //
         }
 
-        private static void WriteConstraints(IEnumerable<Constraint> fkConstraints, StreamWriter sqlFile)
+        private static void WriteConstraints(IEnumerable<Constraint> constraints, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* FK constraints */");
-            foreach (var fkConstraint in fkConstraints)
+            foreach (var constraint in constraints)
             {
-                sqlFile.WriteLine($"ALTER TABLE [{fkConstraint.PrimaryTableSchema}].[{fkConstraint.PrimaryTableName}]");
-                sqlFile.WriteLine($"ADD CONSTRAINT [{fkConstraint.ConstraintName}]");
-                sqlFile.WriteLine($"FOREIGN KEY ({fkConstraint.PrimaryTableColumn})");
-                sqlFile.WriteLine($"REFERENCES [{fkConstraint.ForeignTableSchema}].[{fkConstraint.ForeignTableName}]([{fkConstraint.ForeignTableColumn}])");
-                sqlFile.WriteLine($"ON DELETE {fkConstraint.OnDeleteRule}");
-                sqlFile.WriteLine($"ON UPDATE {fkConstraint.OnUpdateRule};");
+                sqlFile.WriteLine(constraint);
                 sqlFile.WriteLine("GO");
                 sqlFile.WriteLine();
             }
@@ -229,7 +224,7 @@ namespace DatabaseBackup.DAL
         private IEnumerable<Constraint> GetUniqueConstraints(SqlConnection connection)
         {
             var uniqueConstraints = new List<UniqueConstraint>();
-            string sqlCommandStr = Essentials.getAllPrimaryKeyConstraintsQuery;
+            string sqlCommandStr = Essentials.getAllUniqueConstraintsQuery;
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             using (SqlDataReader reader = command.ExecuteReader())
@@ -283,8 +278,8 @@ namespace DatabaseBackup.DAL
 
                 foreach (var column in table.Columns)
                 {
-                    string allowNull = (column.IsNullable == "YES") ? "NULL" : "NOT NULL";
-                    string defaultValue = (column.Default == null) ? String.Empty : "DEFAULT" + column.Default;
+                    string allowNull = column.IsNullable ? "NULL" : "NOT NULL";
+                    string defaultValue = column.Default == null ? String.Empty : "DEFAULT" + column.Default;
                     sqlFile.WriteLine($"\t[{column.Name}] {column.DataType} {allowNull} {defaultValue},");
                 }
 

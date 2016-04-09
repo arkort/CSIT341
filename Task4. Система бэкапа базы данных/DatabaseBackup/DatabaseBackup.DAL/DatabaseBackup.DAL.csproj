@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DatabaseBackup.DAL</RootNamespace>
     <AssemblyName>DatabaseBackup.DAL</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +52,10 @@
     <ProjectReference Include="..\DatabaseBackup.Entities\DatabaseBackup.Entities.csproj">
       <Project>{4b931ed5-c7fe-4b0f-bb5b-2c27354570c4}</Project>
       <Name>DatabaseBackup.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Essentials.cs\DatabaseBackup.Essentials.csproj">
+      <Project>{1f5a765f-a32e-46b0-a9a3-b81e28c1f446}</Project>
+      <Name>DatabaseBackup.Essentials</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

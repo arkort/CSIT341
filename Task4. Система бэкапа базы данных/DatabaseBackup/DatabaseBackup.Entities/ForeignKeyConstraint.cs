@@ -13,7 +13,7 @@ namespace DatabaseBackup.Entities
 
         public override string ToString()
         {
-            return $"ALTER TABLE [{this.TableSchema}].[{this.TableName}] ADD CONSTRAINT {this.Name} FOREIGN KEY({string.Join(", ", this.Columns)} REFERENCES [{this.PrimaryTableSchema}].[{this.PrimaryTableName}]({string.Join(", ", this.Columns)})";
+            return $"ALTER TABLE [{this.TableSchema}].[{this.TableName}] ADD CONSTRAINT {this.Name} FOREIGN KEY({string.Join(", ", this.Columns)}) REFERENCES [{this.PrimaryTableSchema}].[{this.PrimaryTableName}]({string.Join(", ", this.Columns)})";
         }
     }
 }
