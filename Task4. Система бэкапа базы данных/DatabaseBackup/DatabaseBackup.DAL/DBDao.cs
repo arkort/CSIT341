@@ -13,17 +13,34 @@ namespace DatabaseBackup.DAL
     {
         public void Backup(string conString)
         {
+            IEnumerable<Table> tables;
+            IEnumerable<Procedure> procedures;
+            IEnumerable<Synonym> synonyms;
+            List<Constraint> constraints;
+            IEnumerable<View> views;
+            IEnumerable<Function> functions;
+            IEnumerable<Sequence> sequences;
             using (var connection = new SqlConnection(conString))
             {
                 connection.Open();
-                var tables = this.GetTables(connection);
-                var procedures = this.GetStoredProcedures(connection);
-                var constraints = new List<Constraint>(this.GetForeignKeyConstraints(connection));
+                tables = this.GetTables(connection);
+
+                procedures = this.GetStoredProcedures(connection);
+
+                constraints = new List<Constraint>(this.GetForeignKeyConstraints(connection));
                 constraints.AddRange(this.GetPrimaryKeyConstraints(connection));
                 constraints.AddRange(this.GetUniqueConstraints(connection));
 
-                this.CreateBackupFile(tables, procedures, constraints);
+                synonyms = this.GetSynonyms(connection);
+
+                views = this.GetViews(connection);
+
+                functions = this.GetFunctions(connection);
+
+                sequences = this.GetSequences(connection);
             }
+
+            this.CreateBackupFile(tables, procedures, constraints, synonyms, views, functions, sequences);
         }
 
         public void Restore(DateTime date)
@@ -31,34 +48,36 @@ namespace DatabaseBackup.DAL
             throw new NotImplementedException();
         }
 
-        private static void GetData()
-        {
-            //
-        }
-
-        private static void WriteConstraints(IEnumerable<Constraint> constraints, StreamWriter sqlFile)
-        {
-            sqlFile.WriteLine("/* FK constraints */");
-            foreach (var constraint in constraints)
-            {
-                sqlFile.WriteLine(constraint);
-                sqlFile.WriteLine("GO");
-                sqlFile.WriteLine();
-            }
-        }
-
-        private void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures, IEnumerable<Constraint> constraints)
+        private void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures, IEnumerable<Constraint> constraints, IEnumerable<Synonym> synonyms, IEnumerable<View> views, IEnumerable<Function> functions, IEnumerable<Sequence> sequences)
         {
             var curDate = DateTime.Now;
             using (var sqlFile = new StreamWriter($"backup_{curDate: dd-MM-yyyy_HH-mm}.sql"))
             {
                 sqlFile.WriteLine($"/* Database backup ({curDate: dd-MM-yyyy_HH-mm}) */");
                 sqlFile.WriteLine();
+
                 this.WriteTablesCreation(tables, sqlFile);
                 sqlFile.WriteLine();
+
+                this.WriteViews(views, sqlFile);
+                sqlFile.WriteLine();
+
+                this.WriteSynonyms(synonyms, sqlFile);
+                sqlFile.WriteLine();
+
                 this.WriteProcedures(procedures, sqlFile);
                 sqlFile.WriteLine();
-                WriteConstraints(constraints, sqlFile);
+
+                this.WriteFunctions(functions, sqlFile);
+                sqlFile.WriteLine();
+
+                this.WriteSequences(sequences, sqlFile);
+                sqlFile.WriteLine();
+
+                //this.WriteData(data, sqlFile);
+                //sqlFile.WriteLine();
+
+                this.WriteConstraints(constraints, sqlFile);
                 sqlFile.WriteLine();
             }
         }
@@ -140,6 +159,26 @@ namespace DatabaseBackup.DAL
             return foreignKeyConstraints;
         }
 
+        private IEnumerable<Function> GetFunctions(SqlConnection connection)
+        {
+            var functions = new List<Function>();
+            string sqlCommandStr = Essentials.getAllFunctionsQuery;
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    functions.Add(new Function
+                    {
+                        Definition = reader.GetString(0),
+                    });
+                }
+            }
+
+            return functions;
+        }
+
         private IEnumerable<Constraint> GetPrimaryKeyConstraints(SqlConnection connection)
         {
             var primaryKeyConstraints = new List<PrimaryKeyConstraint>();
@@ -176,6 +215,33 @@ namespace DatabaseBackup.DAL
             return primaryKeyConstraints;
         }
 
+        private IEnumerable<Sequence> GetSequences(SqlConnection connection)
+        {
+            string sqlCommandStr = Essentials.getAllSequencesQuery;
+            var sequences = new List<Sequence>();
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    sequences.Add(new Sequence
+                    {
+                        Schema = reader.GetString(0),
+                        Name = reader.GetString(1),
+                        DataType = reader.GetString(2),
+                        StartValue = reader.GetInt64(3),
+                        Increment = reader.GetInt64(4),
+                        MinValue = reader.GetInt64(5),
+                        MaxValue = reader.GetInt64(6),
+                        IsCached = reader.GetBoolean(7),
+                    });
+                }
+            }
+
+            return sequences;
+        }
+
         private IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
         {
             var procedures = new List<Procedure>();
@@ -188,13 +254,36 @@ namespace DatabaseBackup.DAL
                 {
                     procedures.Add(new Procedure
                     {
-                        Name = reader.GetString(0),
-                        Definition = reader.GetString(1),
+                        Definition = reader.GetString(0),
                     });
                 }
             }
 
             return procedures;
+        }
+
+        private IEnumerable<Synonym> GetSynonyms(SqlConnection connection)
+        {
+            var synonyms = new List<Synonym>();
+            string sqlCommandStr = Essentials.getAllSynonymsQuery;
+            char[] trimChars = new char[] { '[', ']' };
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var catalogueSchemaObject = reader.GetString(1).Split('.');
+                    synonyms.Add(new Synonym
+                    {
+                        Name = reader.GetString(0).Trim(trimChars),
+                        Catalogue = catalogueSchemaObject[0].Trim(trimChars),
+                        ObjectName = catalogueSchemaObject[2].Trim(trimChars),
+                        Schema = catalogueSchemaObject[1].Trim(trimChars),
+                    });
+                }
+            }
+
+            return synonyms;
         }
 
         private IEnumerable<Table> GetTables(SqlConnection connection)
@@ -215,7 +304,7 @@ namespace DatabaseBackup.DAL
 
             foreach (var table in tables)
             {
-                table.Columns = GetColumns(connection, table);
+                table.Columns = this.GetColumns(connection, table);
             }
 
             return tables;
@@ -257,14 +346,74 @@ namespace DatabaseBackup.DAL
             return uniqueConstraints;
         }
 
+        private IEnumerable<View> GetViews(SqlConnection connection)
+        {
+            var views = new List<View>();
+            string sqlCommandStr = Essentials.getAllViewsQuery;
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    views.Add(new View
+                    {
+                        Definition = reader.GetString(0),
+                    });
+                }
+            }
+
+            return views;
+        }
+
+        private void WriteConstraints(IEnumerable<Constraint> constraints, StreamWriter sqlFile)
+        {
+            sqlFile.WriteLine("/* FK constraints */");
+            foreach (var constraint in constraints)
+            {
+                sqlFile.WriteLine(constraint);
+                sqlFile.WriteLine("GO");
+                sqlFile.WriteLine();
+            }
+        }
+
+        private void WriteFunctions(IEnumerable<Function> functions, StreamWriter sqlFile)
+        {
+            sqlFile.WriteLine("/* Functions */");
+            foreach (var function in functions)
+            {
+                sqlFile.WriteLine(function);
+                sqlFile.WriteLine("GO");
+            }
+        }
+
         private void WriteProcedures(IEnumerable<Procedure> procedures, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Stored procedures */");
 
             foreach (var procedure in procedures)
             {
-                sqlFile.WriteLine(procedure.Definition);
+                sqlFile.WriteLine(procedure);
                 sqlFile.WriteLine("GO;");
+            }
+        }
+
+        private void WriteSequences(IEnumerable<Sequence> sequences, StreamWriter sqlFile)
+        {
+            foreach (var sequence in sequences)
+            {
+                sqlFile.WriteLine(sequence);
+                sqlFile.WriteLine("GO");
+            }
+        }
+
+        private void WriteSynonyms(IEnumerable<Synonym> synonyms, StreamWriter sqlFile)
+        {
+            sqlFile.WriteLine("/* Synonyms */");
+            foreach (var synonym in synonyms)
+            {
+                sqlFile.WriteLine(synonym);
+                sqlFile.WriteLine("GO");
             }
         }
 
@@ -285,6 +434,14 @@ namespace DatabaseBackup.DAL
 
                 sqlFile.WriteLine(");");
                 sqlFile.WriteLine("GO;");
+            }
+        }
+
+        private void WriteViews(IEnumerable<View> views, StreamWriter sqlFile)
+        {
+            foreach (var view in views)
+            {
+                sqlFile.WriteLine(view);
             }
         }
     }

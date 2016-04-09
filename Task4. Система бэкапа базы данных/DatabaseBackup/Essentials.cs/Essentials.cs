@@ -42,15 +42,22 @@ namespace DatabaseBackup.Essential
                                                 ) PT
                                         ON PT.TABLE_NAME = PK.TABLE_NAME";
 
+        public static readonly string getAllFunctionsQuery = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'FUNCTION'";
+
         public static readonly string getAllPrimaryKeyConstraintsQuery = @"SELECT  tc.CONSTRAINT_NAME, tc.TABLE_SCHEMA, tc.TABLE_NAME, cu.COLUMN_NAME
 	                                                                        FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
 		                                                                        INNER JOIN(SELECT * FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE) AS cu
 		                                                                        ON tc.CONSTRAINT_NAME = cu.CONSTRAINT_NAME
                                                                         WHERE CONSTRAINT_TYPE = 'PRIMARY KEY'";
 
-        public static readonly string getAllStoredProceduresQuery = @"SELECT ROUTINE_NAME, ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
+        public static readonly string getAllSequencesQuery = @"SELECT infS.SEQUENCE_SCHEMA, infS.SEQUENCE_NAME, infS.DATA_TYPE, infS.START_VALUE, infS.INCREMENT, infS.MINIMUM_VALUE, infS.MAXIMUM_VALUE, ss.is_cached FROM INFORMATION_SCHEMA.SEQUENCES as infS
+INNER JOIN (SELECT name, is_cached FROM sys.sequences) as ss
+ON ss.name = infS.SEQUENCE_NAME";
+
+        public static readonly string getAllStoredProceduresQuery = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
                                         WHERE ROUTINE_TYPE = 'PROCEDURE'";
 
+        public static readonly string getAllSynonymsQuery = @"SELECT name, base_object_name FROM sys.synonyms";
         public static readonly string getAllTablesQuery = "SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
 
         public static readonly string getAllUniqueConstraintsQuery = @"SELECT tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME,  tc.TABLE_SCHEMA, tc.TABLE_NAME, cu.COLUMN_NAME
@@ -58,5 +65,7 @@ namespace DatabaseBackup.Essential
 	        INNER JOIN(SELECT * FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE) AS cu
 	        ON tc.CONSTRAINT_NAME = cu.CONSTRAINT_NAME
 	        WHERE tc.CONSTRAINT_TYPE = 'UNIQUE'";
+
+        public static readonly string getAllViewsQuery = @"SELECT VIEW_DEFINITION FROM INFORMATION_SCHEMA.Views";
     }
 }

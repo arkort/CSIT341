@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B931ED5-C7FE-4B0F-BB5B-2C27354570C4}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{DF49819B-EFCF-4005-99E6-1CA1B42A0F16}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DatabaseBackup.Entities</RootNamespace>
-    <AssemblyName>DatabaseBackup.Entities</AssemblyName>
+    <RootNamespace>DatabaseBackup.ConsoleApp</RootNamespace>
+    <AssemblyName>DatabaseBackup.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,17 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constraint.cs" />
-    <Compile Include="ForeignKeyConstraint.cs" />
-    <Compile Include="Function.cs" />
-    <Compile Include="PrimaryKeyConstraint.cs" />
-    <Compile Include="Procedure.cs" />
-    <Compile Include="Synonym.cs" />
-    <Compile Include="Table.cs" />
-    <Compile Include="Column.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UniqueConstraint.cs" />
-    <Compile Include="View.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseBackup.BLL\DatabaseBackup.Logic.csproj">
+      <Project>{6feeaa94-2743-4c92-ba09-7be213ee7ebd}</Project>
+      <Name>DatabaseBackup.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseBackup.ContractsBLL\DatabaseBackup.ContractsBLL.csproj">
+      <Project>{6cfc25b4-76eb-4bd3-9b94-1b41d95effb8}</Project>
+      <Name>DatabaseBackup.ContractsBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseBackup.Entities\DatabaseBackup.Entities.csproj">
+      <Project>{4b931ed5-c7fe-4b0f-bb5b-2c27354570c4}</Project>
+      <Name>DatabaseBackup.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
