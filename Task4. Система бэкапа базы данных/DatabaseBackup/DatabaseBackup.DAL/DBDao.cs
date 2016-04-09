@@ -14,10 +14,10 @@ namespace DatabaseBackup.DAL
             using (var connection = new SqlConnection(conString))
             {
                 connection.Open();
-                var tables = GetTables(connection);
-                var procedures = GetStoredProcedures(connection);
-                var fkConstraints = GetForeignKeyConstraints(connection);
-                CreateBackupFile(tables, procedures, fkConstraints);
+                var tables = this.GetTables(connection);
+                var procedures = this.GetStoredProcedures(connection);
+                var fkConstraints = this.GetForeignKeyConstraints(connection);
+                this.CreateBackupFile(tables, procedures, fkConstraints);
             }
         }
 
@@ -26,7 +26,12 @@ namespace DatabaseBackup.DAL
             throw new NotImplementedException();
         }
 
-        private static void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures, IEnumerable<ForeignKeyConstraint> fkConstraints)
+        private static void GetData()
+        {
+            //
+        }
+
+        private void CreateBackupFile(IEnumerable<Table> tables, IEnumerable<Procedure> procedures, IEnumerable<ForeignKeyConstraint> fkConstraints)
         {
             var curDate = DateTime.Now;
             using (var sqlFile = new StreamWriter($"backup_{curDate: dd-MM-yyyy_HH-mm}.sql"))
@@ -80,7 +85,7 @@ namespace DatabaseBackup.DAL
             }
         }
 
-        private static IEnumerable<Column> GetColumns(SqlConnection connection, Table table)
+        private IEnumerable<Column> GetColumns(SqlConnection connection, Table table)
         {
             string sqlCommandStr = @"SELECT COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLLATION_NAME
                                             FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName";
@@ -111,12 +116,7 @@ namespace DatabaseBackup.DAL
             return columns;
         }
 
-        private static void GetData()
-        {
-            //
-        }
-
-        private static IEnumerable<ForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection)
+        private IEnumerable<ForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection)
         {
             var foreignKeyConstraints = new List<ForeignKeyConstraint>();
             string sqlCommandStr = @"SELECT
@@ -173,7 +173,7 @@ namespace DatabaseBackup.DAL
             return foreignKeyConstraints;
         }
 
-        private static IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
+        private IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
         {
             var procedures = new List<Procedure>();
             string sqlCommandStr = @"SELECT ROUTINE_NAME, ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
@@ -195,7 +195,7 @@ namespace DatabaseBackup.DAL
             return procedures;
         }
 
-        private static IEnumerable<Table> GetTables(SqlConnection connection)
+        private IEnumerable<Table> GetTables(SqlConnection connection)
         {
             var tables = new List<Table>();
             using (SqlCommand command = new SqlCommand("SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", connection))
