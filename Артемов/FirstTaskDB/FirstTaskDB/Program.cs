@@ -11,8 +11,8 @@ namespace FirstTaskDB
     {            
         static void Main(string[] args)
         {
-            StreamReader inFile = new StreamReader(@"C:\Users\Виктор\Desktop\Базы данных\FirstTaskDB\input.txt");
-            StreamWriter outFile = new StreamWriter(@"C:\Users\Виктор\Desktop\Базы данных\FirstTaskDB\output.txt");
+            StreamReader inFile = new StreamReader("input.txt");
+            StreamWriter outFile = new StreamWriter("output.txt");
             string path = inFile.ReadToEnd();
             inFile.Close();
 
@@ -47,7 +47,8 @@ namespace FirstTaskDB
 
             foreach (var el in sortedGroups)
             {                                
-                outFile.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);         
+                outFile.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);
+                //Console.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);        
             }          
               
             outFile.Close();

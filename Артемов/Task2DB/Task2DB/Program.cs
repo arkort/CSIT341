@@ -16,17 +16,17 @@ namespace Task2DB
         static void Main()
         {
             XmlReaderSettings legoSettings = new XmlReaderSettings();
-            legoSettings.Schemas.Add(null, @"C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\XMLFile1.xsd");
+            legoSettings.Schemas.Add(null, @"XMLFile1.xsd");
             legoSettings.ValidationType = ValidationType.Schema;
             legoSettings.ValidationEventHandler += new ValidationEventHandler(legoSettingsValidationEventHandler);
-            XmlReader lego = XmlReader.Create(@"C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\XML_LEGO.xml", legoSettings);
+            XmlReader lego = XmlReader.Create(@"XML_LEGO.xml", legoSettings);
             
             while (lego.Read()) { }
 
             if (showInfo)
             {
                 XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(@"C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\XML_LEGO.xml");             
+                xDoc.Load(@"XML_LEGO.xml");             
                 XmlElement xRoot = xDoc.DocumentElement;
                 foreach (XmlNode xnode in xRoot)
                 {
