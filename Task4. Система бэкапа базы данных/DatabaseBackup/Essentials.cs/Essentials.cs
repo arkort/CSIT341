@@ -8,9 +8,6 @@ namespace DatabaseBackup.Essential
 {
     public static class Essentials
     {
-        public static readonly string getAllColumnsFromATableQuery = @"SELECT COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLLATION_NAME
-                                            FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName";
-
         public static readonly string getAllForeignKeysQuery = @"SELECT
 	                                    FK_Schema = FK.TABLE_SCHEMA,
                                         FK_Table = FK.TABLE_NAME,

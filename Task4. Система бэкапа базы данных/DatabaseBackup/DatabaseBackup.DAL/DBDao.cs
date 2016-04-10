@@ -74,8 +74,8 @@ namespace DatabaseBackup.DAL
                 this.WriteSequences(sequences, sqlFile);
                 sqlFile.WriteLine();
 
-                //this.WriteData(data, sqlFile);
-                //sqlFile.WriteLine();
+                this.WriteTableData(tables, sqlFile);
+                sqlFile.WriteLine();
 
                 this.WriteConstraints(constraints, sqlFile);
                 sqlFile.WriteLine();
@@ -84,7 +84,8 @@ namespace DatabaseBackup.DAL
 
         private IEnumerable<Column> GetColumns(SqlConnection connection, Table table)
         {
-            string sqlCommandStr = Essentials.getAllColumnsFromATableQuery;
+            string sqlCommandStr = @"SELECT COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLLATION_NAME
+                                            FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName";
             var columns = new List<Column>();
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
@@ -110,6 +111,103 @@ namespace DatabaseBackup.DAL
             }
 
             return columns;
+        }
+
+        private IEnumerable<Data> GetData(SqlConnection connection, Table table)
+        {
+            var sqlCommandStr = $"SELECT {string.Join(", ", table.Columns.Select(x => x.Name))} FROM {table.Name}";
+            var data = new List<Data>();
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var tempData = new Data();
+                        tempData.NameValue = new Dictionary<string, string>();
+                        tempData.TableName = table.Name;
+                        tempData.TableSchema = table.Schema;
+                        int counter = 0;
+                        foreach (var column in table.Columns)
+                        {
+                            if (reader[counter] is DBNull)
+                            {
+                                tempData.NameValue.Add(column.Name, "NULL");
+                                continue;
+                            }
+
+                            switch (column.DataType)
+                            {
+                                case "binary":
+                                case "varbinary":
+                                case "image":
+                                case "rowversion":
+                                case "timestamp":
+                                    tempData.NameValue.Add(column.Name, $"'0x{BitConverter.ToString((byte[])reader[counter]).Replace("-", string.Empty)}'");
+                                    break;
+
+                                case "bigint":
+                                case "bit":
+                                case "decimal":
+                                case "float":
+                                case "int":
+                                case "money":
+                                case "numeric":
+                                case "real":
+                                case "smallint":
+                                case "smallmoney":
+                                case "tinyint":
+                                    tempData.NameValue.Add(column.Name, reader[counter].ToString());
+                                    break;
+
+                                case "nchar":
+                                case "ntext":
+                                case "nvarchar":
+                                    tempData.NameValue.Add(column.Name, $"'n{reader[counter].ToString()}'");
+                                    break;
+
+                                case "char":
+                                case "text":
+                                case "varchar":
+                                    tempData.NameValue.Add(column.Name, $"'{reader[counter].ToString()}'");
+                                    break;
+
+                                case "date":
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToShortDateString()}'");
+                                    break;
+
+                                case "datetime":
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-YYYY HH:mm:ss.fffffff")}'");
+                                    break;
+
+                                case "datetime2":
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-YYYY HH:mm:ss.fffffff")}'");
+                                    break;
+
+                                case "datetimeoffset":
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-YYYY HH:mm:ss.fffffff zzz")}'");
+                                    break;
+
+                                case "time":
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetTimeSpan(counter)}'");
+                                    break;
+
+                                case "uniqueidentifier":
+                                    tempData.NameValue.Add(column.Name, $"{reader.GetGuid(counter).ToString()}'");
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            counter++;
+                        }
+
+                        data.Add(tempData);
+                    }
+                }
+            }
+
+            return data;
         }
 
         private IEnumerable<Constraint> GetForeignKeyConstraints(SqlConnection connection)
@@ -305,6 +403,7 @@ namespace DatabaseBackup.DAL
             foreach (var table in tables)
             {
                 table.Columns = this.GetColumns(connection, table);
+                table.Data = this.GetData(connection, table);
             }
 
             return tables;
@@ -373,7 +472,6 @@ namespace DatabaseBackup.DAL
             {
                 sqlFile.WriteLine(constraint);
                 sqlFile.WriteLine("GO");
-                sqlFile.WriteLine();
             }
         }
 
@@ -417,6 +515,20 @@ namespace DatabaseBackup.DAL
             }
         }
 
+        private void WriteTableData(IEnumerable<Table> tables, StreamWriter sqlFile)
+        {
+            sqlFile.WriteLine("/* Data */");
+
+            foreach (var table in tables)
+            {
+                foreach (var dataPiece in table.Data)
+                {
+                    sqlFile.WriteLine(dataPiece);
+                    sqlFile.WriteLine("GO");
+                }
+            }
+        }
+
         private void WriteTablesCreation(IEnumerable<Table> tables, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Tables */");
@@ -442,6 +554,7 @@ namespace DatabaseBackup.DAL
             foreach (var view in views)
             {
                 sqlFile.WriteLine(view);
+                sqlFile.WriteLine("GO");
             }
         }
     }
