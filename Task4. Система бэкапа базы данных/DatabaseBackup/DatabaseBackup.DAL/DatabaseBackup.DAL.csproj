@@ -53,10 +53,6 @@
       <Project>{4b931ed5-c7fe-4b0f-bb5b-2c27354570c4}</Project>
       <Name>DatabaseBackup.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Essentials.cs\DatabaseBackup.Essentials.csproj">
-      <Project>{1f5a765f-a32e-46b0-a9a3-b81e28c1f446}</Project>
-      <Name>DatabaseBackup.Essentials</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DatabaseBackup.Entities
 {
-    public class View
+    public class Trigger
     {
         public string Definition { get; set; }
         public string Name { get; set; }
-        public string Schema { get; set; }
-        public IEnumerable<Trigger> Triggers { get; set; }
 
         public override string ToString()
         {
-            return Definition;
+            return this.Definition;
         }
     }
 }

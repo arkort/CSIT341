@@ -5,8 +5,10 @@ namespace DatabaseBackup.Entities
     public class Table
     {
         public System.Collections.Generic.IEnumerable<Column> Columns { get; set; }
+        public IEnumerable<Constraint> Constraints { get; set; }
         public IEnumerable<Data> Data { get; set; }
         public string Name { get; set; }
         public string Schema { get; set; }
+        public IEnumerable<Trigger> Triggers { get; set; }
     }
 }
