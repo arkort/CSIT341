@@ -8,7 +8,7 @@ namespace DatabaseBackup.Entities
 {
     public class PrimaryKeyConstraint : Constraint
     {
-        public override string ToString()
+        public override string GetCreationQuery()
         {
             return $"ALTER TABLE {this.TableName} ADD CONSTRAINT {this.Name} PRIMARY KEY ({string.Join(", ", this.Columns)})";
         }

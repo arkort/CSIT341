@@ -10,7 +10,7 @@ namespace DatabaseBackup.ConsoleApp
     {
         public static void Main(string[] args)
         {
-            var conString = @"Data Source=alexey\sqlexpress;Initial Catalog=RECRUITMENT_AGENCY;Integrated Security=True";
+            var conString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=ComicsCatalogue;Integrated Security=True";
             ILogic logic = new Logic();
 
             logic.Backup(conString);

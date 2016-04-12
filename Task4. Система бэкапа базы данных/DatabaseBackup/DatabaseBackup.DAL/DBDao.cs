@@ -19,8 +19,8 @@ namespace DatabaseBackup.DAL
             {
                 connection.Open();
 
-                database = this.GetDatabase(connection, Regex.Match(conString, @"Initial Catalog=(.+?);").Groups[1].Value);
-
+                database = this.GetDatabase(connection, Regex.Match(conString, @"Initial Catalog=[""]?(.+?)[""]?;").Groups[1].Value);
+                
                 database.Tables = this.GetTables(connection);
 
                 database.Procedures = this.GetStoredProcedures(connection);
@@ -334,7 +334,7 @@ namespace DatabaseBackup.DAL
 
         #region getters
 
-        private IEnumerable<Constraint> GetForeignKeyConstraints(SqlConnection connection, Table table)
+        private IEnumerable<ForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection, Table table)
         {
             var foreignKeyConstraints = new List<ForeignKeyConstraint>();
             string sqlCommandStr = @"SELECT
@@ -436,7 +436,7 @@ WHERE FK.TABLE_SCHEMA = @tableSchema AND FK.TABLE_NAME = @tableName";
             return functions;
         }
 
-        private IEnumerable<Constraint> GetPrimaryKeyConstraints(SqlConnection connection, Table table)
+        private IEnumerable<PrimaryKeyConstraint> GetPrimaryKeyConstraints(SqlConnection connection, Table table)
         {
             var primaryKeyConstraints = new List<PrimaryKeyConstraint>();
             string sqlCommandStr = @"SELECT  tc.CONSTRAINT_NAME, tc.TABLE_SCHEMA, tc.TABLE_NAME, cu.COLUMN_NAME
@@ -639,7 +639,7 @@ ON ss.name = infS.SEQUENCE_NAME";
             return triggers;
         }
 
-        private IEnumerable<Constraint> GetUniqueConstraints(SqlConnection connection, Table table)
+        private IEnumerable<UniqueConstraint> GetUniqueConstraints(SqlConnection connection, Table table)
         {
             var uniqueConstraints = new List<UniqueConstraint>();
             string sqlCommandStr = @"SELECT tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME,  tc.TABLE_SCHEMA, tc.TABLE_NAME, cu.COLUMN_NAME
@@ -769,7 +769,7 @@ ON ss.name = infS.SEQUENCE_NAME";
             {
                 foreach (var constraint in table.Constraints)
                 {
-                    sqlFile.WriteLine(constraint);
+                    sqlFile.WriteLine(constraint.GetCreationQuery());
                     sqlFile.WriteLine("GO");
                 }
             }
