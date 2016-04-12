@@ -14,7 +14,7 @@ namespace DatabaseBackup.ConsoleApp
             ILogic logic = new Logic();
 
             logic.Backup(conString);
-            Console.Write("Backup completed. If you want to quit, enter q. If you want to backup another database, press any other key: ");
+            Console.Write("Backup completed.");
         }
     }
 }
