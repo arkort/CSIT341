@@ -197,15 +197,15 @@ namespace DatabaseBackup.DAL
                                     break;
 
                                 case "datetime":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-YYYY HH:mm:ss.fffffff")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-yyyy HH:mm:ss.fffffff")}'");
                                     break;
 
                                 case "datetime2":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-YYYY HH:mm:ss.fffffff")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-yyyy HH:mm:ss.fffffff")}'");
                                     break;
 
                                 case "datetimeoffset":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-YYYY HH:mm:ss.fffffff zzz")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-yyyy HH:mm:ss.fffffff zzz")}'");
                                     break;
 
                                 case "time":
