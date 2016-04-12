@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckConstraint.cs" />
     <Compile Include="Constraint.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Database.cs" />

@@ -42,26 +42,6 @@ namespace DatabaseBackup.DAL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> ShowDatabases(string conString)
-        {
-            var databases = new List<string>();
-            var sqlCommandStr = "SELECT name FROM sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb')";
-            using (var connection = new SqlConnection(conString))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(sqlCommandStr, connection))
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        databases.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-            return databases;
-        }
-
         private void CreateBackupFile(Database database)
         {
             var curDate = DateTime.Now;
@@ -101,6 +81,8 @@ namespace DatabaseBackup.DAL
                 sqlFile.WriteLine();
             }
         }
+
+        #region getters
 
         private IEnumerable<Column> GetColumns(SqlConnection connection, Table table)
         {
@@ -332,8 +314,6 @@ namespace DatabaseBackup.DAL
             return null;
         }
 
-        #region getters
-
         private IEnumerable<ForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection, Table table)
         {
             var foreignKeyConstraints = new List<ForeignKeyConstraint>();
@@ -413,6 +393,34 @@ WHERE FK.TABLE_SCHEMA = @tableSchema AND FK.TABLE_NAME = @tableName";
             }
 
             return foreignKeyConstraints;
+        }
+
+        private IEnumerable<CheckConstraint> GetCheckedConstraints(SqlConnection connection, Table table)
+        {
+            var checkedConstraints = new List<CheckConstraint>();
+            string sqlCommandStr = @"select tab.TABLE_SCHEMA, tab.TABLE_NAME, scc.name, scc.definition from sys.check_constraints as scc inner join (select st.object_id, ist.TABLE_NAME, ist.TABLE_SCHEMA from INFORMATION_SCHEMA.TABLES as ist inner join sys.tables as st on ist.TABLE_NAME = st.name WHERE ist.TABLE_TYPE = 'BASE TABLE') as tab
+on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND tab.TABLE_SCHEMA = @tableSchema";
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            {
+                command.Parameters.AddWithValue("@tableName", table.Name);
+                command.Parameters.AddWithValue("@tableSchema", table.Schema);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        checkedConstraints.Add(new CheckConstraint
+                        {
+                            TableSchema = reader.GetString(0),
+                            TableName = reader.GetString(1),
+                            Name = reader.GetString(2),
+                            CheckClause = reader.GetString(3),   
+                        });
+                    }
+                }
+            }
+
+            return checkedConstraints;
         }
 
         private IEnumerable<Function> GetFunctions(SqlConnection connection)
@@ -583,6 +591,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                 var constraints = new List<Constraint>(this.GetForeignKeyConstraints(connection, table));
                 constraints.AddRange(this.GetPrimaryKeyConstraints(connection, table));
                 constraints.AddRange(this.GetUniqueConstraints(connection, table));
+                constraints.AddRange(this.GetCheckedConstraints(connection, table));
 
                 table.Columns = this.GetColumns(connection, table);
                 table.Data = this.GetData(connection, table);

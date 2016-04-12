@@ -19,10 +19,5 @@ namespace DatabaseBackup.BLL
         {
             dal.Restore(date);
         }
-
-        public IEnumerable<string> ShowDatabasesNames(string conString)
-        {
-            return dal.ShowDatabases(conString);
-        }
     }
 }
