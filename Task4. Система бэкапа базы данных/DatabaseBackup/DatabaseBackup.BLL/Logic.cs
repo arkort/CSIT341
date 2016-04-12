@@ -1,8 +1,8 @@
-﻿using DatabaseBackup.ContractsBLL;
+﻿using System;
+using System.Collections.Generic;
+using DatabaseBackup.ContractsBLL;
 using DatabaseBackup.ContractsDAL;
 using DatabaseBackup.DAL;
-using System;
-using System.Collections.Generic;
 
 namespace DatabaseBackup.BLL
 {
@@ -10,9 +10,9 @@ namespace DatabaseBackup.BLL
     {
         private IDao dal = new DBDao();
 
-        public void Backup(string conString, string databaseName)
+        public void Backup(string conString)
         {
-            dal.Backup(conString, databaseName);
+            dal.Backup(conString);
         }
 
         public void Restore(System.DateTime date)

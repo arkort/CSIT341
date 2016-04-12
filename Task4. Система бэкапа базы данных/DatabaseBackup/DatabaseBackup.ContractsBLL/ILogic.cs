@@ -2,7 +2,7 @@
 {
     public interface ILogic
     {
-        void Backup(string conString, string databaseName);
+        void Backup(string conString);
 
         void Restore(System.DateTime date);
 

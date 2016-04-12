@@ -1,36 +1,37 @@
-﻿using DatabaseBackup.ContractsDAL;
-using DatabaseBackup.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using DatabaseBackup.ContractsDAL;
+using DatabaseBackup.Entities;
 
 namespace DatabaseBackup.DAL
 {
     public class DBDao : IDao
     {
-        public void Backup(string conString, string databaseName)
+        public void Backup(string conString)
         {
             Database database;
             using (var connection = new SqlConnection(conString))
             {
                 connection.Open();
 
-                database = this.GetDatabase(connection, databaseName);
+                database = this.GetDatabase(connection, Regex.Match(conString, @"Initial Catalog=(.+?);").Groups[1].Value);
 
-                database.Tables = this.GetTables(connection, database);
+                database.Tables = this.GetTables(connection);
 
-                database.Procedures = this.GetStoredProcedures(connection, database);
+                database.Procedures = this.GetStoredProcedures(connection);
 
-                database.Synonyms = this.GetSynonyms(connection, database);
+                database.Synonyms = this.GetSynonyms(connection);
 
-                database.Views = this.GetViews(connection, database);
+                database.Views = this.GetViews(connection);
 
-                database.Functions = this.GetFunctions(connection, database);
+                database.Functions = this.GetFunctions(connection);
 
-                database.Sequences = this.GetSequences(connection, database);
+                database.Sequences = this.GetSequences(connection);
             }
 
             this.CreateBackupFile(database);
@@ -414,14 +415,13 @@ WHERE FK.TABLE_SCHEMA = @tableSchema AND FK.TABLE_NAME = @tableName";
             return foreignKeyConstraints;
         }
 
-        private IEnumerable<Function> GetFunctions(SqlConnection connection, Database database)
+        private IEnumerable<Function> GetFunctions(SqlConnection connection)
         {
             var functions = new List<Function>();
-            string sqlCommandStr = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'FUNCTION' AND SPECIFIC_CATALOG = @specificCatalog";
+            string sqlCommandStr = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'FUNCTION'";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
-                command.Parameters.AddWithValue("@specificCatalog", database.Name);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -480,17 +480,16 @@ WHERE FK.TABLE_SCHEMA = @tableSchema AND FK.TABLE_NAME = @tableName";
             return primaryKeyConstraints;
         }
 
-        private IEnumerable<Sequence> GetSequences(SqlConnection connection, Database database)
+        private IEnumerable<Sequence> GetSequences(SqlConnection connection)
         {
             string sqlCommandStr = @"SELECT infS.SEQUENCE_SCHEMA, infS.SEQUENCE_NAME, infS.DATA_TYPE, infS.START_VALUE, infS.INCREMENT, infS.MINIMUM_VALUE, infS.MAXIMUM_VALUE, ss.is_cached FROM INFORMATION_SCHEMA.SEQUENCES as infS
 INNER JOIN (SELECT name, is_cached FROM sys.sequences) as ss
-ON ss.name = infS.SEQUENCE_NAME WHERE infS.SEQUENCE_CATALOG = @databaseName";
+ON ss.name = infS.SEQUENCE_NAME";
 
             var sequences = new List<Sequence>();
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
-                command.Parameters.AddWithValue("@databaseName", database.Name);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -513,15 +512,14 @@ ON ss.name = infS.SEQUENCE_NAME WHERE infS.SEQUENCE_CATALOG = @databaseName";
             return sequences;
         }
 
-        private IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection, Database database)
+        private IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
         {
             var procedures = new List<Procedure>();
             string sqlCommandStr = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
-                                        WHERE ROUTINE_TYPE = 'PROCEDURE' AND SPECIFIC_CATALOG = @specificCatalog";
+                                        WHERE ROUTINE_TYPE = 'PROCEDURE'";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
-                command.Parameters.AddWithValue("@specificCatalog", database.Name);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -537,7 +535,7 @@ ON ss.name = infS.SEQUENCE_NAME WHERE infS.SEQUENCE_CATALOG = @databaseName";
             return procedures;
         }
 
-        private IEnumerable<Synonym> GetSynonyms(SqlConnection connection, Database database)
+        private IEnumerable<Synonym> GetSynonyms(SqlConnection connection)
         {
             var synonyms = new List<Synonym>();
             string sqlCommandStr = "SELECT name, base_object_name FROM sys.synonyms";
@@ -549,29 +547,25 @@ ON ss.name = infS.SEQUENCE_NAME WHERE infS.SEQUENCE_CATALOG = @databaseName";
                 {
                     var catalogueSchemaObject = reader.GetString(1).Replace("[", string.Empty).Replace("]", string.Empty).Split('.');
 
-                    if (catalogueSchemaObject[0] == database.Name)
+                    synonyms.Add(new Synonym
                     {
-                        synonyms.Add(new Synonym
-                        {
-                            Name = reader.GetString(0),
-                            Catalogue = catalogueSchemaObject[0],
-                            ObjectName = catalogueSchemaObject[2],
-                            Schema = catalogueSchemaObject[1],
-                        });
-                    }
+                        Name = reader.GetString(0),
+                        Catalogue = catalogueSchemaObject[0],
+                        ObjectName = catalogueSchemaObject[2],
+                        Schema = catalogueSchemaObject[1],
+                    });
                 }
             }
 
             return synonyms;
         }
 
-        private IEnumerable<Table> GetTables(SqlConnection connection, Database database)
+        private IEnumerable<Table> GetTables(SqlConnection connection)
         {
             var tables = new List<Table>();
-            var sqlStrCommand = "SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = @dbName";
+            var sqlStrCommand = "SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
             using (SqlCommand command = new SqlCommand(sqlStrCommand, connection))
             {
-                command.Parameters.AddWithValue("@dbName", database.Name);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -689,14 +683,13 @@ ON ss.name = infS.SEQUENCE_NAME WHERE infS.SEQUENCE_CATALOG = @databaseName";
             return uniqueConstraints;
         }
 
-        private IEnumerable<View> GetViews(SqlConnection connection, Database database)
+        private IEnumerable<View> GetViews(SqlConnection connection)
         {
             var views = new List<View>();
-            string sqlCommandStr = @"SELECT TABLE_SCHEMA, TABLE_NAME, VIEW_DEFINITION FROM INFORMATION_SCHEMA.Views WHERE TABLE_CATALOG = @databaseName";
+            string sqlCommandStr = @"SELECT TABLE_SCHEMA, TABLE_NAME, VIEW_DEFINITION FROM INFORMATION_SCHEMA.Views ";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
-                command.Parameters.AddWithValue("@databaseName", database.Name);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
