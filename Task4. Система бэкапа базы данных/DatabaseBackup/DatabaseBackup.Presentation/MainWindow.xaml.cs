@@ -12,18 +12,7 @@ namespace DatabaseBackup.Presentation
         public MainWindow()
         {
             InitializeComponent();
-        }        
-
-        private void BackupButtonClick(object sender, RoutedEventArgs e)
-        {
-            Backup backupWindow = new Backup();
-            backupWindow.Show();
-        }
-
-        private void RestoreButtonClick(object sender, RoutedEventArgs e)
-        {
-            Restore restoreWindow = new Restore();
-            restoreWindow.Show();
+            frame.NavigationService.Navigate(new Uri("Page1.xaml", UriKind.Relative));
         }        
     }
 }

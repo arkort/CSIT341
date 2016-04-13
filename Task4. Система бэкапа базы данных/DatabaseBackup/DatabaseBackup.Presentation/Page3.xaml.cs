@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DatabaseBackup.Presentation
 {
     /// <summary>
-    /// Логика взаимодействия для Restore.xaml
+    /// Логика взаимодействия для Page3.xaml
     /// </summary>
-    public partial class Restore : Window
+    public partial class Page3 : Page
     {
-        public Restore()
+        public Page3()
         {
             InitializeComponent();
         }

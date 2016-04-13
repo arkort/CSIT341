@@ -7,31 +7,6 @@
         mc:Ignorable="d"
         Title="Database Backup" Height="350" Width="525">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="button"
-                Content="Backup"
-                
-                Grid.Column="1"
-                Grid.Row="1" 
-                Width="120"
-                Height="60" FontSize="29.333" Click="BackupButtonClick"
-                />
-        <Button x:Name="restoreButton"
-                Content="Restore"
-                Grid.Column="1"              
-                Grid.Row="2"
-                Width="120"
-                Height="60" FontSize="29.333" Click="RestoreButtonClick"/>
-
+        <Frame x:Name="frame" Content="Frame" HorizontalAlignment="Left" Height="320" VerticalAlignment="Top" Width="515" Margin="0,0,-8,-1"/>
     </Grid>
 </Window>
