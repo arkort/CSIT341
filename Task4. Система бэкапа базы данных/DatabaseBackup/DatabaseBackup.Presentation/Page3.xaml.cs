@@ -22,7 +22,12 @@ namespace DatabaseBackup.Presentation
     {
         public Page3()
         {
-            InitializeComponent();
+            InitializeComponent();           
+        }
+
+        private void RestoreButtonClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

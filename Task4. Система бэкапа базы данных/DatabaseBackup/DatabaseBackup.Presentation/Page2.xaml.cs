@@ -24,6 +24,8 @@ namespace DatabaseBackup.Presentation
         {
             InitializeComponent();
             selectAutentification.SelectedItem = selectAutentification.Items[0];
+
+            //combobox.Items.Add();
         }
 
         private string connectionString = "";
@@ -46,11 +48,35 @@ namespace DatabaseBackup.Presentation
             }            
         }
 
-        
         private void Combobox_Selected(object sender, SelectionChangedEventArgs e)
         {
-            //string comboboxItemText = (this.selectAutentification.SelectedItem as ComboBoxItem).Content.ToString();
+            if (selectAutentification.SelectedItem == selectAutentification.Items[0])
+            {
+                usernameTextBox.IsEnabled = false;
+                passwordTextBox.IsEnabled = false;
+                usernameLabel.IsEnabled = false;
+                passwordLabel.IsEnabled = false;
+
+                usernameTextBox.Text = "(not required)";
+                passwordTextBox.Text = "(not required)";
+            }
+            else
+            {
+                usernameTextBox.IsEnabled = true;
+                passwordTextBox.IsEnabled = true;
+                usernameLabel.IsEnabled = true;
+                passwordLabel.IsEnabled = true;
+
+                usernameTextBox.Text = "";
+                passwordTextBox.Text = "";
+            }
+            
         }
+
+        private void BackupButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }        
     }
 }
 
