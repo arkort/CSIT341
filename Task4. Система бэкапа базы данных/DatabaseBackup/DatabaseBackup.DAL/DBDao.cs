@@ -15,11 +15,12 @@ namespace DatabaseBackup.DAL
         public void Backup(string conString)
         {
             Database database;
+            string databaseName = Regex.Match(conString, @"\b(Database|Initial Catalog)=""(.+?)"";").Groups[2].Value;
             using (var connection = new SqlConnection(conString))
             {
                 connection.Open();
 
-                database = this.GetDatabase(connection, Regex.Match(conString, @"Initial Catalog=[""]?(.+?)[""]?;").Groups[1].Value);
+                database = this.GetDatabase(connection, databaseName);
                 
                 database.Tables = this.GetTables(connection);
 
@@ -40,6 +41,22 @@ namespace DatabaseBackup.DAL
         public void Restore(DateTime date)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> ShowDatabases(string conString)
+        {
+            using (var connection = new SqlConnection(conString))
+            {
+                connection.Open();
+                using (var command = new SqlCommand($"SELECT name from sys.databases", connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return reader.GetString(0);
+                    }
+                }
+            }
         }
 
         private void CreateBackupFile(Database database)
