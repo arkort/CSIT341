@@ -33,14 +33,14 @@ namespace Solution1
         {
             int countAllFiles = 0;
             Dictionary<string, int> ExtentionFiles = new Dictionary<string, int>();
-            using (StreamReader input = new StreamReader(@"D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\input.txt"))
+            using (StreamReader input = new StreamReader("input.txt"))
             {
                 string path = input.ReadLine();
                 DirectoryInfo di = new DirectoryInfo(path);
                 Scan(di,ref ExtentionFiles,ref countAllFiles);
 
             }
-            using (StreamWriter output = new StreamWriter(@"D:\Универ\6 семестр\CSIT341\Александр Ванюков\Solution1\Solution1\output.txt"))
+            using (StreamWriter output = new StreamWriter("output.txt"))
             {
                 foreach(var i in ExtentionFiles)
                 {
