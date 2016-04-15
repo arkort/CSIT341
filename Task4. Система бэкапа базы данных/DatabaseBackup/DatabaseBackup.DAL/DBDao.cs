@@ -134,7 +134,7 @@ namespace DatabaseBackup.DAL
 
         private IEnumerable<Data> GetData(SqlConnection connection, Table table)
         {
-            var sqlCommandStr = $"SELECT {string.Join(", ", table.Columns.Select(x => x.Name))} FROM {table.Name}";
+            var sqlCommandStr = $"SELECT {string.Join(", ", table.Columns.Select(x => string.Format($"[{x.Name}]")))} FROM {table.Schema}.{table.Name}";
             var data = new List<Data>();
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
@@ -622,10 +622,15 @@ ON ss.name = infS.SEQUENCE_NAME";
         private IEnumerable<Trigger> GetTableTriggers(SqlConnection connection, Table table)
         {
             var triggers = new List<Trigger>();
-            var names = new List<string>();
+
+            // Dictionary<Name, Schema>
+            var nameSchemaPairs = new Dictionary<string, string>();
+
             StringBuilder definition = new StringBuilder();
-            string sqlCommandStr = "SELECT name FROM sys.triggers AS st WHERE st.parent_id = (SELECT object_id FROM sys.tables WHERE name = @tableName AND schema_id = (SELECT schema_id FROM sys.schemas WHERE name = @tableSchema))";
-            string sqlCommandStr2 = "exec sp_helptext @name";
+            string sqlCommandStr = @"SELECT sys.objects.name AS [trigger], sys.tables.name AS [table], sys.schemas.name AS [schema] FROM  sys.schemas
+                                    RIGHT JOIN sys.tables ON sys.schemas.schema_id = sys.tables.schema_id
+                                    RIGHT JOIN sys.objects ON sys.tables.object_id = sys.objects.parent_object_id
+                                    WHERE sys.objects.type = 'tr' AND sys.tables.name = @tableName AND sys.schemas.name = @tableSchema";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
@@ -635,15 +640,18 @@ ON ss.name = infS.SEQUENCE_NAME";
                 {
                     while (reader.Read())
                     {
-                        names.Add(reader.GetString(0));
+                        nameSchemaPairs.Add(reader.GetString(0), reader.GetString(2));
                     }
                 }
             }
-            foreach (var name in names)
+
+            foreach (var pair in nameSchemaPairs)
             {
-                using (SqlCommand command = new SqlCommand(sqlCommandStr2, connection))
+                using (SqlCommand command = new SqlCommand("sp_helptext", connection))
                 {
-                    command.Parameters.AddWithValue("@name", $"{name}");
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@objname", $"{pair.Value}.{pair.Key}"));
+
                     using (SqlDataReader reader2 = command.ExecuteReader())
                     {
                         while (reader2.Read())
@@ -654,7 +662,7 @@ ON ss.name = infS.SEQUENCE_NAME";
 
                     triggers.Add(new Trigger
                     {
-                        Name = name,
+                        Name = pair.Key,
                         Definition = definition.ToString(),
                     });
 
