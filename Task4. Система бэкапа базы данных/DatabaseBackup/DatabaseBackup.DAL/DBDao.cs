@@ -1,7 +1,5 @@
 ﻿using DatabaseBackup.ContractsDAL;
 using DatabaseBackup.Entities;
-using Microsoft.SqlServer.Management.Common;
-using Microsoft.SqlServer.Management.Smo;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -44,7 +42,8 @@ namespace DatabaseBackup.DAL
 
         public void Restore(DateTime date, string conString)
         {
-            string pathToFile = @"C:\Users\John\Documents\Projects\C#\AdoNet341\CSIT341\Task4. Система бэкапа базы данных\DatabaseBackup\DatabaseBackup.ConsoleApp\bin\Debug\backup_ 16-04-2016_17-41.sql";
+            string pathToFile = $"backup_{date:dd-MM-yyyy_HH-mm}.sql";
+
             var script = File.ReadAllLines(pathToFile);
             var comString = new StringBuilder();
             using (var connection = new SqlConnection(conString))
@@ -106,7 +105,7 @@ namespace DatabaseBackup.DAL
         private void CreateBackupFile(DBDatabase database)
         {
             var curDate = DateTime.Now;
-            using (var sqlFile = new StreamWriter($"backup_{curDate: dd-MM-yyyy_HH-mm}.sql"))
+            using (var sqlFile = new StreamWriter($"backup_{curDate:dd-MM-yyyy_HH-mm}.sql"))
             {
                 sqlFile.WriteLine(database.GetCreationQuery());
                 sqlFile.WriteLine();

@@ -25,9 +25,14 @@ namespace DatabaseBackup.BLL
             this.dal.Backup($@"Data Source={address};Initial Catalog=""{databaseName}"";Integrated Security=True");
         }
 
-        public void Restore(System.DateTime date)
+        public void Restore(DateTime date, string address, string username, string password)
         {
-            this.dal.Restore(date, @"Data Source=(localdb)\mssqllocaldb;Integrated Security=True");
+            this.dal.Restore(date, $"Server={address};User Id={username};Password={password}");
+        }
+
+        public void RestoreLocalInstance(DateTime date, string address)
+        {
+            this.dal.Restore(date, $@"Data Source={address};Integrated Security=True");
         }
 
         // Use when auth is Sql security

@@ -10,6 +10,8 @@
 
         System.Collections.Generic.IEnumerable<string> ShowDatabasesLocalInstance(string address);
 
-        void Restore(System.DateTime date);
+        void Restore(System.DateTime date, string address, string username, string password);
+
+        void RestoreLocalInstance(System.DateTime date, string address);
     }
 }
