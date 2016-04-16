@@ -275,7 +275,7 @@ on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND ta
                                     break;
 
                                 case "datetime2":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("yyyy-MM-dd HH:mm:ss.fffffff")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("yyyy-MM-dd-HH:mm:ss.fffffff")}'");
                                     break;
 
                                 case "datetimeoffset":
