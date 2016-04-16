@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DatabaseBackup.Entities
 {
-    public class ForeignKeyConstraint : Constraint
+    public class DBForeignKeyConstraint : DBConstraint
     {
         public string OnDeleteRule { get; set; }
         public string OnUpdateRule { get; set; }

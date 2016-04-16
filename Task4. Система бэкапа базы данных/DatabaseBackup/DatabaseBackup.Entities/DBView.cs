@@ -2,14 +2,14 @@
 
 namespace DatabaseBackup.Entities
 {
-    public class View
+    public class DBView
     {
         public string Definition { get; set; }
         public string Name { get; set; }
         public string Schema { get; set; }
-        public IEnumerable<Trigger> Triggers { get; set; }
+        public IEnumerable<DBTrigger> Triggers { get; set; }
 
-        public override string ToString()
+        public string GetCreationQuery()
         {
             return Definition;
         }

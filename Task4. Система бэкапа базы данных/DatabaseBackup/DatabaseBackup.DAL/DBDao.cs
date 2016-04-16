@@ -1,12 +1,14 @@
-﻿using System;
+﻿using DatabaseBackup.ContractsDAL;
+using DatabaseBackup.Entities;
+using Microsoft.SqlServer.Management.Common;
+using Microsoft.SqlServer.Management.Smo;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using DatabaseBackup.ContractsDAL;
-using DatabaseBackup.Entities;
 
 namespace DatabaseBackup.DAL
 {
@@ -14,14 +16,16 @@ namespace DatabaseBackup.DAL
     {
         public void Backup(string conString)
         {
-            Database database;
+            DBDatabase database;
             string databaseName = Regex.Match(conString, @"\b(Database|Initial Catalog)=""(.+?)"";").Groups[2].Value;
             using (var connection = new SqlConnection(conString))
             {
                 connection.Open();
 
                 database = this.GetDatabase(connection, databaseName);
-                
+
+                database.Schemas = this.GetSchemas(connection);
+
                 database.Tables = this.GetTables(connection);
 
                 database.Procedures = this.GetStoredProcedures(connection);
@@ -38,9 +42,49 @@ namespace DatabaseBackup.DAL
             this.CreateBackupFile(database);
         }
 
-        public void Restore(DateTime date)
+        public void Restore(DateTime date, string conString)
         {
-            throw new NotImplementedException();
+            string pathToFile = @"C:\Users\John\Documents\Projects\C#\AdoNet341\CSIT341\Task4. Система бэкапа базы данных\DatabaseBackup\DatabaseBackup.ConsoleApp\bin\Debug\backup_ 16-04-2016_17-41.sql";
+            var script = File.ReadAllLines(pathToFile);
+            var comString = new StringBuilder();
+            using (var connection = new SqlConnection(conString))
+            {
+                connection.Open();
+                foreach (var line in script)
+                {
+                    if (Regex.IsMatch(line, @".*GO.*"))
+                    {
+                        try
+                        {
+                            using (var command = new SqlCommand(comString.ToString(), connection))
+                            {
+                                command.ExecuteNonQuery();
+                                Console.WriteLine(comString);
+                            }
+
+                            comString.Clear();
+                            continue;
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(comString);
+                            Console.WriteLine(e.Message);
+                            if (Console.ReadLine().ToLower() == "g")
+                            {
+                                comString.Clear();
+                                continue;
+                            }
+                            else
+                            {
+                                connection.Close();
+                                return;
+                            }
+                        }
+                    }
+
+                    comString.AppendLine(line);
+                }
+            }
         }
 
         public IEnumerable<string> ShowDatabases(string conString)
@@ -59,15 +103,18 @@ namespace DatabaseBackup.DAL
             }
         }
 
-        private void CreateBackupFile(Database database)
+        private void CreateBackupFile(DBDatabase database)
         {
             var curDate = DateTime.Now;
             using (var sqlFile = new StreamWriter($"backup_{curDate: dd-MM-yyyy_HH-mm}.sql"))
             {
-                sqlFile.WriteLine(database);
+                sqlFile.WriteLine(database.GetCreationQuery());
                 sqlFile.WriteLine();
                 sqlFile.WriteLine($"USE {database.Name}");
                 sqlFile.WriteLine("GO");
+                sqlFile.WriteLine();
+
+                this.WriteSchemas(database.Schemas, sqlFile);
                 sqlFile.WriteLine();
 
                 this.WriteTablesCreation(database.Tables, sqlFile);
@@ -101,11 +148,39 @@ namespace DatabaseBackup.DAL
 
         #region getters
 
-        private IEnumerable<Column> GetColumns(SqlConnection connection, Table table)
+        private IEnumerable<DBCheckConstraint> GetCheckedConstraints(SqlConnection connection, DBTable table)
+        {
+            var checkedConstraints = new List<DBCheckConstraint>();
+            string sqlCommandStr = @"select tab.TABLE_SCHEMA, tab.TABLE_NAME, scc.name, scc.definition from sys.check_constraints as scc inner join (select st.object_id, ist.TABLE_NAME, ist.TABLE_SCHEMA from INFORMATION_SCHEMA.TABLES as ist inner join sys.tables as st on ist.TABLE_NAME = st.name WHERE ist.TABLE_TYPE = 'BASE TABLE') as tab
+on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND tab.TABLE_SCHEMA = @tableSchema";
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            {
+                command.Parameters.AddWithValue("@tableName", table.Name);
+                command.Parameters.AddWithValue("@tableSchema", table.Schema);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        checkedConstraints.Add(new DBCheckConstraint
+                        {
+                            TableSchema = reader.GetString(0),
+                            TableName = reader.GetString(1),
+                            Name = reader.GetString(2),
+                            CheckClause = reader.GetString(3),
+                        });
+                    }
+                }
+            }
+
+            return checkedConstraints;
+        }
+
+        private IEnumerable<DBColumn> GetColumns(SqlConnection connection, DBTable table)
         {
             string sqlCommandStr = @"SELECT COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLLATION_NAME
                                             FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = @tableSchema AND TABLE_NAME = @tableName";
-            var columns = new List<Column>();
+            var columns = new List<DBColumn>();
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
@@ -116,13 +191,13 @@ namespace DatabaseBackup.DAL
                 {
                     while (reader.Read())
                     {
-                        columns.Add(new Column
+                        columns.Add(new DBColumn
                         {
                             Name = reader.GetString(0),
                             Default = (reader.IsDBNull(1)) ? null : reader.GetString(1),
                             IsNullable = reader.GetString(2) == "YES" ? true : false,
                             DataType = reader.GetString(3),
-                            CharactersMaxLength = (reader.IsDBNull(4)) ? -1 : reader.GetInt32(4),
+                            CharactersMaxLength = (reader.IsDBNull(4) || reader.GetString(3) == "hierarchyid") ? -1 : reader.GetInt32(4),
                             CollationName = (reader.IsDBNull(5)) ? null : reader.GetString(5),
                         });
                     }
@@ -132,17 +207,17 @@ namespace DatabaseBackup.DAL
             return columns;
         }
 
-        private IEnumerable<Data> GetData(SqlConnection connection, Table table)
+        private IEnumerable<DBData> GetData(SqlConnection connection, DBTable table)
         {
             var sqlCommandStr = $"SELECT {string.Join(", ", table.Columns.Select(x => string.Format($"[{x.Name}]")))} FROM {table.Schema}.{table.Name}";
-            var data = new List<Data>();
+            var data = new List<DBData>();
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var tempData = new Data();
+                        var tempData = new DBData();
                         tempData.NameValue = new Dictionary<string, string>();
                         tempData.TableName = table.Name;
                         tempData.TableSchema = table.Schema;
@@ -182,7 +257,7 @@ namespace DatabaseBackup.DAL
                                 case "nchar":
                                 case "ntext":
                                 case "nvarchar":
-                                    tempData.NameValue.Add(column.Name, $"'n{reader[counter].ToString()}'");
+                                    tempData.NameValue.Add(column.Name, $"N'{reader[counter].ToString()}'");
                                     break;
 
                                 case "char":
@@ -196,15 +271,15 @@ namespace DatabaseBackup.DAL
                                     break;
 
                                 case "datetime":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-yyyy HH:mm:ss.fffffff")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("yyyy-MM-dd HH:mm:ss")}'");
                                     break;
 
                                 case "datetime2":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-yyyy HH:mm:ss.fffffff")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("yyyy-MM-dd HH:mm:ss.fffffff")}'");
                                     break;
 
                                 case "datetimeoffset":
-                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("dd-MM-yyyy HH:mm:ss.fffffff zzz")}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetDateTime(counter).ToString("yyyy-MM-dd HH:mm:ss.fffffff zzz")}'");
                                     break;
 
                                 case "time":
@@ -212,7 +287,7 @@ namespace DatabaseBackup.DAL
                                     break;
 
                                 case "uniqueidentifier":
-                                    tempData.NameValue.Add(column.Name, $"{reader.GetGuid(counter).ToString()}'");
+                                    tempData.NameValue.Add(column.Name, $"'{reader.GetGuid(counter).ToString()}'");
                                     break;
 
                                 default:
@@ -229,7 +304,7 @@ namespace DatabaseBackup.DAL
             return data;
         }
 
-        private Database GetDatabase(SqlConnection connection, string databaseName)
+        private DBDatabase GetDatabase(SqlConnection connection, string databaseName)
         {
             var sqlStrCommand = @"SELECT
                                 name,
@@ -294,7 +369,7 @@ namespace DatabaseBackup.DAL
                         var IsTrustworthyOn = reader.GetBoolean(24);
                         var IsParameterizationForced = reader.GetBoolean(25);
                         var IsBrokerEnabled = reader.GetBoolean(26);
-                        return new Database
+                        return new DBDatabase
                         {
                             Name = reader.GetString(0),
                             CompatibilityLevel = reader.GetByte(1),
@@ -331,9 +406,9 @@ namespace DatabaseBackup.DAL
             return null;
         }
 
-        private IEnumerable<ForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection, Table table)
+        private IEnumerable<DBForeignKeyConstraint> GetForeignKeyConstraints(SqlConnection connection, DBTable table)
         {
-            var foreignKeyConstraints = new List<ForeignKeyConstraint>();
+            var foreignKeyConstraints = new List<DBForeignKeyConstraint>();
             string sqlCommandStr = @"SELECT
 	                                    FK_Schema = FK.TABLE_SCHEMA,
                                         FK_Table = FK.TABLE_NAME,
@@ -393,7 +468,7 @@ WHERE FK.TABLE_SCHEMA = @tableSchema AND FK.TABLE_NAME = @tableName";
                         var onDeleteRule = reader["On_Delete"] as string;
                         var onUpdateRule = reader["On_Update"] as string;
 
-                        foreignKeyConstraints.Add(new ForeignKeyConstraint
+                        foreignKeyConstraints.Add(new DBForeignKeyConstraint
                         {
                             Name = constraintName,
                             PrimaryTableColumns = new List<string> { primaryTableColumnName },
@@ -412,37 +487,9 @@ WHERE FK.TABLE_SCHEMA = @tableSchema AND FK.TABLE_NAME = @tableName";
             return foreignKeyConstraints;
         }
 
-        private IEnumerable<CheckConstraint> GetCheckedConstraints(SqlConnection connection, Table table)
+        private IEnumerable<DBFunction> GetFunctions(SqlConnection connection)
         {
-            var checkedConstraints = new List<CheckConstraint>();
-            string sqlCommandStr = @"select tab.TABLE_SCHEMA, tab.TABLE_NAME, scc.name, scc.definition from sys.check_constraints as scc inner join (select st.object_id, ist.TABLE_NAME, ist.TABLE_SCHEMA from INFORMATION_SCHEMA.TABLES as ist inner join sys.tables as st on ist.TABLE_NAME = st.name WHERE ist.TABLE_TYPE = 'BASE TABLE') as tab
-on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND tab.TABLE_SCHEMA = @tableSchema";
-
-            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
-            {
-                command.Parameters.AddWithValue("@tableName", table.Name);
-                command.Parameters.AddWithValue("@tableSchema", table.Schema);
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        checkedConstraints.Add(new CheckConstraint
-                        {
-                            TableSchema = reader.GetString(0),
-                            TableName = reader.GetString(1),
-                            Name = reader.GetString(2),
-                            CheckClause = reader.GetString(3),   
-                        });
-                    }
-                }
-            }
-
-            return checkedConstraints;
-        }
-
-        private IEnumerable<Function> GetFunctions(SqlConnection connection)
-        {
-            var functions = new List<Function>();
+            var functions = new List<DBFunction>();
             string sqlCommandStr = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'FUNCTION'";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
@@ -451,7 +498,7 @@ on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND ta
                 {
                     while (reader.Read())
                     {
-                        functions.Add(new Function
+                        functions.Add(new DBFunction
                         {
                             Definition = reader.GetString(0),
                         });
@@ -461,9 +508,9 @@ on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND ta
             return functions;
         }
 
-        private IEnumerable<PrimaryKeyConstraint> GetPrimaryKeyConstraints(SqlConnection connection, Table table)
+        private IEnumerable<DBPrimaryKeyConstraint> GetPrimaryKeyConstraints(SqlConnection connection, DBTable table)
         {
-            var primaryKeyConstraints = new List<PrimaryKeyConstraint>();
+            var primaryKeyConstraints = new List<DBPrimaryKeyConstraint>();
             string sqlCommandStr = @"SELECT  tc.CONSTRAINT_NAME, tc.TABLE_SCHEMA, tc.TABLE_NAME, cu.COLUMN_NAME
 	                                                                        FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
 		                                                                        INNER JOIN(SELECT * FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE) AS cu
@@ -491,7 +538,7 @@ on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND ta
                             continue;
                         }
 
-                        primaryKeyConstraints.Add(new PrimaryKeyConstraint
+                        primaryKeyConstraints.Add(new DBPrimaryKeyConstraint
                         {
                             Name = constraintName,
                             Columns = new List<string> { primaryTableColumnName },
@@ -505,13 +552,24 @@ on scc.parent_object_id = tab.object_id WHERE tab.TABLE_NAME = @tableName AND ta
             return primaryKeyConstraints;
         }
 
-        private IEnumerable<Sequence> GetSequences(SqlConnection connection)
+        private IEnumerable<DBSchema> GetSchemas(SqlConnection connection)
         {
-            string sqlCommandStr = @"SELECT infS.SEQUENCE_SCHEMA, infS.SEQUENCE_NAME, infS.DATA_TYPE, infS.START_VALUE, infS.INCREMENT, infS.MINIMUM_VALUE, infS.MAXIMUM_VALUE, ss.is_cached FROM INFORMATION_SCHEMA.SEQUENCES as infS
-INNER JOIN (SELECT name, is_cached FROM sys.sequences) as ss
-ON ss.name = infS.SEQUENCE_NAME";
-
-            var sequences = new List<Sequence>();
+            var schemas = new List<DBSchema>();
+            string sqlCommandStr = @"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME NOT IN
+(
+'dbo',
+'guest',
+'INFORMATION_SCHEMA',
+'sys',
+'db_owner',
+'db_accessadmin',
+'db_securityadmin',
+'db_ddladmin',
+'db_backupoperator',
+'db_datareader',
+'db_datawriter',
+'db_denydatareader',
+'db_denydatawriter')";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
@@ -519,7 +577,31 @@ ON ss.name = infS.SEQUENCE_NAME";
                 {
                     while (reader.Read())
                     {
-                        sequences.Add(new Sequence
+                        schemas.Add(new DBSchema
+                        {
+                            Name = reader.GetString(0),
+                        });
+                    }
+                }
+            }
+            return schemas;
+        }
+
+        private IEnumerable<DBSequence> GetSequences(SqlConnection connection)
+        {
+            string sqlCommandStr = @"SELECT infS.SEQUENCE_SCHEMA, infS.SEQUENCE_NAME, infS.DATA_TYPE, infS.START_VALUE, infS.INCREMENT, infS.MINIMUM_VALUE, infS.MAXIMUM_VALUE, ss.is_cached FROM INFORMATION_SCHEMA.SEQUENCES as infS
+INNER JOIN (SELECT name, is_cached FROM sys.sequences) as ss
+ON ss.name = infS.SEQUENCE_NAME";
+
+            var sequences = new List<DBSequence>();
+
+            using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        sequences.Add(new DBSequence
                         {
                             Schema = reader.GetString(0),
                             Name = reader.GetString(1),
@@ -537,9 +619,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return sequences;
         }
 
-        private IEnumerable<Procedure> GetStoredProcedures(SqlConnection connection)
+        private IEnumerable<DBProcedure> GetStoredProcedures(SqlConnection connection)
         {
-            var procedures = new List<Procedure>();
+            var procedures = new List<DBProcedure>();
             string sqlCommandStr = @"SELECT ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES
                                         WHERE ROUTINE_TYPE = 'PROCEDURE'";
 
@@ -549,7 +631,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                 {
                     while (reader.Read())
                     {
-                        procedures.Add(new Procedure
+                        procedures.Add(new DBProcedure
                         {
                             Definition = reader.GetString(0),
                         });
@@ -560,9 +642,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return procedures;
         }
 
-        private IEnumerable<Synonym> GetSynonyms(SqlConnection connection)
+        private IEnumerable<DBSynonym> GetSynonyms(SqlConnection connection)
         {
-            var synonyms = new List<Synonym>();
+            var synonyms = new List<DBSynonym>();
             string sqlCommandStr = "SELECT name, base_object_name FROM sys.synonyms";
             char[] trimChars = new char[] { '[', ']' };
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
@@ -572,7 +654,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                 {
                     var catalogueSchemaObject = reader.GetString(1).Replace("[", string.Empty).Replace("]", string.Empty).Split('.');
 
-                    synonyms.Add(new Synonym
+                    synonyms.Add(new DBSynonym
                     {
                         Name = reader.GetString(0),
                         Catalogue = catalogueSchemaObject[0],
@@ -585,9 +667,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return synonyms;
         }
 
-        private IEnumerable<Table> GetTables(SqlConnection connection)
+        private IEnumerable<DBTable> GetTables(SqlConnection connection)
         {
-            var tables = new List<Table>();
+            var tables = new List<DBTable>();
             var sqlStrCommand = "SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
             using (SqlCommand command = new SqlCommand(sqlStrCommand, connection))
             {
@@ -595,7 +677,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                 {
                     while (reader.Read())
                     {
-                        tables.Add(new Table
+                        tables.Add(new DBTable
                         {
                             Schema = reader.GetString(0),
                             Name = reader.GetString(1)
@@ -605,7 +687,7 @@ ON ss.name = infS.SEQUENCE_NAME";
             }
             foreach (var table in tables)
             {
-                var constraints = new List<Constraint>(this.GetForeignKeyConstraints(connection, table));
+                var constraints = new List<DBConstraint>(this.GetForeignKeyConstraints(connection, table));
                 constraints.AddRange(this.GetPrimaryKeyConstraints(connection, table));
                 constraints.AddRange(this.GetUniqueConstraints(connection, table));
                 constraints.AddRange(this.GetCheckedConstraints(connection, table));
@@ -619,9 +701,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return tables;
         }
 
-        private IEnumerable<Trigger> GetTableTriggers(SqlConnection connection, Table table)
+        private IEnumerable<DBTrigger> GetTableTriggers(SqlConnection connection, DBTable table)
         {
-            var triggers = new List<Trigger>();
+            var triggers = new List<DBTrigger>();
 
             // Dictionary<Name, Schema>
             var nameSchemaPairs = new Dictionary<string, string>();
@@ -660,7 +742,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                         }
                     }
 
-                    triggers.Add(new Trigger
+                    triggers.Add(new DBTrigger
                     {
                         Name = pair.Key,
                         Definition = definition.ToString(),
@@ -673,9 +755,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return triggers;
         }
 
-        private IEnumerable<UniqueConstraint> GetUniqueConstraints(SqlConnection connection, Table table)
+        private IEnumerable<DBUniqueConstraint> GetUniqueConstraints(SqlConnection connection, DBTable table)
         {
-            var uniqueConstraints = new List<UniqueConstraint>();
+            var uniqueConstraints = new List<DBUniqueConstraint>();
             string sqlCommandStr = @"SELECT tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME,  tc.TABLE_SCHEMA, tc.TABLE_NAME, cu.COLUMN_NAME
 	        FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
 	        INNER JOIN(SELECT * FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE) AS cu
@@ -703,7 +785,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                             continue;
                         }
 
-                        uniqueConstraints.Add(new UniqueConstraint
+                        uniqueConstraints.Add(new DBUniqueConstraint
                         {
                             Name = constraintName,
                             Columns = new List<string> { primaryTableColumnName },
@@ -717,9 +799,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return uniqueConstraints;
         }
 
-        private IEnumerable<View> GetViews(SqlConnection connection)
+        private IEnumerable<DBView> GetViews(SqlConnection connection)
         {
-            var views = new List<View>();
+            var views = new List<DBView>();
             string sqlCommandStr = @"SELECT TABLE_SCHEMA, TABLE_NAME, VIEW_DEFINITION FROM INFORMATION_SCHEMA.Views ";
 
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
@@ -728,7 +810,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                 {
                     while (reader.Read())
                     {
-                        views.Add(new View
+                        views.Add(new DBView
                         {
                             Schema = reader.GetString(0),
                             Name = reader.GetString(1),
@@ -746,9 +828,9 @@ ON ss.name = infS.SEQUENCE_NAME";
             return views;
         }
 
-        private IEnumerable<Trigger> GetViewTriggers(SqlConnection connection, View view)
+        private IEnumerable<DBTrigger> GetViewTriggers(SqlConnection connection, DBView view)
         {
-            var triggers = new List<Trigger>();
+            var triggers = new List<DBTrigger>();
             var names = new List<string>();
             StringBuilder definition = new StringBuilder();
             string sqlCommandStr = "SELECT name FROM sys.triggers AS st WHERE st.parent_id = (SELECT object_id FROM sys.tables WHERE name = @viewName AND schema_id = (SELECT schema_id FROM sys.schemas WHERE name = @viewSchema))";
@@ -780,7 +862,7 @@ ON ss.name = infS.SEQUENCE_NAME";
                         }
                     }
 
-                    triggers.Add(new Trigger
+                    triggers.Add(new DBTrigger
                     {
                         Name = name,
                         Definition = definition.ToString(),
@@ -797,7 +879,7 @@ ON ss.name = infS.SEQUENCE_NAME";
 
         #region WriteMethods
 
-        private void WriteConstraints(IEnumerable<Table> tables, StreamWriter sqlFile)
+        private void WriteConstraints(IEnumerable<DBTable> tables, StreamWriter sqlFile)
         {
             foreach (var table in tables)
             {
@@ -809,47 +891,56 @@ ON ss.name = infS.SEQUENCE_NAME";
             }
         }
 
-        private void WriteFunctions(IEnumerable<Function> functions, StreamWriter sqlFile)
+        private void WriteFunctions(IEnumerable<DBFunction> functions, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Functions */");
             foreach (var function in functions)
             {
-                sqlFile.WriteLine(function);
+                sqlFile.WriteLine(function.GetCreationQuery());
                 sqlFile.WriteLine("GO");
             }
         }
 
-        private void WriteProcedures(IEnumerable<Procedure> procedures, StreamWriter sqlFile)
+        private void WriteProcedures(IEnumerable<DBProcedure> procedures, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Stored procedures */");
 
             foreach (var procedure in procedures)
             {
-                sqlFile.WriteLine(procedure);
+                sqlFile.WriteLine(procedure.GetCreationQuery());
                 sqlFile.WriteLine("GO;");
             }
         }
 
-        private void WriteSequences(IEnumerable<Sequence> sequences, StreamWriter sqlFile)
+        private void WriteSchemas(IEnumerable<DBSchema> schemas, StreamWriter sqlFile)
         {
-            foreach (var sequence in sequences)
+            foreach (var schema in schemas)
             {
-                sqlFile.WriteLine(sequence);
+                sqlFile.WriteLine(schema.GetCreationQuery());
                 sqlFile.WriteLine("GO");
             }
         }
 
-        private void WriteSynonyms(IEnumerable<Synonym> synonyms, StreamWriter sqlFile)
+        private void WriteSequences(IEnumerable<DBSequence> sequences, StreamWriter sqlFile)
+        {
+            foreach (var sequence in sequences)
+            {
+                sqlFile.WriteLine(sequence.GetCreationQuery());
+                sqlFile.WriteLine("GO");
+            }
+        }
+
+        private void WriteSynonyms(IEnumerable<DBSynonym> synonyms, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Synonyms */");
             foreach (var synonym in synonyms)
             {
-                sqlFile.WriteLine(synonym);
+                sqlFile.WriteLine(synonym.GetCreationQuery());
                 sqlFile.WriteLine("GO");
             }
         }
 
-        private void WriteTableData(IEnumerable<Table> tables, StreamWriter sqlFile)
+        private void WriteTableData(IEnumerable<DBTable> tables, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Data */");
 
@@ -857,50 +948,41 @@ ON ss.name = infS.SEQUENCE_NAME";
             {
                 foreach (var dataPiece in table.Data)
                 {
-                    sqlFile.WriteLine(dataPiece);
+                    sqlFile.WriteLine(dataPiece.GetCreationQuery());
                     sqlFile.WriteLine("GO");
                 }
             }
         }
 
-        private void WriteTablesCreation(IEnumerable<Table> tables, StreamWriter sqlFile)
+        private void WriteTablesCreation(IEnumerable<DBTable> tables, StreamWriter sqlFile)
         {
             sqlFile.WriteLine("/* Tables */");
 
             foreach (var table in tables)
             {
-                sqlFile.WriteLine($"CREATE TABLE [{table.Schema}].[{table.Name}] (");
-
-                foreach (var column in table.Columns)
-                {
-                    string allowNull = column.IsNullable ? "NULL" : "NOT NULL";
-                    string defaultValue = column.Default == null ? String.Empty : "DEFAULT" + column.Default;
-                    sqlFile.WriteLine($"\t[{column.Name}] {column.DataType} {allowNull} {defaultValue},");
-                }
-
-                sqlFile.WriteLine(");");
+                sqlFile.WriteLine(table.GetCreationQuery());
                 sqlFile.WriteLine("GO;");
             }
         }
 
-        private void WriteTriggers(IEnumerable<Table> tables, StreamWriter sqlFile)
+        private void WriteTriggers(IEnumerable<DBTable> tables, StreamWriter sqlFile)
         {
             foreach (var table in tables)
             {
                 foreach (var trigger in table.Triggers)
                 {
-                    sqlFile.WriteLine(trigger);
+                    sqlFile.WriteLine(trigger.GetCreationQuery());
                     sqlFile.WriteLine("GO");
                     sqlFile.WriteLine();
                 }
             }
         }
 
-        private void WriteViews(IEnumerable<View> views, StreamWriter sqlFile)
+        private void WriteViews(IEnumerable<DBView> views, StreamWriter sqlFile)
         {
             foreach (var view in views)
             {
-                sqlFile.WriteLine(view);
+                sqlFile.WriteLine(view.GetCreationQuery());
                 sqlFile.WriteLine("GO");
             }
         }

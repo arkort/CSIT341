@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseBackup.Entities
 {
-    public class CheckConstraint : Constraint
+    public class DBCheckConstraint : DBConstraint
     {
         public string CheckClause { get; set; }
 

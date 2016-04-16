@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace DatabaseBackup.Entities
 {
-    public class Trigger
+    public class DBSchema
     {
-        public string Definition { get; set; }
         public string Name { get; set; }
 
-        public override string ToString()
+        public string GetCreationQuery()
         {
-            return this.Definition;
+            return $"CREATE SCHEMA {Name}";
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseBackup.Entities
 {
-    public class PrimaryKeyConstraint : Constraint
+    public class DBPrimaryKeyConstraint : DBConstraint
     {
         public override string GetCreationQuery()
         {

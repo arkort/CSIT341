@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DatabaseBackup.Entities
 {
-    public abstract class Constraint
+    public abstract class DBConstraint
     {
         public List<string> Columns { get; set; }
         public string Name { get; set; }

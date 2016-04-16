@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DatabaseBackup.Entities
 {
-    public class UniqueConstraint : Constraint
+    public class DBUniqueConstraint : DBConstraint
     {
         public override string GetCreationQuery()
         {

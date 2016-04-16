@@ -1,6 +1,6 @@
 ﻿namespace DatabaseBackup.Entities
 {
-    public class Column
+    public class DBColumn
     {
         public int CharactersMaxLength { get; set; }
 

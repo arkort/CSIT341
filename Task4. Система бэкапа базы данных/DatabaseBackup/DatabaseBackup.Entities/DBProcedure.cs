@@ -1,12 +1,12 @@
 ﻿namespace DatabaseBackup.Entities
 {
-    public class Function
+    public class DBProcedure
     {
         public string Definition { get; set; }
 
-        public override string ToString()
+        public string GetCreationQuery()
         {
-            return Definition;
+            return this.Definition;
         }
     }
 }

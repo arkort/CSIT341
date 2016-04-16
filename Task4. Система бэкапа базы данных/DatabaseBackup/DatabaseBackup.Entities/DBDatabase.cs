@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DatabaseBackup.Entities
 {
-    public class Database
+    public class DBDatabase
     {
         public string CollationName { get; set; }
         public byte CompatibilityLevel { get; set; }
-        public IEnumerable<Function> Functions { get; set; }
+        public IEnumerable<DBFunction> Functions { get; set; }
         public bool IsAnsiNullDefaultOn { get; set; }
         public bool IsAnsiNullsOn { get; set; }
         public bool IsAnsiPaddingOn { get; set; }
@@ -35,15 +35,16 @@ namespace DatabaseBackup.Entities
         public bool IsTrustworthyOn { get; set; }
         public string Name { get; set; }
         public string PageVerifyOptionDescription { get; set; }
-        public IEnumerable<Procedure> Procedures { get; set; }
+        public IEnumerable<DBProcedure> Procedures { get; set; }
         public string RecoveryModelDescription { get; set; }
-        public IEnumerable<Sequence> Sequences { get; set; }
-        public IEnumerable<Synonym> Synonyms { get; set; }
-        public IEnumerable<Table> Tables { get; set; }
+        public IEnumerable<DBSchema> Schemas { get; set; }
+        public IEnumerable<DBSequence> Sequences { get; set; }
+        public IEnumerable<DBSynonym> Synonyms { get; set; }
+        public IEnumerable<DBTable> Tables { get; set; }
         public string UserAccessDescription { get; set; }
-        public IEnumerable<View> Views { get; set; }
+        public IEnumerable<DBView> Views { get; set; }
 
-        public override string ToString()
+        public string GetCreationQuery()
         {
             var result = new StringBuilder();
             result.AppendLine("USE [master]");
@@ -56,7 +57,7 @@ namespace DatabaseBackup.Entities
             result.AppendLine($"GO");
             result.AppendLine();
 
-            result.AppendLine($"ALTER DATABSE [{this.Name}] SET COMPATIBILITY_LEVEL = {this.CompatibilityLevel.ToString()}");
+            result.AppendLine($"ALTER DATABASE [{this.Name}] SET COMPATIBILITY_LEVEL = {this.CompatibilityLevel.ToString()}");
             result.AppendLine("GO");
             result.AppendLine();
 
