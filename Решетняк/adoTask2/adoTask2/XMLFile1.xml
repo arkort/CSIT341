@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PHONES>  
+  
+  <PHONE name="iPHONE 6">
+    <COMPANY>Apple</COMPANY>
+    <PRICE>40000</PRICE>    
+  </PHONE>
+  
+  
+  
+  <PHONE name="Galaxy S5">
+    <COMPANY>Samsung</COMPANY>
+    <PRICE>33000</PRICE>
+  </PHONE>
+  
+  
+  <PHONE name = "Lumia 6509">
+    <COMPANY>Nokia</COMPANY>
+    <PRICE>25000</PRICE>
+    </PHONE>
+  
+  
+</PHONES>
