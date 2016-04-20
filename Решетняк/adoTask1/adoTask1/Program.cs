@@ -66,7 +66,7 @@ namespace adoTask1
                 count++;
                 temp = Path.GetExtension(file).Trim('.');
 
-                if (extensions.Count == 0 || !extensions.Keys.Contains(temp))
+                if (!extensions.Keys.Contains(temp))
                 {
                     extensions.Add(temp, 1);
                 }
@@ -80,6 +80,7 @@ namespace adoTask1
             {
                 foreach (var item in extensions.OrderByDescending(element => element.Value))
                 {
+                    if(!String.IsNullOrEmpty(item.Key))
                     outFile.WriteLine("{0} - {1:0.####}%", item.Key, 100 * (double)item.Value / count);
                 }
             }

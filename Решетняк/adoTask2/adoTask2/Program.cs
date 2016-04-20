@@ -12,13 +12,13 @@ class XmlSchemaSetExample
     static void Main()
     {
         XmlDocument xdoc = new XmlDocument();
-        xdoc.Load(@"F:\С#_project\adoTask2\adoTask2\XMLFile1.xml");
+        xdoc.Load("XMLFile1.xml");
         XmlReaderSettings booksSettings = new XmlReaderSettings();
-        booksSettings.Schemas.Add(null, @"F:\С#_project\adoTask2\adoTask2\XMLSchema1.xsd");
+        booksSettings.Schemas.Add(null, "XMLSchema1.xsd");
         booksSettings.ValidationType = ValidationType.Schema;
         booksSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
 
-        XmlReader reader = XmlReader.Create(@"F:\С#_project\adoTask2\adoTask2\XMLFile1.xml", booksSettings);
+        XmlReader reader = XmlReader.Create("XMLFile1.xml", booksSettings);
 
         while (reader.Read())
         {
