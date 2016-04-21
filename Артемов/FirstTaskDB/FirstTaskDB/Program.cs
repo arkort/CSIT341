@@ -16,15 +16,17 @@ namespace FirstTaskDB
             string path = inFile.ReadToEnd();
             inFile.Close();
 
-
             List<string> allExtensions = new List<string>();
             
             if(Directory.Exists(path))
             {
                 string[] Data = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
                 foreach(string file in Data)
-                {                
-                    allExtensions.Add(Path.GetExtension(file));
+                {
+                    if (file.Contains('.'))
+                    {
+                        allExtensions.Add(Path.GetExtension(file));
+                    }                                  
                 }
             }
             else
@@ -48,9 +50,9 @@ namespace FirstTaskDB
             foreach (var el in sortedGroups)
             {                                
                 outFile.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);
-                //Console.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);        
-            }          
-              
+                Console.WriteLine("{0}#{1}#{2:0.00}", el.Key, el.Count(), (float)el.Count() * 100 / allExtensions.Count);
+            }        
+             
             outFile.Close();
         }        
     }
