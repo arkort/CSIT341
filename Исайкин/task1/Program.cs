@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace task1
 {
@@ -12,13 +13,19 @@ namespace task1
         {
             Seach seach = new Seach();
 
-            seach.SeachFiles(args[0]);
-
-            foreach (var item in seach.Gettypefiles())
+            using (StreamReader input = new StreamReader("input.txt"))
             {
-                Console.WriteLine($"{item.Key}:{(double)item.Value/seach.Count}");
+                seach.SeachFiles(input.ReadLine());
             }
-       
+
+            using (StreamWriter output = new StreamWriter("output.txt"))
+            {
+
+                foreach (var item in seach.Gettypefiles())
+                {
+                    output.WriteLine($"{item.Key}:{(double)item.Value / seach.Count}");
+                }
+            }
         }
     }
 }
