@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,10 +54,6 @@
     <ProjectReference Include="..\DatabaseBackup.Entities\DatabaseBackup.Entities.csproj">
       <Project>{4b931ed5-c7fe-4b0f-bb5b-2c27354570c4}</Project>
       <Name>DatabaseBackup.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Essentials.cs\DatabaseBackup.Essentials.csproj">
-      <Project>{1f5a765f-a32e-46b0-a9a3-b81e28c1f446}</Project>
-      <Name>DatabaseBackup.Essentials</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
