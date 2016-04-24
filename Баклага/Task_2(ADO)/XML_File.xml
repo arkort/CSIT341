@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Catalog>
+  <Car>
+    <title> Audi </title>
+    <model> Q8 </model>
+    <price> 9000 </price>
+    <country>German</country>
+    <year>2013</year>
+  </Car>
+  <Car>
+    <title>BMW</title>
+    <model> x6 </model>
+    <price> 10000 </price>
+    <country>German</country>
+    <year>2013</year>
+  </Car>
+  <Car>
+    <title>Lada</title>
+    <model>Kalina</model>
+    <price> 2000 </price>
+    <country> Russia </country>
+    <year>2010</year>
+  </Car>
+  <Car>
+    <title> Chevrolet </title>
+    <model> Camaro </model>
+    <price> 7000 </price>
+    <country> USA </country>
+    <year>2011</year>
+  </Car>
+  <Car>
+    <title> Audi </title>
+    <model> A4 </model>
+    <price> 7000 </price>
+    <country> German </country>
+    <year>2000</year>
+  </Car>
+    <Car>
+      <title> Mersedes </title>
+      <model> GLK</model>
+      <price> 20000 </price>
+      <country> German </country>
+      <year>2003</year>
+    </Car>
+      <Car>
+        <title> Volvo </title>
+        <model> S80 </model>
+        <price> 5000 </price>
+        <country> Sweden </country>
+        <year>2007</year>
+      </Car>
+        <Car>
+          <title> Chevrolet </title>
+          <model> Cruz </model>
+          <price> 4000 </price>
+          <country> USA </country>
+          <year>2008</year>
+        </Car>
+          <Car>
+            <title> Ford </title>
+            <model> Focus </model>
+            <price> 7900 </price>
+            <country> USA </country>
+            <year>2009</year>
+          </Car>
+            <Car>
+              <title> Kia </title>
+              <model> Rio </model>
+              <price> 40000 </price>
+              <country> South Korea </country>
+              <year>2016</year>
+            </Car>
+              <Car>
+                <title> Volkswagen</title>
+                <model> Tuareg </model>
+                <price> 9900 </price>
+                <country> German </country>
+                <year>2011</year>
+              </Car>
+              <Car>
+                <title> Mazda </title>
+                <model> 6 </model>
+                <price> 13000 </price>
+                <country> Japan </country>
+                <year>2003</year>
+              </Car>
+   </Catalog>
