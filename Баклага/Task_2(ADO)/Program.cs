@@ -11,32 +11,32 @@ class XmlSchemaSetExample
         carSettings.ValidationType = ValidationType.Schema;
         carSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
 
-        XmlReader books = XmlReader.Create(@"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_2(ADO)\XML_File.xml", carSettings);
+        XmlReader cars = XmlReader.Create(@"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_2(ADO)\XML_File.xml", carSettings);
 
 
-        while (books.Read())
+        while (cars.Read())
         {
-            switch (books.NodeType)
+            switch (cars.NodeType)
             {
                 case XmlNodeType.Element:
                     {
-                        if (books.Name == "Car")
+                        if (cars.Name == "Car")
                         {
-                            Console.Write(" Cars Features " + books.GetAttribute(0));
+                            Console.Write(" Cars Features " + cars.GetAttribute(0));
                             Console.WriteLine();
                             break;
                         }
 
-                        else if (books.Name != "Catalog")
+                        else if (cars.Name != "Catalog")
 
                         {
-                            Console.Write(" - " + books.Name);
+                            Console.Write(" - " + cars.Name);
                         }
                         break;
                     }
                 case XmlNodeType.Text:
                     {
-                        Console.WriteLine(":" + books.Value);
+                        Console.WriteLine(":" + cars.Value);
 
                     }
                     break;
