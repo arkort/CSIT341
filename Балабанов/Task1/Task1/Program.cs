@@ -48,7 +48,8 @@ namespace Task1
 
                     int FilesCount = ListFiles.Count;
                     var ChangedListFiles = ListFiles.Select(s => Path.GetExtension(s)) //taking all extensions
-                        .Select(s => s.Remove(0, 1)).GroupBy(s=>s) //then remove "." before every extension and set sorting criterion
+                        .Select(s=>{ if (s.Length > 0) return s.Remove(0, 1); else return s; }) // .Select(s => s.Remove(0, 1))
+                        .GroupBy(s=>s) //then remove "." before every extension and set sorting criterion
                         .Select(s => new { elem = s, Count = s.Count() }) //transforming from "exe" to -> "exe; exe.Count" etc.
                         .OrderByDescending(s => s.Count);  //sort descending
 
