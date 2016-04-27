@@ -1,5 +1,6 @@
 ﻿using DatabaseBackup.BLL;
 using DatabaseBackup.ContractsBLL;
+using System;
 using System.Windows;
 
 namespace DatabaseBackup.Presentation
@@ -11,6 +12,7 @@ namespace DatabaseBackup.Presentation
         public MainWindow()
         {
             InitializeComponent();
-        }
+            frame.NavigationService.Navigate(new Uri("Page1.xaml", UriKind.Relative));
+        }        
     }
 }

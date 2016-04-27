@@ -6,6 +6,8 @@ namespace DatabaseBackup.ContractsDAL
     {
         void Backup(string conString);
 
-        void Restore(System.DateTime date);
+        void Restore(System.DateTime date, string conString);
+
+        IEnumerable<string> ShowDatabases(string conString);
     }
 }

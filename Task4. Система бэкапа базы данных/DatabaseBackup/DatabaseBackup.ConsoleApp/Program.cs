@@ -1,8 +1,7 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using DatabaseBackup.BLL;
+﻿using DatabaseBackup.BLL;
 using DatabaseBackup.ContractsBLL;
+using System;
+using System.IO;
 
 namespace DatabaseBackup.ConsoleApp
 {
@@ -10,11 +9,9 @@ namespace DatabaseBackup.ConsoleApp
     {
         public static void Main(string[] args)
         {
-            var conString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=ComicsCatalogue;Integrated Security=True";
             ILogic logic = new Logic();
-
-            logic.Backup(conString);
-            Console.Write("Backup completed.");
+            //logic.BackupLocalInstance(@"(localdb)\mssqllocaldb", "AdventureWorks2012");
+            logic.RestoreLocalInstance(DateTime.Now, @"(localdb)\mssqllocaldb");
         }
     }
 }
