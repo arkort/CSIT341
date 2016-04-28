@@ -44,7 +44,10 @@ namespace Solution1
             {
                 foreach(var i in ExtentionFiles)
                 {
-                    output.WriteLine("{0}#{1}#{2}", i.Key.Substring(1), i.Value, (double)i.Value / (double)countAllFiles * 100);
+                    if (i.Key.Length != 0)
+                    {
+                        output.WriteLine("{0}#{1}#{2}", i.Key.Substring(1), i.Value, (double)i.Value / (double)countAllFiles * 100);
+                    }
                 }
             }
             

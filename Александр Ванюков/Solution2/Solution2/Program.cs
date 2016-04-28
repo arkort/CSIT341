@@ -18,7 +18,7 @@ namespace Solution2
                 Console.WriteLine(xmlNodes[i].Name);
                 for (int j = 0; xmlNodes[i].Attributes !=null && j < xmlNodes[i].Attributes.Count; j++)
                 {
-                    Console.WriteLine("Attribute: " + "{0}", xmlNodes[i].Attributes[j].Value);
+                    Console.WriteLine("{0}: {1}", xmlNodes[i].Attributes[j].Name, xmlNodes[i].Attributes[j].Value);
                 }
                 for (int j = 0; j < xmlNodes[i].ChildNodes.Count; j++)
                 {
