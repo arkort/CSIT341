@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Catalog>
+  <flowers>
+    <title> rose </title>
+    <price> 120 </price>
+    <country> Ecuador </country>
+    <count> 800 </count>
+  </flowers>
+  <flowers>
+    <title> tulip </title>
+    <price> 80 </price>
+    <country> Holland </country>
+    <count> 120 </count>
+  </flowers>
+  <flowers>
+    <title> iris </title>
+    <price> 100 </price>
+    <country> Italy </country>
+    <count> 50 </count>
+  </flowers>
+  <flowers>
+    <title> lily </title>
+    <price> 200 </price>
+    <country> France </country>
+    <count>50 </count>
+  </flowers>
+  <flowers>
+    <title> chamomile </title>
+    <price> 70 </price>
+    <country> Russia </country>
+    <count>100 </count>
+  </flowers>
+  <flowers>
+    <title> gerbera </title>
+    <price> 100 </price>
+    <country> Holland </country>
+    <count>100 </count>
+  </flowers>
+
+</Catalog>
