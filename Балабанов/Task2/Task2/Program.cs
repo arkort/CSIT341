@@ -45,13 +45,36 @@ namespace Task2
 
             XmlReader reader = XmlReader.Create("MyXML.xml", settings);
 
-            while (reader.Read()) ;
+            try
+            {
+                while (true)
+                {
+                    if (!reader.Read())
+                    {
+                        break;
+                    }
 
-            if (IsValid)
+                }
+            }
+            catch (Exception)
+            {
+
+                
+            }
+
+            finally
             {
                 XDocument Document = XDocument.Load("MyXML.xml");
                 PrintXmlDoc(Document);
             }
+
+            //while (reader.Read());
+
+            //if (IsVa; lid)
+            //{
+            //    XDocument Document = XDocument.Load("MyXML.xml");
+            //    PrintXmlDoc(Document);
+            //}
         }
     }
 }
