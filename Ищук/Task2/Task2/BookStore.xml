@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BookStore>
+  <BOOK Title="sd">
+    <AUTHOR>Stephen King</AUTHOR>
+    <NAME>The Green Mile</NAME>
+    <COVERTYPE>paperback</COVERTYPE>
+    <PAGES>444</PAGES>
+    <PRICE>$9.95</PRICE>
+  </BOOK>
+  <BOOK Title="sd">
+    <AUTHOR>Agatha Christie</AUTHOR>
+    <NAME>Sparkling Cyanide</NAME>
+    <COVERTYPE>paperback</COVERTYPE>
+    <PAGES>679</PAGES>
+    <PRICE>$18.95</PRICE>
+  </BOOK>
+  <BOOK Title="sd">
+    <AUTHOR>Dan Brown</AUTHOR>
+    <NAME>Inferno</NAME>
+    <COVERTYPE>hardcover</COVERTYPE>
+    <PAGES>732</PAGES>
+    <PRICE>$89.95</PRICE>
+  </BOOK>
+</BookStore>
