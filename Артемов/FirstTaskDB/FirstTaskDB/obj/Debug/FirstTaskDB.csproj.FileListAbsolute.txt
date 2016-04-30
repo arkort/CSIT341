@@ -4,3 +4,19 @@ C:\Users\Виктор\Desktop\Базы данных\FirstTaskDB\FirstTaskDB\bin\
 C:\Users\Виктор\Desktop\Базы данных\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.csprojResolveAssemblyReference.cache
 C:\Users\Виктор\Desktop\Базы данных\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.exe
 C:\Users\Виктор\Desktop\Базы данных\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.pdb
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\FirstTaskDB.exe.config
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.exe
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.pdb
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\FirstTaskDB.exe
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\FirstTaskDB.pdb
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.csprojResolveAssemblyReference.cache
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\input.txt
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\output.txt
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\FirstTaskDB.exe.config
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.exe
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.pdb
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\input.txt
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\output.txt
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\FirstTaskDB.exe
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\bin\Debug\FirstTaskDB.pdb
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\FirstTaskDB\FirstTaskDB\obj\Debug\FirstTaskDB.csprojResolveAssemblyReference.cache

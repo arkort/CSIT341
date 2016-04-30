@@ -8,17 +8,14 @@ class Test
     public static void Main()
     {
         Dictionary<string, int> stat = new Dictionary<string, int>();
-        int total = 0;
 
         string infile = "input.txt";
         string outfile = "output.txt";
 
-        foreach (string fullname in Directory.GetFiles(File.ReadAllText(infile), ".", SearchOption.AllDirectories))
+        string[] qwe = Directory.GetFiles(File.ReadAllText(infile), ".", SearchOption.AllDirectories);
+        foreach (string fullname in qwe)
         {
-            total++;
-            string ext = Path.GetFileName(fullname);
-            int N = ext.LastIndexOf('.');
-            ext = ext.Substring(N + 1);
+            string ext = Path.GetExtension(fullname);
             int Count = 0;
             if (stat.TryGetValue(ext, out Count))
             { 
@@ -33,7 +30,7 @@ class Test
         {
             foreach (var elem in stat)
             {
-                output.WriteLine("{0}#{1}#{2}", elem.Key, elem.Value.ToString(), (100.0 * elem.Value / total).ToString("0.0"));
+                output.WriteLine("{0}#{1}#{2}", elem.Key, elem.Value.ToString(), (100.0 * elem.Value / qwe.Length).ToString("0.0"));
             }
         }
     }
