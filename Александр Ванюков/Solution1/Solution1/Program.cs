@@ -84,7 +84,7 @@ namespace Solution1
                 ans.Sort();
                 foreach(Ans i in ans)
                 {
-                    output.WriteLine($"{i.format}#{i.cnt}#{i.procent}");
+                    output.WriteLine("{0}#{1}#{2}", i.format, i.cnt, i.procent);
                 }
             }
             
