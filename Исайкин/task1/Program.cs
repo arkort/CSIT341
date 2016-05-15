@@ -18,12 +18,19 @@ namespace task1
                 seach.SeachFiles(input.ReadLine());
             }
 
+            int count = 0;
+            var files = seach.Gettypefiles();
+            foreach (var item in files)
+            {
+                count += item.Value;
+            }
+
             using (StreamWriter output = new StreamWriter("output.txt"))
             {
 
-                foreach (var item in seach.Gettypefiles())
+                foreach (var item in files )
                 {
-                    output.WriteLine($"{item.Key}:{(double)item.Value / seach.Count}");
+                    output.WriteLine($"{item.Key}:{(double)item.Value / count *100}");
                 }
             }
         }
