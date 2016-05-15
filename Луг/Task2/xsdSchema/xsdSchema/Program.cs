@@ -7,7 +7,8 @@ using System.Xml.Linq;
 using System.Data;
 using System.Text;
 
-namespace normalnoe_nazvanie
+
+namespace xsdSchema
 {
     class Program
     {
@@ -29,13 +30,13 @@ namespace normalnoe_nazvanie
 
 
             XmlReaderSettings booksSettings = new XmlReaderSettings();
-            booksSettings.Schemas.Add(null, @"norm_nazv.xsd");
+            booksSettings.Schemas.Add(null, @"xsdSchema1.xsd");
             booksSettings.ValidationType = ValidationType.Schema;
             booksSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
+             
+            XmlReader books = XmlReader.Create(@"xsdSchema1.xml", booksSettings);
 
-            XmlReader books = XmlReader.Create(@"norm_nazv.xml", booksSettings);
-
-            while (books.Read()) 
+            while (books.Read())
             {
                 switch (books.NodeType)
                 {
@@ -64,9 +65,9 @@ namespace normalnoe_nazvanie
 
                 }
             }
-          
 
-           
+
+
         }
     }
 }
