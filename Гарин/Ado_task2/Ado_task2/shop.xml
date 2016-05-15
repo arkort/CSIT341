@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<shop>
+  <product>
+    <name>milk</name>
+    <type>dairy products</type>
+    <price>35</price>
+  </product>
+
+  <product>
+    <name>yogurt</name>
+    <type>dairy products</type>
+    <price>40</price>
+  </product>
+
+  <product>
+    <name>bread</name>
+    <type>flour products</type>
+    <price>20</price>
+  </product>
+
+  <product>
+    <name>chocolate</name>
+    <type>sweets</type>
+    <price>55</price>
+  </product>
+
+  <product>
+    <name>tea</name>
+    <type>tea</type>
+    <price>76</price>
+  </product>
+
+    <product>
+    <name>juice</name>
+    <type>drinks</type>
+    <price>64</price>
+  </product>
+
+
+</shop>
