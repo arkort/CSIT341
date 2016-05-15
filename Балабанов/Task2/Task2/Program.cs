@@ -1,58 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
-using System.Xml.Linq;
 
-namespace Task2
+class Program
 {
-    class Program
+    static void Main()
     {
-        static bool IsValid = true;
-        private static void ValidationCallBack(object sender, ValidationEventArgs e)
+        try
         {
-            Console.WriteLine("Validation Error: {0}", e.Message);
-            IsValid = false;
-        }
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load("MyXML.xml");
 
-        static void PrintXmlDoc(XDocument Document)
-        {
-            foreach (XElement el in Document.Root.Elements())
+            XmlNodeList node = xmlDocument.SelectNodes("Users");
+            xmlDocument.Schemas.Add("", @"Schema.xsd");
+            xmlDocument.Validate(UsersValidationEventHandler);
+
+            foreach (XmlNode user in node[0].ChildNodes)
             {
-                Console.WriteLine("{0}", el.Name);
-                Console.WriteLine("  Attributes:");
-                foreach (XAttribute attribute in el.Attributes())
-                    Console.WriteLine("{0}", attribute);
-                Console.WriteLine("  Elements:");
-                foreach (XElement element in el.Elements())
-                    Console.WriteLine("    {0}: {1}", element.Name, element.Value);
+                Console.WriteLine(user.Name);
+
+                foreach (XmlNode userInfo in user.ChildNodes)
+                {
+                    Console.WriteLine(userInfo.Name + " " + userInfo.InnerText);
+                }
+                Console.WriteLine();
             }
         }
-
-        static void Main(string[] args)
+        catch (Exception e)
         {
+            Console.WriteLine(e.Message);
+        }
+    }
 
-            XmlSchemaSet SchemaSet = new XmlSchemaSet();
-            SchemaSet.Add(null, "Schema.xsd");
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.ValidationType = ValidationType.Schema;
-            settings.Schemas = SchemaSet;
-            settings.ValidationEventHandler += new ValidationEventHandler(ValidationCallBack);
-
-            XmlReader reader = XmlReader.Create("MyXML.xml", settings);
-
-            while (reader.Read()) ;
-
-            if (IsValid)
-            {
-                XDocument Document = XDocument.Load("MyXML.xml");
-                PrintXmlDoc(Document);
-            }
+    private static void UsersValidationEventHandler(object sender, ValidationEventArgs e)
+    {
+        if (e.Severity == XmlSeverityType.Warning)
+        {
+            Console.Write("Error: ");
+            Console.WriteLine(e.Message);
+        }
+        else if (e.Severity == XmlSeverityType.Error)
+        {
+            throw new Exception(e.Message);
         }
     }
 }
-

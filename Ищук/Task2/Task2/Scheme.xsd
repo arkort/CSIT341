@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Scheme"
+    targetNamespace="http://tempuri.org/Scheme.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/Scheme.xsd"
+    xmlns:mstns="http://tempuri.org/Scheme.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="BookStore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BOOK" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AUTHOR" type="xs:string"/>
+              <xs:element name="NAME" type="xs:string"/>
+              <xs:element name="COVERTYPE" type="xs:string"/>
+              <xs:element name="PAGES" type="xs:int"/>
+              <xs:element name="PRICE" type="xs:float"/>
+            </xs:sequence>
+            <xs:attribute name="Title" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

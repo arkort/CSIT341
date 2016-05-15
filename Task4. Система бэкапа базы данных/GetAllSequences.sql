@@ -1,0 +1,6 @@
+USE ComicsCatalogue
+GO
+
+SELECT infS.SEQUENCE_SCHEMA, infS.SEQUENCE_NAME, infS.DATA_TYPE, infS.START_VALUE, infS.INCREMENT, infS.MINIMUM_VALUE, infS.MAXIMUM_VALUE, ss.is_cached FROM INFORMATION_SCHEMA.SEQUENCES as infS
+INNER JOIN (SELECT name, is_cached FROM sys.sequences) as ss 
+ON ss.name = infS.SEQUENCE_NAME

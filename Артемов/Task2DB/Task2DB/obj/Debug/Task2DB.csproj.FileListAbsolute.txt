@@ -4,3 +4,14 @@ C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\bin\Debug\Ta
 C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\obj\Debug\Task2DB.csprojResolveAssemblyReference.cache
 C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\obj\Debug\Task2DB.exe
 C:\Users\Виктор\Desktop\Базы данных\Task2DB\Task2DB\obj\Debug\Task2DB.pdb
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\bin\Debug\Task2DB.exe.config
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\obj\Debug\Task2DB.exe
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\obj\Debug\Task2DB.pdb
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\bin\Debug\XML_LEGO.xml
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\bin\Debug\XMLFile1.xsd
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\bin\Debug\Task2DB.exe
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\bin\Debug\Task2DB.pdb
+C:\Users\Виктор\Desktop\gitForDB\CSIT341\Артемов\Task2DB\Task2DB\obj\Debug\Task2DB.csprojResolveAssemblyReference.cache
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\Task2DB\Task2DB\bin\Debug\Task2DB.exe.config
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\Task2DB\Task2DB\obj\Debug\Task2DB.exe
+C:\Users\Виктор\Desktop\Koroteev\CSIT341\Артемов\Task2DB\Task2DB\obj\Debug\Task2DB.pdb
