@@ -37,7 +37,7 @@ namespace Statistics
         }
         static void Result()
         {
-            using (StreamWriter output1 = new StreamWriter(@"C:/Users/Юрий/Documents/Visual Studio 2013/Projects/Statistics/Statistics/output.txt"))
+            using (StreamWriter output1 = new StreamWriter(@"output.txt"))
             {
                 foreach (var q in count.OrderByDescending(pair => pair.Value))
                 {
@@ -49,7 +49,7 @@ namespace Statistics
         }
         static void Main(string[] args)
         {
-            using (StreamReader Input_File = new StreamReader(@"C:/Users/Юрий/Documents/Visual Studio 2013/Projects/Statistics/Statistics/input.txt"))
+            using (StreamReader Input_File = new StreamReader(@"input.txt"))
             {
                 string path = Input_File.ReadLine();
                 FileDirection(path);
