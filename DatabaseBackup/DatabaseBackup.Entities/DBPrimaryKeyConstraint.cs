@@ -10,7 +10,7 @@ namespace DatabaseBackup.Entities
     {
         public override string GetCreationQuery()
         {
-            return $"ALTER TABLE {this.TableName} ADD CONSTRAINT {this.Name} PRIMARY KEY ({string.Join(", ", this.Columns)})";
+            return $"ALTER TABLE [{this.TableName}] ADD CONSTRAINT [{this.Name}] PRIMARY KEY ({string.Join(", ", this.Columns)})";
         }
     }
 }

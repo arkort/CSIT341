@@ -16,7 +16,7 @@ namespace DatabaseBackup.Entities
 
         public override string GetCreationQuery()
         {
-            return $"ALTER TABLE [{this.TableSchema}].[{this.TableName}] ADD CONSTRAINT {this.Name} FOREIGN KEY({string.Join(", ", this.Columns)}) REFERENCES [{this.PrimaryTableSchema}].[{this.PrimaryTableName}]({string.Join(", ", this.PrimaryTableColumns)})";
+            return $"ALTER TABLE [{this.TableSchema}].[{this.TableName}] ADD CONSTRAINT [{this.Name}] FOREIGN KEY({string.Join(", ", this.Columns)}) REFERENCES [{this.PrimaryTableSchema}].[{this.PrimaryTableName}]({string.Join(", ", this.PrimaryTableColumns)})";
         }
     }
 }

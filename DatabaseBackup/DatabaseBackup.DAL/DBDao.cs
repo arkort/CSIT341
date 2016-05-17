@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DatabaseBackup.ContractsDAL;
+using DatabaseBackup.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -6,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using DatabaseBackup.ContractsDAL;
-using DatabaseBackup.Entities;
 
 namespace DatabaseBackup.DAL
 {
@@ -200,7 +200,7 @@ on scc.parent_object_id = tab.object_id";
 
         private IEnumerable<DBData> GetData(SqlConnection connection, DBTable table)
         {
-            var sqlCommandStr = $"SELECT {string.Join(", ", table.Columns.Select(x => string.Format($"[{x.Name}]")))} FROM {table.Schema}.{table.Name}";
+            var sqlCommandStr = $"SELECT {string.Join(", ", table.Columns.Select(x => string.Format($"[{x.Name}]")))} FROM [{table.Schema}].[{table.Name}]";
             var data = new List<DBData>();
             using (SqlCommand command = new SqlCommand(sqlCommandStr, connection))
             {
@@ -338,36 +338,15 @@ on scc.parent_object_id = tab.object_id";
                 {
                     while (reader.Read())
                     {
-                        //var Name = reader.GetString(0);
-                        //var CompatibilityLevel = reader.GetByte(1);
-                        //var CollationName = reader.GetString(2);
-                        //var UserAccessDescription = reader.GetString(3);
-                        //var IsReadOnly = reader.GetBoolean(4);
-                        //var IsAutoCloseOn = reader.GetBoolean(5);
-                        //var IsAutoShrinkOn = reader.GetBoolean(6);
-                        //var IsReadCommittedSnapshotOn = reader.GetBoolean(7);
-                        //var RecoveryModelDescription = reader.GetString(8);
-                        //var PageVerifyOptionDescription = reader.GetString(9);
-                        //var IsAutoCreateStatsOn = reader.GetBoolean(10);
-                        //var IsAutoUpdateStatsOn = reader.GetBoolean(11);
-                        //var IsAnsiNullDefaultOn = reader.GetBoolean(12);
-                        //var IsAnsiNullsOn = reader.GetBoolean(13);
-                        //var IsAnsiPaddingOn = reader.GetBoolean(14);
-                        //var IsAnsiWarningsOn = reader.GetBoolean(15);
-                        //var IsArithabortOn = reader.GetBoolean(16);
-                        //var IsConcatNullYieldsNullOn = reader.GetBoolean(17);
-                        //var IsQuotedIdentifierOn = reader.GetBoolean(18);
-                        //var IsNumericRoundAbortOn = reader.GetBoolean(19);
-                        //var IsRecursiveTriggersOn = reader.GetBoolean(20);
-                        //var IsCursorCloseOnCommitOn = reader.GetBoolean(21);
-                        //var IsDateCorrelationOn = reader.GetBoolean(22);
-                        //var IsDbChainingOn = reader.GetBoolean(23);
-                        //var IsTrustworthyOn = reader.GetBoolean(24);
-                        //var IsParameterizationForced = reader.GetBoolean(25);
-                        //var IsBrokerEnabled = reader.GetBoolean(26);
+                        string name = reader.GetString(0);
+                        if (name.Length >= 120)
+                        {
+                            name = $"backup_{DateTime.Now}";
+                        }
+
                         return new DBDatabase
                         {
-                            Name = $"{reader.GetString(0)}_{DateTime.Now}",
+                            Name = name,
                             CompatibilityLevel = reader.GetByte(1),
                             CollationName = reader.GetString(2),
                             UserAccessDescription = reader.GetString(3),

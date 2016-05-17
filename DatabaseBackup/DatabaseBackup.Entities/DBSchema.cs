@@ -12,7 +12,7 @@ namespace DatabaseBackup.Entities
 
         public string GetCreationQuery()
         {
-            return $"CREATE SCHEMA {Name}";
+            return $"CREATE SCHEMA [{Name}]";
         }
     }
 }

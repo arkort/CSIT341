@@ -6,7 +6,7 @@
 
         public override string GetCreationQuery()
         {
-            return $"ALTER TABLE [{this.TableSchema}].[{this.TableName}] ADD CONSTRAINT {this.Name} CHECK {this.CheckClause}";
+            return $"ALTER TABLE [{this.TableSchema}].[{this.TableName}] ADD CONSTRAINT [{this.Name}] CHECK {this.CheckClause}";
         }
     }
 }
