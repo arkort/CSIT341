@@ -35,11 +35,10 @@
             this.генерацияАлгоримомМарковаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.загрузитьСловаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.изФайлаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ввестиТекстToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.задатьКоличесвоСловToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.задатьКоличесвоСловToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
@@ -91,7 +90,6 @@
             // 
             this.загрузитьСловаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.изФайлаToolStripMenuItem,
-            this.ввестиТекстToolStripMenuItem,
             this.задатьКоличесвоСловToolStripMenuItem});
             this.загрузитьСловаToolStripMenuItem.Name = "загрузитьСловаToolStripMenuItem";
             this.загрузитьСловаToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
@@ -104,12 +102,12 @@
             this.изФайлаToolStripMenuItem.Text = "Из файла";
             this.изФайлаToolStripMenuItem.Click += new System.EventHandler(this.изФайлаToolStripMenuItem_Click);
             // 
-            // ввестиТекстToolStripMenuItem
+            // задатьКоличесвоСловToolStripMenuItem
             // 
-            this.ввестиТекстToolStripMenuItem.Name = "ввестиТекстToolStripMenuItem";
-            this.ввестиТекстToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.ввестиТекстToolStripMenuItem.Text = "Ввести текст";
-            this.ввестиТекстToolStripMenuItem.Click += new System.EventHandler(this.ввестиТекстToolStripMenuItem_Click);
+            this.задатьКоличесвоСловToolStripMenuItem.Name = "задатьКоличесвоСловToolStripMenuItem";
+            this.задатьКоличесвоСловToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.задатьКоличесвоСловToolStripMenuItem.Text = "Задать количесво слов";
+            this.задатьКоличесвоСловToolStripMenuItem.Click += new System.EventHandler(this.задатьКоличесвоСловToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -121,13 +119,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 2;
-            // 
-            // задатьКоличесвоСловToolStripMenuItem
-            // 
-            this.задатьКоличесвоСловToolStripMenuItem.Name = "задатьКоличесвоСловToolStripMenuItem";
-            this.задатьКоличесвоСловToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.задатьКоличесвоСловToolStripMenuItem.Text = "Задать количесво слов";
-            this.задатьКоличесвоСловToolStripMenuItem.Click += new System.EventHandler(this.задатьКоличесвоСловToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -175,7 +166,6 @@
         private System.Windows.Forms.ToolStripMenuItem сВыборомКолчичестваСловToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem загрузитьСловаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem изФайлаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ввестиТекстToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem генерацияАлгоримомМарковаToolStripMenuItem;
