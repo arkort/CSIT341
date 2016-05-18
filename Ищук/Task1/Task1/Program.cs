@@ -9,18 +9,24 @@ namespace Task1
 {
     class Program
     {
-        static List<string> AllDirectories = new List<string>();
-        static Dictionary<string, int> AllFiles = new Dictionary<string, int>();
-
-        static void DirectoryStatistic(string InFile)
+        static void Main(string[] args)
         {
-            AllDirectories = Directory.GetDirectories(InFile).ToList();
+            StreamReader sr = new StreamReader("input.txt");
 
+            string InFile = sr.ReadToEnd();
+
+            List<string> AllDirectories = new List<string>();
+            AllDirectories = Directory.GetDirectories(InFile).ToList();
+            Dictionary<string, int> AllFiles = new Dictionary<string, int>();
+            int count = 0;
             foreach (var item in AllDirectories)
             {
                 if (Directory.GetFiles(item) != null)
                 {
-                    foreach (var val in Directory.GetFiles(item))
+                    int len = Directory.GetFiles(item).Length;
+                    string[] FilesMas = new string[len];
+                    FilesMas = Directory.GetFiles(item);
+                    foreach (var val in FilesMas)
                     {
                         string type = Path.GetExtension(val);
                         if (AllFiles.ContainsKey(type))
@@ -33,44 +39,18 @@ namespace Task1
                         }
                     }
                 }
-            }            
-        }
-
-        static void Main(string[] args)
-        {
-            string InFile = null;
-            int _counter = 0;
-
-            try
-            {
-                StreamReader sr = new StreamReader("input.txt");
-
-                InFile = sr.ReadToEnd();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Невозможно произвести чтение с файла.");
-                Console.WriteLine(e.Message);
-                return;
-            }            
 
-            DirectoryStatistic(InFile);
-            
             foreach (var item in AllFiles)
             {
-                _counter += item.Value;
+                count += item.Value;
             }
-
-            var result = AllFiles.OrderByDescending(a => a.Value);
 
             using (StreamWriter sw = new StreamWriter("output.txt"))
             {
-                foreach (var item in result)
+                foreach (var item in AllFiles)
                 {
-                    if (!String.IsNullOrEmpty(item.Key))
-                    {
-                        sw.WriteLine("{0} # {1} # {2:0.0}", item.Key.Remove(0, 1), item.Value, 100 * (double)item.Value / _counter);
-                    }
+                    sw.WriteLine("{0} # {1} # {2:0.0}", item.Key.Remove(0, 1), item.Value, 100 * (double)item.Value / count);
                 }
             }
         }
