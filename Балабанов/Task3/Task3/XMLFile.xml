@@ -1,0 +1,69 @@
+﻿<?xml version="1.0"?>
+<ArrayOfFigure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Figure xsi:type="Line">
+    <_StartPoint>
+      <X>0</X>
+      <Y>0</Y>
+    </_StartPoint>
+    <_EndPoint>
+      <X>150</X>
+      <Y>150</Y>
+    </_EndPoint>
+    <StartPoint>
+      <X>0</X>
+      <Y>0</Y>
+    </StartPoint>
+    <EndPoint>
+      <X>150</X>
+      <Y>150</Y>
+    </EndPoint>
+  </Figure>
+  <Figure xsi:type="Circle">
+    <_Xcenter>150</_Xcenter>
+    <_Ycenter>150</_Ycenter>
+    <_Radius>50</_Radius>
+    <Xcenter>150</Xcenter>
+    <Ycenter>150</Ycenter>
+    <Radius>50</Radius>
+  </Figure>
+  <Figure xsi:type="Triangle">
+    <_FirstPoint>
+      <X>150</X>
+      <Y>150</Y>
+    </_FirstPoint>
+    <_SecondPoint>
+      <X>150</X>
+      <Y>300</Y>
+    </_SecondPoint>
+    <_ThirdPoint>
+      <X>300</X>
+      <Y>150</Y>
+    </_ThirdPoint>
+    <FirstPoint>
+      <X>150</X>
+      <Y>150</Y>
+    </FirstPoint>
+    <SecondPoint>
+      <X>150</X>
+      <Y>300</Y>
+    </SecondPoint>
+    <ThirdPoint>
+      <X>300</X>
+      <Y>150</Y>
+    </ThirdPoint>
+  </Figure>
+  <Figure xsi:type="Rectangle">
+    <_CenterPoint>
+      <X>100</X>
+      <Y>100</Y>
+    </_CenterPoint>
+    <_Width>50</_Width>
+    <_Height>100</_Height>
+    <CenterPoint>
+      <X>100</X>
+      <Y>100</Y>
+    </CenterPoint>
+    <Width>50</Width>
+    <Height>100</Height>
+  </Figure>
+</ArrayOfFigure>
