@@ -1,3 +1,1 @@
-Type: txt, count: 3, percentage share: 0,428571428571429
-Type: jpg, count: 2, percentage share: 0,285714285714286
-Type: docx, count: 2, percentage share: 0,285714285714286
+
