@@ -1,2 +1,0 @@
-Type: txt, count: 3, percentage share: 0,75
-Type: doc, count: 1, percentage share: 0,25

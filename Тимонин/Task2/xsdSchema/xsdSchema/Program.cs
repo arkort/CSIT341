@@ -8,7 +8,7 @@ using System.Data;
 using System.Text;
 
 
-namespace Zadanie2
+namespace xsdSchema
 {
     class Program
     {
@@ -30,11 +30,11 @@ namespace Zadanie2
 
 
             XmlReaderSettings booksSettings = new XmlReaderSettings();
-            booksSettings.Schemas.Add(null, @"XMLFile1.xsd");
+            booksSettings.Schemas.Add(null, @"xsdSchema1.xsd");
             booksSettings.ValidationType = ValidationType.Schema;
             booksSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
-
-            XmlReader books = XmlReader.Create(@"XMLFile1.xml", booksSettings);
+             
+            XmlReader books = XmlReader.Create(@"xsdSchema1.xml", booksSettings);
 
             while (books.Read())
             {

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<group>
+  <BOOK Title="Moby Dick">
+    <AUTHOR>Herman Melville</AUTHOR>
+    <BINDING>hardcover</BINDING>
+    <PAGES>724</PAGES>
+    <PRICE>$9.95</PRICE>
+  </BOOK>
+  <BOOK Title="Doby Mick">
+    <AUTHOR>German Welville</AUTHOR>
+    <BINDING>handrover</BINDING>
+    <PAGES>424</PAGES>
+    <PRICE>$15</PRICE>
+  </BOOK>
+</group>
