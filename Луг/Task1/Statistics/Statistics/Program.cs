@@ -17,6 +17,7 @@ namespace Statistics
             SearchOfFiles(direction);
             foreach (var q in direction.EnumerateDirectories())
             {
+
                 SearchOfDirectory(q.FullName);
             }
 
