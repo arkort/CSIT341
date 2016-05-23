@@ -28,8 +28,8 @@ class XmlSchemaSetExample
                     {
                         if (reader.Name == "PHONE")
                         {
-                            Console.WriteLine(reader.Name);
-                            Console.Write("Attribute: Title=" + reader.GetAttribute(0));
+                            Console.WriteLine(reader.Name);                          
+                            Console.Write(reader.GetAttribute(0));
                             Console.WriteLine();
                             break;
                         }

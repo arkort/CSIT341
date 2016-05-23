@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3
+namespace GenerationTextMarkov.BLL.Interface
 {
-    class Rectangle
+    public interface IGenMarkovText
     {
+        List<string> GetWords();
     }
 }

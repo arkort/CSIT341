@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3
+namespace GenerationText.PL.Interface
 {
-    class Circle
+    public interface IGenerationPL
     {
+        string GetGenerateText(int numCommand);
     }
 }

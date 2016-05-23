@@ -25,12 +25,14 @@ namespace task1
                 count += item.Value;
             }
 
+            var mycomparer = new Mycomparer();
+            var result = files.Select(item =>  new KeyValuePair<string, double>(item.Key,(double)item.Value / count * 100)).OrderBy(n => n ,mycomparer);
             using (StreamWriter output = new StreamWriter("output.txt"))
             {
 
-                foreach (var item in files )
+                foreach (var item in result )
                 {
-                    output.WriteLine($"{item.Key}:{(double)item.Value / count *100}");
+                    output.WriteLine($"{item.Key}:{(double)item.Value}");
                 }
             }
         }
