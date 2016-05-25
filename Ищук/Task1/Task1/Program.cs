@@ -50,7 +50,10 @@ namespace Task1
             {
                 foreach (var item in AllFiles)
                 {
-                    sw.WriteLine("{0} # {1} # {2:0.0}", item.Key.Remove(0, 1), item.Value, 100 * (double)item.Value / count);
+                    if (!string.IsNullOrEmpty(item.Key))
+                    {
+                        sw.WriteLine("{0} # {1} # {2:0.0}", item.Key.Remove(0, 1), item.Value, 100 * (double)item.Value / count);
+                    }
                 }
             }
         }
