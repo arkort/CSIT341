@@ -1,9 +1,9 @@
-﻿namespace Task_3
+﻿namespace Task3
 {
     partial class Form1
     {
         /// <summary>
-        /// Обязательная переменная конструктора.
+        /// Требуется переменная конструктора.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
@@ -23,8 +23,8 @@
         #region Код, автоматически созданный конструктором форм Windows
 
         /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
+        /// Обязательный метод для поддержки конструктора - не изменяйте
+        /// содержимое данного метода при помощи редактора кода.
         /// </summary>
         private void InitializeComponent()
         {
@@ -34,10 +34,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1426, 839);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ClientSize = new System.Drawing.Size(1211, 829);
             this.Name = "Form1";
+            this.Text = "Task 3";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);

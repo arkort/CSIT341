@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using Task_3.Figure;
+using Task3.Figure;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Task_3
+namespace Task3
 {
     public partial class Form1 : Form
     {
@@ -22,15 +28,8 @@ namespace Task_3
         {
             this.Location = new Point(0, 0);
             this.figures = new List<AbstractFigure>();
-            this.figures = new List<AbstractFigure>()
-            {
-                new Circle(new Point(100, 250), 50),
-                new MyRectangle(new Point(400, 400), 150, 300),
-                new Line(new Point(450, 300), new Point(100, 850)),
-                new Triange(new Point(450, 300), new Point(85, 700), new Point(20, 30)),
-            };
             this.Size = Screen.PrimaryScreen.Bounds.Size;
-            this.XmlDeserializeData("figure.xml");
+            this.XmlDeserializeData("Figure.xml");
             this.BinarySerializeData();
         }
 
@@ -55,5 +54,6 @@ namespace Task_3
                 figure.Draw(gr);
             }
         }
+
     }
 }
