@@ -20,9 +20,9 @@ class XmlSchemaSetExample
             {
                 Console.WriteLine(car.Name);
 
-                foreach (XmlNode userInfo in car.ChildNodes)
+                foreach (XmlNode carInfo in car.ChildNodes)
                 {
-                    Console.WriteLine(userInfo.Name + " " + userInfo.InnerText);
+                    Console.WriteLine(carInfo.Name + " " + carInfo.InnerText);
                 }
                 Console.WriteLine();
             }
