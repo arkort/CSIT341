@@ -7,11 +7,11 @@ class XmlSchemaSetExample
     static void Main()
     {
         XmlReaderSettings carSettings = new XmlReaderSettings();
-        carSettings.Schemas.Add(null, @"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_2(ADO)\XMLSchema.xsd");
+        carSettings.Schemas.Add(null, "XMLSchema.xsd");
         carSettings.ValidationType = ValidationType.Schema;
         carSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
 
-        XmlReader cars = XmlReader.Create(@"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_2(ADO)\XML_File.xml", carSettings);
+        XmlReader cars = XmlReader.Create("XML_File.xml", carSettings);
 
 
         while (cars.Read())
