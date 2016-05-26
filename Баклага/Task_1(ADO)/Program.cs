@@ -10,7 +10,7 @@ namespace Task_1_ADO_
     {
         static void Main()
         {
-            using (StreamReader Input_File = new StreamReader(@"C:\Users\Artem\Desktop\input.txt"))
+            using (StreamReader Input_File = new StreamReader("input.txt"))
             {
                 string path = Input_File.ReadLine();
                 FileDirection(path);
@@ -46,7 +46,7 @@ namespace Task_1_ADO_
         }
         static void WriteResult()
         {
-          using (StreamWriter Output_File = new StreamWriter(@"C:\Users\Artem\Desktop\output.txt"))
+          using (StreamWriter Output_File = new StreamWriter("output.txt"))
             {
                 foreach (var q in count.OrderByDescending(pair => pair.Value))
                 {

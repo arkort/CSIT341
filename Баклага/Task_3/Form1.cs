@@ -50,7 +50,7 @@ namespace Task_3
             this.Location = new Point(0, 0);
             this.figures = new List<AbstractFigure>();
             this.Size = Screen.PrimaryScreen.Bounds.Size;
-            this.XmlDeserializeData(@"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_3\Figures.xml");
+            this.XmlDeserializeData("Figures.xml");
             this.BinarySerializeData();
         }
     }

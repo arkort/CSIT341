@@ -7,36 +7,36 @@ class XmlSchemaSetExample
     static void Main()
     {
         XmlReaderSettings carSettings = new XmlReaderSettings();
-        carSettings.Schemas.Add(null, @"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_2(ADO)\XMLSchema.xsd");
+        carSettings.Schemas.Add(null, "XMLSchema.xsd");
         carSettings.ValidationType = ValidationType.Schema;
         carSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
 
-        XmlReader cars = XmlReader.Create(@"C:\Users\Artem\Documents\Visual Studio 2015\Projects\Task_2(ADO)\XML_File.xml", carSettings);
+        XmlReader books = XmlReader.Create("XML_File.xml", carSettings);
 
 
-        while (cars.Read())
+        while (books.Read())
         {
-            switch (cars.NodeType)
+            switch (books.NodeType)
             {
                 case XmlNodeType.Element:
                     {
-                        if (cars.Name == "Car")
+                        if (books.Name == "Car")
                         {
-                            Console.Write(" Cars Features " + cars.GetAttribute(0));
+                            Console.Write(" Cars Features " + books.GetAttribute(0));
                             Console.WriteLine();
                             break;
                         }
 
-                        else if (cars.Name != "Catalog")
+                        else if (books.Name != "Catalog")
 
                         {
-                            Console.Write(" - " + cars.Name);
+                            Console.Write(" - " + books.Name);
                         }
                         break;
                     }
                 case XmlNodeType.Text:
                     {
-                        Console.WriteLine(":" + cars.Value);
+                        Console.WriteLine(":" + books.Value);
 
                     }
                     break;
