@@ -8,7 +8,7 @@ namespace GenerationText.DAL
 
         void AddText(string text);
 
-        void AddWords(List<string> text);
+        void AddWords(List<string> text, string newbook);
 
         string ClearWord(string temp);
 

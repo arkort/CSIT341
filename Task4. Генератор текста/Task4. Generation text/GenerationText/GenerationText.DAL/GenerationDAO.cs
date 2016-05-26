@@ -7,12 +7,12 @@ namespace GenerationText.DAL
 {
     public class GenerationDAO : IGenerationDAO
     {
-        private static IDictionary<string, List<string>> words;
-        private static string book; 
+        private static IDictionary<string, List<string>> resul;
+        private static string book;
 
         public GenerationDAO()
         {
-            words = this.GetWords();
+            resul = this.GetWords();
             book = this.GetText();
         }
 
@@ -27,78 +27,76 @@ namespace GenerationText.DAL
 
                 text = temptext.Split(separator.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
             }
-            text = text.Select(word => this.ClearWord(word)).ToList();
 
-            if (!words.ContainsKey(text[0].ToLower()))
+            text = text.Select(word => this.ClearWord(word)).ToList();
+            book.Insert(book.Length, string.Join(" ", text));
+            if (!resul.ContainsKey(text[0].ToLower()))
             {
-                words.Add(text[0].ToLower(), new List<string>());
+                resul.Add(text[0].ToLower(), new List<string>());
             }
 
             for (int i = 0; i < text.Count - 1; i++)
             {
-                if (!words.ContainsKey(text[i + 1].ToLower()))
+                if (!resul.ContainsKey(text[i + 1].ToLower()))
                 {
                     var tempList = new List<string>();
                     tempList.Add(text[i].ToLower());
-                    words.Add(text[i + 1].ToLower(), tempList);
-                    if (!words.ContainsKey(text[i].ToLower()))
+                    resul.Add(text[i + 1].ToLower(), tempList);
+                    if (!resul.ContainsKey(text[i].ToLower()))
                     {
-                        words.Add(text[i].ToLower(), new List<string>());
+                        resul.Add(text[i].ToLower(), new List<string>());
                     }
                 }
                 else
                 {
-                    if (!words[text[i + 1].ToLower()].Contains(text[i].ToLower()))
+                    if (!resul[text[i + 1].ToLower()].Contains(text[i].ToLower()))
                     {
-                        words[text[i + 1].ToLower()].Add(text[i].ToLower());
+                        resul[text[i + 1].ToLower()].Add(text[i].ToLower());
                     }
                 }
             }
 
-            if (!words.ContainsKey(text.Last().ToLower()))
+            if (!resul.ContainsKey(text.Last().ToLower()))
             {
-                words.Add(text.Last().ToLower(), new List<string>());
+                resul.Add(text.Last().ToLower(), new List<string>());
             }
-
-            this.SaveWords();
         }
 
-        public void AddWords(List<string> text)
+        public void AddWords(List<string> text, string newbook)
         {
             text = text.Select(word => this.ClearWord(word)).ToList();
-
-            if (!words.ContainsKey(text[0].ToLower()))
+            if (!resul.ContainsKey(text[0].ToLower()))
             {
-                words.Add(text[0].ToLower(), new List<string>());
+                resul.Add(text[0].ToLower(), new List<string>());
             }
 
             for (int i = 0; i < text.Count - 1; i++)
             {
-                if (!words.ContainsKey(text[i + 1].ToLower()))
+                if (!resul.ContainsKey(text[i + 1].ToLower()))
                 {
                     var tempList = new List<string>();
                     tempList.Add(text[i].ToLower());
-                    words.Add(text[i + 1].ToLower(), tempList);
-                    if (!words.ContainsKey(text[i].ToLower()))
+                    resul.Add(text[i + 1].ToLower(), tempList);
+                    if (!resul.ContainsKey(text[i].ToLower()))
                     {
-                        words.Add(text[i].ToLower(), new List<string>());
+                        resul.Add(text[i].ToLower(), new List<string>());
                     }
                 }
                 else
                 {
-                    if (!words[text[i + 1].ToLower()].Contains(text[i].ToLower()))
+                    if (!resul[text[i + 1].ToLower()].Contains(text[i].ToLower()))
                     {
-                        words[text[i + 1].ToLower()].Add(text[i].ToLower());
+                        resul[text[i + 1].ToLower()].Add(text[i].ToLower());
                     }
                 }
             }
 
-            if (!words.ContainsKey(text.Last().ToLower()))
+            if (!resul.ContainsKey(text.Last().ToLower()))
             {
-                words.Add(text.Last().ToLower(), new List<string>());
+                resul.Add(text.Last().ToLower(), new List<string>());
             }
 
-            this.SaveWords();
+            this.SaveWords(text);
         }
 
         public void AddText(string text)
@@ -108,44 +106,21 @@ namespace GenerationText.DAL
 
         public IDictionary<string, List<string>> Getwords()
         {
-            return new Dictionary<string, List<string>>(words);
+            return new Dictionary<string, List<string>>(resul);
         }
 
         public string ClearWord(string temp)
         {
-            string outs = "";
+            string outs = string.Empty;
             for (int i = 0; i < temp.Length; i++)
             {
-                if (!Char.IsControl(temp[i]))
+                if (!char.IsControl(temp[i]))
                 {
                     outs += temp[i];
                 }
             }
+
             return outs.Trim(' ');
-        }
-
-        private Dictionary<string, List<string>> GetWords()
-        {
-            if (!File.Exists("inputWords.txt"))
-            {
-                File.Create("inputWords.txt");
-            }
-
-            var result = new Dictionary<string, List<string>>();
-            using (StreamReader input = new StreamReader("inputWords.txt"))
-            {
-                book = input.ReadToEnd();
-                var tempstringArray = book.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var item in tempstringArray)
-                {
-                    var tempstring = item.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(word => this.ClearWord(word)).ToList();
-
-                    if (tempstring.Count != 0 && tempstring[0] != string.Empty)
-                        result.Add(tempstring[0], tempstring.Skip(1).ToList());
-                }
-            }
-
-            return result;
         }
 
         public string GetText()
@@ -167,15 +142,66 @@ namespace GenerationText.DAL
             return separator;
         }
 
-        private void SaveWords()
+        private void SaveWords(List<string> text)
         {
-            using (StreamWriter output = new StreamWriter("inputWords.txt"))
+            using (StreamWriter output = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "inputWords.txt"), true))
             {
-                foreach (var word in words)
+                output.WriteLine(string.Join(" ", text));
+            }
+        }
+
+        private Dictionary<string, List<string>> GetWords()
+        {
+            if (!File.Exists("inputWords.txt"))
+            {
+                File.Create("inputWords.txt");
+            }
+
+            var result1 = new Dictionary<string, List<string>>();
+            using (StreamReader input = new StreamReader("inputWords.txt"))
+            {
+                if (!input.EndOfStream)
                 {
-                    output.WriteLine($"{word.Key.Trim(' ')} {string.Join(" ", word.Value.ToArray())}|");
+                    book = input.ReadToEnd();
+
+                    if (book != string.Empty)
+                    {
+                        var text = book.Split(' ').ToList();
+                        if (!result1.ContainsKey(text[0].ToLower()))
+                        {
+                            result1.Add(text[0].ToLower(), new List<string>());
+                        }
+
+                        for (int i = 0; i < text.Count - 1; i++)
+                        {
+                            if (!result1.ContainsKey(text[i + 1].ToLower()))
+                            {
+                                var tempList = new List<string>();
+                                tempList.Add(text[i].ToLower());
+                                result1.Add(text[i + 1].ToLower(), tempList);
+                                if (!result1.ContainsKey(text[i].ToLower()))
+                                {
+                                    result1.Add(text[i].ToLower(), new List<string>());
+                                }
+                            }
+                            else
+                            {
+                                if (!result1[text[i + 1].ToLower()].Contains(text[i].ToLower()))
+                                {
+                                    result1[text[i + 1].ToLower()].Add(text[i].ToLower());
+                                }
+                            }
+                        }
+
+                        if (!result1.ContainsKey(text.Last().ToLower()))
+                        {
+                            result1.Add(text.Last().ToLower(), new List<string>());
+                        }
+                    }
                 }
             }
+
+            return result1;
         }
     }
 }

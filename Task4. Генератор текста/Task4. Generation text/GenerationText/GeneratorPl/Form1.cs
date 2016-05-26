@@ -1,23 +1,17 @@
-﻿using GenerationText.BLL;
-using GenerationTextMarvoc.BLL;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using GenerationText.BLL;
 
 namespace GeneratorPl
 {
     public partial class Form1 : Form
     {
-        private IGenerationLogic GrahpLogic = new GenerationLogic();
-        private GenMarkovText MarkovLogic = new GenMarkovText();
-        private Form Option;
-
+        private Form option;
         private int countWords = 10;
 
         public Form1()
         {
             InitializeComponent();
-            //textBox1.Visible = false;
-            //button1.Visible = false;
         }
 
         public int N
@@ -36,12 +30,12 @@ namespace GeneratorPl
                 countWords = value;
             }
         }
-        //!!!
+
         private void изФайлаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                ((GenerationLogic)GrahpLogic).AddFile(openFileDialog1.FileName);
+                ((GenerationLogic)Common.GrahpLogic).AddFile(openFileDialog1.FileName);
             }
         }
 
@@ -49,51 +43,11 @@ namespace GeneratorPl
         {
         }
 
-        /*
-        private void задатьКоличесвоСловToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            textBox1.Visible = true;
-            button1.Visible = true;
-        }*/
-
-        /*
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (int.Parse(textBox1.Text) < 0)
-            {
-                MessageBox.Show("Отрицательное количество слов");
-                countWords = 10;
-            }
-            else
-            {
-                countWords = int.Parse(textBox1.Text);
-                textBox1.Visible = false;
-                button1.Visible = false;
-            }
-        }*/
-
         private void случайнаяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*
             try
             {
-                var wods = GrahpLogic.GetWords();
-                foreach (var item in wods)
-                {
-                    listBox1.Items.Add(item);
-                }
-
-                listBox1.Items.Add("-----------");
-            }
-            catch
-            {
-            }
-            */
-
-            listBox1.Items.Add(countWords);
-            try
-            {
-                var wods = ((GenerationLogic)GrahpLogic).GetWords(countWords);
+                var wods = ((GenerationLogic)Common.GrahpLogic).GetWords(countWords);
                 foreach (var item in wods)
                 {
                     listBox1.Items.Add(item);
@@ -110,8 +64,8 @@ namespace GeneratorPl
         {
             try
             {
-                var wods = MarkovLogic.GetWords(countWords);
-                foreach (var item in wods)
+                var words = Common.MarkovLogic.GetWords(countWords);
+                foreach (var item in words)
                 {
                     listBox1.Items.Add(item);
                 }
@@ -130,8 +84,8 @@ namespace GeneratorPl
         {
             try
             {
-                var wods = ((GenerationLogic)GrahpLogic).GetWords(countWords);
-                foreach (var item in wods)
+                var words = ((GenerationLogic)Common.GrahpLogic).GetWords(countWords);
+                foreach (var item in words)
                 {
                     listBox1.Items.Add(item);
                 }
@@ -145,10 +99,14 @@ namespace GeneratorPl
 
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Option = new Option(this);
+            option = new Option(this);
             Hide();
-            Option.FormClosed += (object o, FormClosedEventArgs evnt) => { Show(); };
-            Option.Show();
+            option.FormClosed += (object o, FormClosedEventArgs evnt) => { Show(); };
+            option.Show();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
         }
     }
 }

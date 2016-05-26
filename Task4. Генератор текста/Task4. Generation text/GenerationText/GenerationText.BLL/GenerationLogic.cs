@@ -1,24 +1,24 @@
-﻿using GenerationText.DAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GenerationText.DAL;
 
 namespace GenerationText.BLL
 {
     public class GenerationLogic : IGenerationLogic
     {
-        private IGenerationDAO data = new GenerationDAO();
+        private IGenerationDAO data = Common.Data;
         private Random rand = new Random();
 
         public string GenerateRandom()
         {
-            var words = data.Getwords();
-            var word = words.ElementAt(rand.Next(1, words.Count)).Key;
+            var words = this.data.Getwords();
+            var word = words.ElementAt(this.rand.Next(1, words.Count)).Key;
             string result = string.Empty;
             int i = 0;
-            this.DFS(word, rand.Next(1, 100), ref result, ref i);
+            this.DFS(word, this.rand.Next(1, 100), ref result, ref i);
 
             return result;
         }
@@ -38,6 +38,7 @@ namespace GenerationText.BLL
                     count = 0;
                     tempString.Clear();
                 }
+
                 tempString.AppendFormat($"{words[i]} ");
                 count++;
             }
@@ -54,14 +55,14 @@ namespace GenerationText.BLL
             var tempString = new StringBuilder();
             for (int i = 0; i < words.Count; i++)
             {
-                if (count == 5)
+                tempString.AppendFormat($"{words[i]} ");
+                count++;
+                if (count == 5 || i == words.Count - 1)
                 {
                     tempResult.Add(tempString.ToString());
                     count = 0;
                     tempString.Clear();
                 }
-                tempString.AppendFormat($"{words[i]} ");
-                count++;
             }
 
             return tempResult;
@@ -69,8 +70,8 @@ namespace GenerationText.BLL
 
         public string GenerateRandom(int n)
         {
-            var words = data.Getwords();
-            var word = words.ElementAt(rand.Next(1, words.Count)).Key;
+            var words = this.data.Getwords();
+            var word = words.ElementAt(this.rand.Next(1, words.Count)).Key;
             string result = string.Empty;
             int i = 0;
             this.DFS(word, n, ref result, ref i);
@@ -82,30 +83,16 @@ namespace GenerationText.BLL
         {
             var separator = this.GetSeparator(text);
             var tempstring = text.Split(separator.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-            this.data.AddWords(tempstring);
         }
 
         public void AddFile(string path)
         {
-            using (StreamReader input = new StreamReader(path))
+            using (StreamReader input = new StreamReader(File.Open(path, FileMode.Open), Encoding.GetEncoding(1251)))
             {
                 var text = input.ReadToEnd();
                 var separator = this.GetSeparator(text);
-                this.data.AddText(text);
-                this.data.AddWords(text.Split(separator.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList());
+                this.data.AddWords(text.Split(separator.ToArray(), StringSplitOptions.RemoveEmptyEntries).ToList(), text);
             }
-        }
-
-        private void DFS(string start, int n, ref string result, ref int count)
-        {
-            if (count == n)
-            {
-                return;
-            }
-            result += " " + start;
-            count++;
-            var dictonary = this.data.Getwords()[start];
-            this.DFS(dictonary[rand.Next(0, dictonary.Count)], n, ref result, ref count);
         }
 
         public List<string> GetSeparator(string text)
@@ -120,6 +107,19 @@ namespace GenerationText.BLL
             }
 
             return separator;
+        }
+
+        private void DFS(string start, int n, ref string result, ref int count)
+        {
+            if (count == n)
+            {
+                return;
+            }
+
+            result += " " + start;
+            count++;
+            var dictonary = this.data.Getwords()[start];
+            this.DFS(dictonary[this.rand.Next(0, dictonary.Count)], n, ref result, ref count);
         }
     }
 }

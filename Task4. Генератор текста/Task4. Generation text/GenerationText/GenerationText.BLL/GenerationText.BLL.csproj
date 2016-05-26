@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="GenerationLogic.cs" />
     <Compile Include="GenMarkovText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
