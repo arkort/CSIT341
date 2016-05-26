@@ -53,5 +53,10 @@ namespace GeneratorPl
         {
             form1.N = (int)numericUpDown1.Value;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
