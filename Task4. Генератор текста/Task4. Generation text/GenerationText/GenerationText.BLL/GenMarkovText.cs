@@ -15,8 +15,9 @@ namespace GenerationTextMarvoc.BLL
         private int K = 2, N = 10;
         private int PrecCoeff = 50;
 
-        public List<string> GetWords()
+        public List<string> GetWords(int countWords)
         {
+            this.N = Math.Max(countWords,10);
             var tempResult = new List<string>();
             var words = this.GenerateText().Split(' ').ToList();
 
@@ -32,6 +33,12 @@ namespace GenerationTextMarvoc.BLL
                 }
                 tempString.AppendFormat($"{words[i]} ");
                 count++;
+            }
+            if(tempString.Length!=0)
+            {
+                tempResult.Add(tempString.ToString());
+                count = 0;
+                tempString.Clear();
             }
             return tempResult;
         }

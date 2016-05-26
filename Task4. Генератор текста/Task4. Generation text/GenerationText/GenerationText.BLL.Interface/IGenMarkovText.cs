@@ -8,6 +8,6 @@ namespace GenerationTextMarkov.BLL.Interface
 {
     public interface IGenMarkovText
     {
-        List<string> GetWords();
+        List<string> GetWords(int countWords);
     }
 }

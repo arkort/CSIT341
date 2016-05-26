@@ -9,21 +9,22 @@ namespace GeneratorPl
     {
         private IGenerationLogic GrahpLogic = new GenerationLogic();
         private GenMarkovText MarkovLogic = new GenMarkovText();
+        private Form Option;
 
-        private int n = 10;
+        private int countWords = 10;
 
         public Form1()
         {
             InitializeComponent();
-            textBox1.Visible = false;
-            button1.Visible = false;
+            //textBox1.Visible = false;
+            //button1.Visible = false;
         }
 
         public int N
         {
             get
             {
-                return n;
+                return countWords;
             }
             set
             {
@@ -32,27 +33,10 @@ namespace GeneratorPl
                     throw new ArgumentException("Is not pozitive");//исправить
                 }
 
-                n = value;
+                countWords = value;
             }
         }
-
-        private void сВыборомКолчичестваСловToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var wods = ((GenerationLogic)GrahpLogic).GetWords(n);
-                foreach (var item in wods)
-                {
-                    listBox1.Items.Add(item);
-                }
-
-                listBox1.Items.Add("-----------");
-            }
-            catch
-            {
-            }
-        }
-
+        //!!!
         private void изФайлаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -61,8 +45,36 @@ namespace GeneratorPl
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+
+        /*
+        private void задатьКоличесвоСловToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Visible = true;
+            button1.Visible = true;
+        }*/
+
+        /*
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (int.Parse(textBox1.Text) < 0)
+            {
+                MessageBox.Show("Отрицательное количество слов");
+                countWords = 10;
+            }
+            else
+            {
+                countWords = int.Parse(textBox1.Text);
+                textBox1.Visible = false;
+                button1.Visible = false;
+            }
+        }*/
+
         private void случайнаяToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             try
             {
                 var wods = GrahpLogic.GetWords();
@@ -76,17 +88,29 @@ namespace GeneratorPl
             catch
             {
             }
+            */
+
+            listBox1.Items.Add(countWords);
+            try
+            {
+                var wods = ((GenerationLogic)GrahpLogic).GetWords(countWords);
+                foreach (var item in wods)
+                {
+                    listBox1.Items.Add(item);
+                }
+
+                listBox1.Items.Add("-----------");
+            }
+            catch
+            {
+            }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void генерацияАлгоримомМарковаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void алгоритмомМарковаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                var wods = MarkovLogic.GetWords();
+                var wods = MarkovLogic.GetWords(countWords);
                 foreach (var item in wods)
                 {
                     listBox1.Items.Add(item);
@@ -101,30 +125,30 @@ namespace GeneratorPl
             }
         }
 
-        private void ввестиТекстToolStripMenuItem_Click(object sender, EventArgs e)
+        //!!!
+        private void текстСОпределеннымКоличествомСловToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var wods = ((GenerationLogic)GrahpLogic).GetWords(countWords);
+                foreach (var item in wods)
+                {
+                    listBox1.Items.Add(item);
+                }
+
+                listBox1.Items.Add("-----------");
+            }
+            catch
+            {
+            }
         }
 
-        private void задатьКоличесвоСловToolStripMenuItem_Click(object sender, EventArgs e)
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            textBox1.Visible = true;
-            button1.Visible = true;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (int.Parse(textBox1.Text) < 0)
-            {
-                MessageBox.Show("Отрицательное количество слов");
-                n = 10;
-            }
-            else
-            {
-                n = int.Parse(textBox1.Text);
-
-                textBox1.Visible = false;
-                button1.Visible = false;
-            }
+            Option = new Option(this);
+            Hide();
+            Option.FormClosed += (object o, FormClosedEventArgs evnt) => { Show(); };
+            Option.Show();
         }
     }
 }

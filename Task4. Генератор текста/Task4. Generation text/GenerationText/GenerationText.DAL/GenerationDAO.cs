@@ -8,7 +8,7 @@ namespace GenerationText.DAL
     public class GenerationDAO : IGenerationDAO
     {
         private static IDictionary<string, List<string>> words;
-        private static string book;
+        private static string book; 
 
         public GenerationDAO()
         {
