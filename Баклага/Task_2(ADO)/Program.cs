@@ -1,53 +1,41 @@
 ﻿using System;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Schema;
 
 class XmlSchemaSetExample
 {
     static void Main()
     {
-        XmlReaderSettings carSettings = new XmlReaderSettings();
-        carSettings.Schemas.Add(null, "XMLSchema.xsd");
-        carSettings.ValidationType = ValidationType.Schema;
-        carSettings.ValidationEventHandler += new ValidationEventHandler(booksSettingsValidationEventHandler);
-
-        XmlReader books = XmlReader.Create("XML_File.xml", carSettings);
-
-
-        while (books.Read())
+        try
         {
-            switch (books.NodeType)
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load("XML_File.xml");
+
+            XmlNodeList node = xmlDocument.SelectNodes("Catalog");
+            xmlDocument.Schemas.Add(null, @"XMLSchema.xsd");
+            xmlDocument.Validate(carsSettingsValidationEventHandler);
+
+            foreach (XmlNode car in node[0].ChildNodes)
             {
-                case XmlNodeType.Element:
-                    {
-                        if (books.Name == "Car")
-                        {
-                            Console.Write(" Cars Features " + books.GetAttribute(0));
-                            Console.WriteLine();
-                            break;
-                        }
+                Console.WriteLine(car.Name);
 
-                        else if (books.Name != "Catalog")
-
-                        {
-                            Console.Write(" - " + books.Name);
-                        }
-                        break;
-                    }
-                case XmlNodeType.Text:
-                    {
-                        Console.WriteLine(":" + books.Value);
-
-                    }
-                    break;
-
+                foreach (XmlNode userInfo in car.ChildNodes)
+                {
+                    Console.WriteLine(userInfo.Name + " " + userInfo.InnerText);
+                }
+                Console.WriteLine();
             }
         }
 
+        catch( Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 
-
-    static void booksSettingsValidationEventHandler(object sender, ValidationEventArgs e)
+    
+        private static void carsSettingsValidationEventHandler(object sender, ValidationEventArgs e)
     {
         if (e.Severity == XmlSeverityType.Warning)
         {
