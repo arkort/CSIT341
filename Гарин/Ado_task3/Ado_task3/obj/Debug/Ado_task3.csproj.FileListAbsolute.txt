@@ -1,0 +1,9 @@
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\bin\Debug\Ado_task3.exe.config
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\bin\Debug\Ado_task3.exe
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\bin\Debug\Ado_task3.pdb
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.csprojResolveAssemblyReference.cache
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.Properties.Resources.resources
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.csproj.GenerateResource.Cache
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.exe
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.pdb
+c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.Form1.resources
