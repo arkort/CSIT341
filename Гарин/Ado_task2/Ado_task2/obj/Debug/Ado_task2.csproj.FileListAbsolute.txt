@@ -4,3 +4,5 @@ C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task2\Ado_task2\bin\Deb
 C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task2\Ado_task2\obj\Debug\Ado_task2.csprojResolveAssemblyReference.cache
 C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task2\Ado_task2\obj\Debug\Ado_task2.exe
 C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task2\Ado_task2\obj\Debug\Ado_task2.pdb
+C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task2\Ado_task2\bin\Debug\shop.xml
+C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task2\Ado_task2\bin\Debug\TemplateShop.xsd

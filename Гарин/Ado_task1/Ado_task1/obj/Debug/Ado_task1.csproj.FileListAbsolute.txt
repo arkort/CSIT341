@@ -4,3 +4,4 @@ c:\users\andre\documents\visual studio 2015\Projects\Ado_task1\Ado_task1\bin\Deb
 c:\users\andre\documents\visual studio 2015\Projects\Ado_task1\Ado_task1\obj\Debug\Ado_task1.csprojResolveAssemblyReference.cache
 c:\users\andre\documents\visual studio 2015\Projects\Ado_task1\Ado_task1\obj\Debug\Ado_task1.exe
 c:\users\andre\documents\visual studio 2015\Projects\Ado_task1\Ado_task1\obj\Debug\Ado_task1.pdb
+C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task1\Ado_task1\bin\Debug\input.txt

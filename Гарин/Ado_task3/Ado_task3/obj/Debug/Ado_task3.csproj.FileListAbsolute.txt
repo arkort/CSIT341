@@ -7,3 +7,4 @@ c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Deb
 c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.exe
 c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.pdb
 c:\users\andre\documents\visual studio 2015\Projects\Ado_task3\Ado_task3\obj\Debug\Ado_task3.Form1.resources
+C:\Users\andre\Documents\Visual Studio 2015\Projects\Ado_task3\Ado_task3\bin\Debug\figure.xml
