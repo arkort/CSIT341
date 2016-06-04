@@ -1,77 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace Task2
+class Program
 {
-    class Program
+    private static void Main()
     {
-        static void Main()
+        try
         {
-            XmlReaderSettings FilmLibrarySettings = new XmlReaderSettings();
-            FilmLibrarySettings.Schemas.Add(null, @"Film.xsd");
-            FilmLibrarySettings.ValidationType = ValidationType.Schema;
-            FilmLibrarySettings.ValidationEventHandler += new ValidationEventHandler(bsValidationEventHandler);
-            XmlReader films = XmlReader.Create(@"FilmLibrary.xml", FilmLibrarySettings);
+            var document = new XmlDocument();
+            document.Load("Films.xml");
 
-            Print(films);
-        }
+            var a = document.SelectNodes("FilmLibrary");
+            document.Schemas.Add("", @"TFilms.xsd");
+            document.Validate(FilmsSettingsValidationEventHandler);
 
-        public static void Print(XmlReader films)
-        {
-            try
+            foreach (XmlNode film in a[0].ChildNodes)
             {
-                while (films.Read())
+                Console.WriteLine(film.Name);
+
+                foreach (XmlNode characteristics in film.ChildNodes)
                 {
-                    switch (films.NodeType)
-                    {
-                        case XmlNodeType.Element:
-                            {
-                                if (films.Name == "FILM")
-                                {
-                                    Console.WriteLine(films.Name);
-                                    break;
-                                }
-
-                                else if (films.Name != "FilmLibrary")
-                                {
-                                    Console.Write(" - " + films.Name);
-                                }
-                                break;
-                            }
-                        case XmlNodeType.Text:
-                            {
-                                Console.WriteLine(" - " + films.Value);
-
-                            }
-                            break;
-                    }
+                    Console.WriteLine(characteristics.Name + " " + characteristics.InnerText);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR!");
-                Console.WriteLine(e.Message);
+                Console.WriteLine();
             }
         }
-
-
-        static void bsValidationEventHandler(object sender, ValidationEventArgs e)
+        catch (Exception e)
         {
-            if (e.Severity == XmlSeverityType.Warning)
-            {
-                Console.Write("WARNING: ");
-                Console.WriteLine(e.Message);
-            }
-            else if (e.Severity == XmlSeverityType.Error)
-            {
-                Console.Write("ERROR: ");
-                Console.WriteLine(e.Message);
-            }
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    private static void FilmsSettingsValidationEventHandler(object sender, ValidationEventArgs e)
+    {
+        if (e.Severity == XmlSeverityType.Warning)
+        {
+            Console.Write("WARNING: ");
+            Console.WriteLine(e.Message);
+        }
+        else if (e.Severity == XmlSeverityType.Error)
+        {
+            throw new Exception(e.Message);
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+
+<FilmLibrary>
+  <FILM>
+    <PRODUCER>Joss Whedon</PRODUCER>
+    <NAME>The Avengers</NAME>
+    <GENRE>fantastic</GENRE>
+    <PREMIERE>2012</PREMIERE>
+    <BUDGET>$220 000 000</BUDGET>
+  </FILM>
+  <FILM>
+    <PRODUCER>Louis Leterrier</PRODUCER>
+    <NAME>Now You See Me</NAME>
+    <GENRE>crime</GENRE>
+    <PREMIERE>2013</PREMIERE>
+    <BUDGET> $75 000 000</BUDGET>
+  </FILM>
+  <FILM>
+    <PRODUCER>Matthew Vaughn</PRODUCER>
+    <NAME>Kingsman: The Secret Service</NAME>
+    <GENRE>thriller</GENRE>
+    <PREMIERE>2014</PREMIERE>
+    <BUDGET>$81 000 000</BUDGET>
+  </FILM>
+</FilmLibrary>
