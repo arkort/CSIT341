@@ -1,0 +1,6 @@
+C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task2\ConsoleApplication5\bin\Debug\ConsoleApplication5.exe.config
+C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task2\ConsoleApplication5\bin\Debug\ConsoleApplication5.exe
+C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task2\ConsoleApplication5\bin\Debug\ConsoleApplication5.pdb
+C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task2\ConsoleApplication5\obj\Debug\ConsoleApplication5.csprojResolveAssemblyReference.cache
+C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task2\ConsoleApplication5\obj\Debug\ConsoleApplication5.exe
+C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task2\ConsoleApplication5\obj\Debug\ConsoleApplication5.pdb
