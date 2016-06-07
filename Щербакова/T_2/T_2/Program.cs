@@ -6,36 +6,33 @@ class XmlSchemaSetExample
 {
     static void Main()
     {
-        XmlReaderSettings flowersSettings = new XmlReaderSettings();
-        flowersSettings.Schemas.Add(null, @"c:\users\dns\documents\visual studio 2015\Projects\T_2\T_2\XML_Schema.xsd");
-        flowersSettings.ValidationType = ValidationType.Schema;
-        flowersSettings.ValidationEventHandler += new ValidationEventHandler(flowersSettingsValidationEventHandler);
-        XmlReader flowers = XmlReader.Create(@"c:\users\dns\documents\visual studio 2015\Projects\T_2\T_2\XML_File.xml", flowersSettings);
-
-
-        while (flowers.Read())
+        try
         {
-            switch (flowers.NodeType)
-            {
-                case XmlNodeType.Element:
-                    {
-                        if (flowers.Name == "flowers")
-                        {
-                            Console.Write(flowers.GetAttribute(0));
-                            Console.WriteLine();
-                            break;
-                        }
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load("XML_File.xml");
 
-                        else if (flowers.Name != "Catalog")
-                            Console.Write(flowers.Name);
-                        break;
-                    }
-                case XmlNodeType.Text:
-                    Console.WriteLine(flowers.Value);
-                    break;
+            XmlNodeList node = xmlDocument.SelectNodes("Catalog");
+            xmlDocument.Schemas.Add(null, @"XML_Schema.xsd");
+            xmlDocument.Validate(flowersSettingsValidationEventHandler);
+
+            foreach (XmlNode flowers in node[0].ChildNodes)
+            {
+                Console.WriteLine(flowers.Name);
+
+                foreach (XmlNode flowersInfo in flowers.ChildNodes)
+                {
+                    Console.WriteLine(flowersInfo.Name + " " + flowersInfo.InnerText);
+                }
+                Console.WriteLine();
             }
         }
+
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
+
 
     static void flowersSettingsValidationEventHandler(object sender, ValidationEventArgs e)
     {
