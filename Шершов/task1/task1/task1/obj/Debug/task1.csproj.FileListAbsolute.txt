@@ -1,1 +1,8 @@
 C:\Users\CoMManDo$\Desktop\git\CSIT341\Шершов\task1\task1\task1\bin\Debug\task1.exe.config
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\bin\Debug\task1.exe.config
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\bin\Debug\input.txt
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\bin\Debug\task1.exe
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\bin\Debug\task1.pdb
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\obj\Debug\task1.csprojResolveAssemblyReference.cache
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\obj\Debug\task1.exe
+C:\Users\CoMManDo$\Desktop\1\CSIT341\Шершов\task1\task1\task1\obj\Debug\task1.pdb
