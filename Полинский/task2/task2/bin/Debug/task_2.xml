@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<animes>
+  <animeid name="2">
+    <Studio>Ufotable</Studio>
+    <NameAnime>FAte2</NameAnime>
+	<Series>15</Series>
+    <DateOfEnd>11.06.2016</DateOfEnd>
+  </animeid>
+  <animeid name="1">
+    <Studio>Ufotable</Studio>
+    <NameAnime>FAte</NameAnime>
+    <Series>25</Series>
+    <DateOfEnd>28.01.2015</DateOfEnd>
+  </animeid>
+</animes>
+

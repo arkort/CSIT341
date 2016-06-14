@@ -1,0 +1,6 @@
+C:\Users\Елена\Desktop\игр\task2\task2\bin\Debug\task2.exe.config
+C:\Users\Елена\Desktop\игр\task2\task2\bin\Debug\task2.exe
+C:\Users\Елена\Desktop\игр\task2\task2\bin\Debug\task2.pdb
+C:\Users\Елена\Desktop\игр\task2\task2\obj\Debug\task2.csprojResolveAssemblyReference.cache
+C:\Users\Елена\Desktop\игр\task2\task2\obj\Debug\task2.exe
+C:\Users\Елена\Desktop\игр\task2\task2\obj\Debug\task2.pdb

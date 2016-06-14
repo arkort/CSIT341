@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="XMLSchema1"
+    xmlns:mstns="http://tempuri.org/XMLSchema1.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="animes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="anime">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Studio" type="xs:string" />
+              <xs:element name="NameAnime" type="xs:string" />
+              <xs:element name="Series" type="xs:int" />
+              <xs:element name ="DateOfEnd" type="xs:date" />
+            </xs:sequence>
+            <xs:attribute name="AnimeID" type="xs:int"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

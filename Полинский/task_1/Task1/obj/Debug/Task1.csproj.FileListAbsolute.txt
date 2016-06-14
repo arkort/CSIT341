@@ -1,0 +1,30 @@
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев Р\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Shekhmametyev_R\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Shekhmametyev_R\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Shekhmametyev_R\Task1\Task1\bin\Debug\Task1.pdb
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Shekhmametyev_R\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Shekhmametyev_R\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.pdb
+C:\Users\Rustam\Documents\GitProjects\AdoNetGit2\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.pdb
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Shekhmametyev\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Shekhmametyev\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Shekhmametyev\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Shekhmametyev\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Shekhmametyev\Task1\Task1\bin\Debug\Task1.pdb
+C:\Users\John\Documents\Visual Studio 2015\Projects\GitProjects\AdoNet341\CSIT341\Shekhmametyev\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+C:\Users\Елена\Desktop\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\Елена\Desktop\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\Елена\Desktop\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.pdb
+C:\Users\Елена\Desktop\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\Елена\Desktop\CSIT341\Шехмаметьев\Task1\Task1\bin\Debug\Task1.pdb
+C:\Users\Елена\Desktop\CSIT341\Шехмаметьев\Task1\Task1\obj\Debug\Task1.csprojResolveAssemblyReference.cache
