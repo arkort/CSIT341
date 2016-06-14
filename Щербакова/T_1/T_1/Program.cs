@@ -9,7 +9,7 @@ namespace T_1
     {
         static void Main()
         {
-            using (StreamReader Input = new StreamReader(@"C:\Users\DNS\Desktop\input.txt"))
+            using (StreamReader Input = new StreamReader("input.txt"))
             {
                 string path = Input.ReadLine();
                 FileDirection(path);
@@ -43,7 +43,7 @@ namespace T_1
         }
         static void WriteResult()
         {
-            using (StreamWriter Output = new StreamWriter(@"C:\Users\DNS\Desktop\output.txt"))
+            using (StreamWriter Output = new StreamWriter("output.txt"))
             {
                 foreach (var a in count.OrderByDescending(pair => pair.Value))
                 {
