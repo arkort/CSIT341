@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parking>
+  <car>
+<place>1</place>
+<mark>Opel Kadett</mark>
+<number>B242PH64</number>
+  </car>
+  <car>
+<place>2</place>
+<mark>Lada Priora</mark>
+<number>O123PO64</number>
+  </car>
+  <car>
+<place>3</place>
+<mark>Hyundai Solaris</mark>
+<number>O004MO64</number>
+  </car>
+  <car>
+<place>4</place>
+<mark>Volkswagen Polo</mark>
+<number>E111XX64</number>
+  </car>
+  <car>
+<place>5</place>
+<mark>Nissan Almera</mark>
+<number>M415CC64</number>
+  </car>
+  <car>
+<place>6</place>
+<mark>Ford Focus</mark>
+<number>H454HY64</number>
+  </car>
+  <car>
+<place>7</place>
+<mark>Toyota MarkII</mark>
+<number>A123BO64</number>
+  </car>
+  <car>
+<place>8</place>
+<mark>Audi RS5</mark>
+<number>c777cc777</number>
+  </car>
+
+</parking>
